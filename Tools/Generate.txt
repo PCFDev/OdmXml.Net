@@ -1,0 +1,1 @@
+Xsd2Code.exe ..\PCF.OdmXml\odm1-3-2.xsd /o odm1-3-2.xsd.cs /n PCF.OdmXml /l CS /pl Net35 /xa /gbc /ggbc /tc /tcc /is /lf Load /sf Save

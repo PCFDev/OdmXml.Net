@@ -40,8 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\ClinicalDataDao.cs" />
+    <Compile Include="DTO\StudyDao.cs" />
+    <Compile Include="Helpers\ByteArrayBuilder.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="DTO\I2B2ClinicalDataInfo.cs" />
+    <Compile Include="MetaDataXML.cs" />
     <Compile Include="I2b2OdmImporter.cs" />
+    <Compile Include="DTO\I2B2StudyInfo.cs" />
+    <Compile Include="Interfaces\IClinicalDataDao.cs" />
+    <Compile Include="Interfaces\IStudyDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helpers\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PCF.OdmXml\PCF.OdmXml.csproj">

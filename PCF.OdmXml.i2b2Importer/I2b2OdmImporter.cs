@@ -6,481 +6,13 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using PCF.OdmXml.i2b2Importer.DTO;
+using PCF.OdmXml.i2b2Importer.Helpers;
+using PCF.OdmXml.i2b2Importer.Interfaces;
 
 //License?
 namespace PCF.OdmXml.i2b2Importer
 {
-    public static class Constants
-    {
-        //From https://github.com/CTMM-TraIT/trait_odm_to_i2b2/blob/452a1950b94d3a779eb66aaf1ad7ef34976c628c/src/main/java/com/recomdata/i2b2/IConstants.java
-        //TODO: How many of these do we actually need?
-        public const int C_HLEVEL_1 = 1;
-        public const int C_HLEVEL_2 = 2;
-        public const int C_HLEVEL_3 = 3;
-        public const int C_HLEVEL_4 = 4;
-        public const int C_HLEVEL_5 = 5;
-        public const int C_HLEVEL_6 = 6;
-        public const string C_SYNONYM_CD = "N";
-        public const string C_VISUALATTRIBUTES_FOLDER = "FA";
-        public const string C_VISUALATTRIBUTES_LEAF = "LA";
-        public const string C_FACTTABLECOLUMN = "concept_cd";
-        public const string C_TABLENAME = "concept_dimension";
-        public const string C_COLUMNNAME = "concept_path";
-        public const string C_COLUMNDATATYPE = "T";
-        public const string C_OPERATOR = "LIKE";
-    }
-
-    //https://github.com/CTMM-TraIT/trait_odm_to_i2b2/blob/452a1950b94d3a779eb66aaf1ad7ef34976c628c/src/main/java/com/recomdata/i2b2/util/ODMUtil.java
-    public static class ODMUtil
-    {
-        public static ODMcomplexTypeDefinitionStudy GetStudy(ODM odm, string studyOID)
-        {
-            foreach (var study in odm.Study)
-            {
-                if (study.OID.Equals(studyOID))
-                    return study;
-            }
-            return null;
-        }
-
-        /**
-         * Resolve StudyEventDef from StudyEventRef
-         *
-         * @throws JAXBException
-         */
-
-        public static ODMcomplexTypeDefinitionStudyEventDef GetStudyEvent(ODMcomplexTypeDefinitionStudy study, string studyEventOID)
-        {
-            var version = study.MetaDataVersion.First();//FirstOrDefault()?
-            if (version.StudyEventDef == null)
-                return null;
-
-            foreach (var studyEventDef in version.StudyEventDef)
-            {
-                if (studyEventDef.OID.Equals(studyEventOID))
-                    return studyEventDef;
-            }
-            return null;
-        }
-
-        /**
-         * Resolve FormDef from FormRef
-         *
-         * @throws JAXBException
-         */
-
-        public static ODMcomplexTypeDefinitionFormDef GetForm(ODMcomplexTypeDefinitionStudy study, string formOID)
-        {
-            var version = study.MetaDataVersion.First();//FirstOrDefault()?
-            if (version.FormDef == null)
-                return null;
-
-            foreach (var formDef in version.FormDef)
-            {
-                if (formDef.OID.Equals(formOID))
-                    return formDef;
-            }
-            return null;
-        }
-
-        /**
-         * Resolve ItemGroupDef from ItemGroupRef
-         *
-         * @throws JAXBException
-         */
-
-        public static ODMcomplexTypeDefinitionItemGroupDef GetItemGroup(ODMcomplexTypeDefinitionStudy study, string itemGroupOID)
-        {
-            var version = study.MetaDataVersion.First();//FirstOrDefault()?
-            if (version.ItemGroupDef == null)
-                return null;
-
-            foreach (var itemGroupDef in version.ItemGroupDef)
-            {
-                if (itemGroupDef.OID.Equals(itemGroupOID))
-                    return itemGroupDef;
-            }
-            return null;
-        }
-
-        /**
-         * Resolve ItemDef from ItemRef
-         *
-         * @throws JAXBException
-         */
-
-        public static ODMcomplexTypeDefinitionItemDef GetItem(ODMcomplexTypeDefinitionStudy study, string itemOID)
-        {
-            var version = study.MetaDataVersion.First();//FirstOrDefault()?
-            if (version.ItemDef == null)
-                return null;
-
-            foreach (var itemDef in version.ItemDef)
-            {
-                if (itemDef.OID.Equals(itemOID))
-                    return itemDef;
-            }
-            return null;
-        }
-
-        /**
-         * Resolve CodListDef from CodeListRef
-         *
-         * @throws JAXBException
-         */
-
-        public static ODMcomplexTypeDefinitionCodeList GetCodeList(ODMcomplexTypeDefinitionStudy study, string codeListOID)
-        {
-            var version = study.MetaDataVersion.First();//FirstOrDefault()?
-            if (version.CodeList == null)
-                return null;
-
-            foreach (var codeListDef in version.CodeList)
-            {
-                if (codeListDef.OID.Equals(codeListOID))
-                    return codeListDef;
-            }
-            return null;
-        }
-
-        public static string[] GetCodeListValues(ODMcomplexTypeDefinitionCodeList codeList, string lang)
-        {
-            var codeListItems = codeList.Items.Where(_ => _ is ODMcomplexTypeDefinitionCodeListItem).Select(_ => _ as ODMcomplexTypeDefinitionCodeListItem).ToList();//.getCodeListItem();
-            string[] codeListValues = new string[codeListItems.Count];
-
-            for (int i = 0; i < codeListValues.Length; i++)
-            {
-                var codeListItem = codeListItems[i];
-
-                codeListValues[i] = GetTranslatedValue(codeListItem, lang);
-            }
-
-            return codeListValues;
-        }
-
-        /**
-         * Look for a translated value for the given item. Returns the language specific value, or the
-         * first value if the translated value could not be found.
-         */
-
-        public static string GetTranslatedValue(ODMcomplexTypeDefinitionCodeListItem codeListItem, string lang)
-        {
-            var translatedValue = default(string);
-
-            foreach (var translatedText in codeListItem.Decode.TranslatedText)
-            {
-                // TODO: the language attribute is not always available for OpenClinica data.
-                if (translatedText.lang != null && translatedText.lang.Equals("en"))
-                {
-                    translatedValue = translatedText.Value;
-                    break;
-                }
-            }
-
-            if (translatedValue == null)
-            {
-                // take first value if we can't find an english translation
-                translatedValue = codeListItem.Decode.TranslatedText.First().Value;//FirstOrDefault()?
-            }
-
-            return translatedValue;
-        }
-
-        public static bool IsNumeric(DataType type)
-        {
-            switch (type)
-            {
-                case DataType.integer:
-                case DataType.@float:
-                case DataType.@double:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        public static ODMcomplexTypeDefinitionCodeListItem GetCodeListItem(ODMcomplexTypeDefinitionCodeList codeList, string codedValue)
-        {
-            foreach (var codeListItem in codeList.Items.Where(_ => _ is ODMcomplexTypeDefinitionCodeListItem).Select(_ => _ as ODMcomplexTypeDefinitionCodeListItem).ToList())//.getCodeListItem()
-            {
-                if (codeListItem.CodedValue.Equals(codedValue))
-                    return codeListItem;
-            }
-            return null;
-        }
-    }
-
-    public class ByteArrayBulder
-    {
-        private List<byte> Bytes = new List<byte>();
-
-        public ByteArrayBulder Append(params byte[] bytes)
-        {
-            if (bytes == null)
-                throw new ArgumentNullException("bytes");
-            Bytes.AddRange(bytes);
-            return this;
-        }
-
-        public byte[] GetBytes()
-        {
-            return Bytes.ToArray();
-        }
-    }
-
-    //TODO: Entity framework
-    public interface IStudyDao
-    {
-        void ExecuteBatch();
-        void InsertMetadata(I2B2StudyInfo studyInfo);
-        void PreSetupI2B2Study(string projectID, string sourceSystem);
-    }
-
-    //TODO: Entity framework
-    public class StudyDao : IStudyDao
-    {
-        public void ExecuteBatch()
-        {
-            throw new NotImplementedException();
-        }
-        
-        public void InsertMetadata(I2B2StudyInfo studyInfo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PreSetupI2B2Study(string projectID, string sourceSystem)
-        {
-            throw new NotImplementedException();
-        }
-
-    }
-
-    //TODO: Entity framework
-    public interface IClinicalDataDao
-    {
-        void CleanupClinicalData(string projectID, string sourceSystem);
-        void ExecuteBatch();
-        void InsertObservation(I2B2ClinicalDataInfo clinicalDataInfo);
-    }
-
-    //TODO: Entity framework
-    public class ClinicalDataDao : IClinicalDataDao
-    {
-        public void CleanupClinicalData(string projectID, string sourceSystem)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ExecuteBatch()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InsertObservation(I2B2ClinicalDataInfo clinicalDataInfo)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    //https://github.com/CTMM-TraIT/trait_odm_to_i2b2/blob/edbc360643d64a51ca13ce4c0c57e282c04ccb2d/src/main/java/com/recomdata/i2b2/MetaDataXML.java
-    public class MetaDataXML
-    {
-        /**
-         * The element name used for the enumeration values.
-         */
-        private const string ENUM_VALUES_ELEMENT_NAME = "EnumValues";
-
-        /**
-         * The value used for units that are not available.
-         */
-        private const string NOT_AVAILABLE_VALUE = "N/A";
-
-        /**
-         * Create Enum type metadata xml for items such as Sex, Race, etc.
-         *
-         * @param itemOID    the OID of the item.
-         * @param itemName   the name of the item.
-         * @param enumValues the enumeration values to add.
-         * @return the metadata xml (as a string).
-         */
-
-        public string GetEnumMetadataXML(string itemOID, string itemName, string[] enumValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        /**
-         * Create Integer type metadata xml.
-         *
-         * @param itemOID  the OID of the item.
-         * @param itemName the name of the item.
-         * @return the metadata xml (as a string).
-         */
-
-        public string GetIntegerMetadataXML(string itemOID, string itemName)
-        {
-            throw new NotImplementedException();
-        }
-
-        /**
-         * Create Float type metadata xml.
-         *
-         * @param itemOID  the OID of the item.
-         * @param itemName the name of the item.
-         * @return the metadata xml (as a string).
-         */
-
-        public string GetFloatMetadataXML(string itemOID, string itemName)
-        {
-            throw new NotImplementedException();
-        }
-
-        /**
-         * Create string type metadata xml.
-         *
-         * @param itemOID  the OID of the item.
-         * @param itemName the name of the item.
-         * @return the metadata xml (as a string).
-         */
-
-        public string GetStringMetadataXML(string itemOID, string itemName)
-        {
-            throw new NotImplementedException();
-        }
-
-        /**
-         * Create metadata xml using the specified values (which can be altered if required).
-         *
-         * @param testId   the value for the TestID element.
-         * @param testName the value for the TestName element.
-         * @param dataType the value for the DataType element.
-         * @return the metadata xml (as a string).
-         */
-
-        private XElement CreateBaseMetadata(string testId, string testName, string dataType)
-        {
-            throw new NotImplementedException();
-        }
-
-        /**
-         * Add the simple elements for the metadat xml to the root element.
-         *
-         * @param root     the root element for the xml document.
-         * @param testId   the value for the TestID element.
-         * @param testName the value for the TestName element.
-         * @param dataType the value for the DataType element.
-         */
-
-        private void AddSimpleElements(XElement root, string testId, string testName, string dataType)
-        {
-            throw new NotImplementedException();
-        }
-
-        /**
-         * Convert an xml root element into a compact formatted xml string.
-         *
-         * @param rootElement the root element to convert.
-         * @return the compact formatted xml string.
-         */
-
-        private string ToString(XElement rootElement)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class I2B2StudyInfo
-    {
-        public I2B2StudyInfo()
-        {
-            MappliedPath = "@";
-        }
-
-        //TODO: Better names
-        public string Cbasecode { get; set; }
-        public string CcolumnDatatype { get; set; }
-        public string Ccolumnname { get; set; }
-        public string Ccomment { get; set; }
-        public string Cdimcode { get; set; }
-        public string CfactTableColumn { get; set; }
-        public string Cfullname { get; set; }
-        public int Chlevel { get; set; }
-        public string Cmetadataxml { get; set; }
-        public string Cname { get; set; }
-        public string Coperator { get; set; }
-        public string CsynonmCd { get; set; }
-        public string Ctablename { get; set; }
-        public string Ctooltip { get; set; }
-        public int CtotalNum { get; set; }
-        public string CvisualAttributes { get; set; }
-        public DateTime? DownloadDate { get; set; }//non nullable?
-        public DateTime? ImportDate { get; set; }//non nullable?
-        public string MappliedPath { get; set; }
-        public string SourceSystemCd { get; set; }
-        public DateTime? UpdateDate { get; set; }//non nullable?
-        public string Valuetype { get; set; }
-
-        public override string ToString()
-        {
-            return "I2B2StudyInfo [cbasecode=" + Cbasecode + ", cdimcode=" + Cdimcode + ", chlevel=" + Chlevel + ", cname=" + Cname + "]";
-        }
-    }
-
-    public class I2B2ClinicalDataInfo
-    {
-        public I2B2ClinicalDataInfo()
-        {
-            ProviderId = "@";
-            ModifierCd = "@";
-        }
-
-        //observation_fact
-        //TODO: Better names
-        public string ConceptCd { get; set; }
-        public decimal? ConfidenceNum { get; set; }//non nullable?//BigDecimal
-        public DateTime? DownloadDate { get; set; }//non nullable?
-        public int EncounterNum { get; set; }
-        public DateTime? EndDate { get; set; }//non nullable?
-        public DateTime? ImportDate { get; set; }//non nullable?
-        public int InstanceNum { get; set; }
-        public string LocationCd { get; set; }
-        public string ModifierCd { get; set; }
-        public decimal? NvalNum { get; set; }//non nullable?//BigDecimal
-        public string ObservationBlob { get; set; }
-        public string PatientNum { get; set; }
-        public string ProviderId { get; set; }
-        public decimal? QuantityNum { get; set; }//non nullable?//BigDecimal
-        public string SourcesystemCd { get; set; }
-        public DateTime? StartDate { get; set; }
-        public string TvalChar { get; set; }
-        public string UnitsCd { get; set; }
-        public DateTime? UpdateDate { get; set; }//non nullable?
-        public int UploadId { get; set; }
-        public string ValTypeCd { get; set; }
-        public string ValueFlagCd { get; set; }
-
-        public override string ToString()
-        {
-            return new StringBuilder("I2B2ClinicalDataInfo [")
-                .Append("patientNum=").Append(PatientNum)
-                .Append(", encounterNum=").Append(EncounterNum)
-                .Append(", instanceNum=").Append(InstanceNum)
-                .Append(", conceptCd=").Append(ConceptCd)
-                .Append(", modifierCd=").Append(ModifierCd)
-                .Append(", startDate=").Append(StartDate)
-                .Append(", endDate=").Append(EndDate)
-                .Append(", valueFlagCd=").Append(ValueFlagCd)
-                .Append(", valTypeCd=").Append(ValTypeCd)
-                .Append(", tvalChar=").Append(TvalChar)
-                .Append(", nvalNum=").Append(NvalNum)
-                .Append(", quantityNum=").Append(QuantityNum)
-                .Append(", unitsCd=").Append(UnitsCd)
-                .Append(", sourcesystemCd=").Append(SourcesystemCd)
-                .Append("]").ToString();
-        }
-    }
-
     /// <summary>
     /// An ODMXML importer for i2b2
     /// </summary>
@@ -582,7 +114,7 @@ namespace PCF.OdmXml.i2b2Importer
             {
                 foreach (var studyEventRef in version.Protocol.StudyEventRef)
                 {
-                    var studyEventDef = ODMUtil.GetStudyEvent(study, studyEventRef.StudyEventOID);
+                    var studyEventDef = Utilities.GetStudyEvent(study, studyEventRef.StudyEventOID);
 
                     SaveEvent(study, studyEventDef, studyPath, studyToolTip);
                 }
@@ -619,7 +151,7 @@ namespace PCF.OdmXml.i2b2Importer
 
             foreach (var formRef in studyEventDef.FormRef)
             {
-                var formDef = ODMUtil.GetForm(study, formRef.FormOID);
+                var formDef = Utilities.GetForm(study, formRef.FormOID);
 
                 SaveForm(study, studyEventDef, formDef, eventPath, eventToolTip);
             }
@@ -656,12 +188,12 @@ namespace PCF.OdmXml.i2b2Importer
 
             foreach (var itemGroupRef in formDef.ItemGroupRef)
             {
-                var itemGroupDef = ODMUtil.GetItemGroup(study, itemGroupRef.ItemGroupOID);
+                var itemGroupDef = Utilities.GetItemGroup(study, itemGroupRef.ItemGroupOID);
                 if (itemGroupDef.ItemRef != null)
                 {
                     foreach (var itemRef in itemGroupDef.ItemRef)
                     {
-                        var itemDef = ODMUtil.GetItem(study, itemRef.ItemOID);
+                        var itemDef = Utilities.GetItem(study, itemRef.ItemOID);
 
                         SaveItem(study, studyEventDef, formDef, itemDef, formPath, formToolTip);
                     }
@@ -706,7 +238,7 @@ namespace PCF.OdmXml.i2b2Importer
 
             if (itemDef.CodeListRef != null)
             {
-                var codeList = ODMUtil.GetCodeList(study, itemDef.CodeListRef.CodeListOID);
+                var codeList = Utilities.GetCodeList(study, itemDef.CodeListRef.CodeListOID);
                 if (codeList != null)
                 {
                     foreach (var codeListItem in codeList.Items.Where(_ => _ is ODMcomplexTypeDefinitionCodeListItem).Select(_ => _ as ODMcomplexTypeDefinitionCodeListItem).ToList())//getCodeListItem()
@@ -756,8 +288,8 @@ namespace PCF.OdmXml.i2b2Importer
                         metadataXml = mdx.GetStringMetadataXML(itemDef.OID, itemDef.Name);
                     else
                     {
-                        var codeList = ODMUtil.GetCodeList(study, itemDef.CodeListRef.CodeListOID);
-                        var codeListValues = ODMUtil.GetCodeListValues(codeList, "en");
+                        var codeList = Utilities.GetCodeList(study, itemDef.CodeListRef.CodeListOID);
+                        var codeListValues = Utilities.GetCodeListValues(codeList, "en");
                         metadataXml = mdx.GetEnumMetadataXML(itemDef.OID, itemDef.Name, codeListValues);
                     }
                     break;
@@ -789,7 +321,7 @@ namespace PCF.OdmXml.i2b2Importer
                                       string itemPath,
                                       string itemToolTip)
         {
-            var value = ODMUtil.GetTranslatedValue(codeListItem, "en");
+            var value = Utilities.GetTranslatedValue(codeListItem, "en");
             var codedValue = codeListItem.CodedValue;
             var codeListItemPath = itemPath + codedValue + "\\";
             var codeListItemToolTip = itemToolTip + "\\" + value;
@@ -909,7 +441,7 @@ namespace PCF.OdmXml.i2b2Importer
                 Debug.WriteLine("Save Clinical data for study OID " + clinicalData.StudyOID + " into i2b2...");
                 var timer = Stopwatch.StartNew();
 
-                var study = ODMUtil.GetStudy(odm, clinicalData.StudyOID);
+                var study = Utilities.GetStudy(odm, clinicalData.StudyOID);
                 if (study == null)
                 {
                     //log.error("ODM does not contain study metadata for study OID " + clinicalData.getStudyOID());
@@ -989,7 +521,7 @@ namespace PCF.OdmXml.i2b2Importer
                                   int encounterNum)
         {
             var itemValue = itemData.Value;
-            var item = ODMUtil.GetItem(study, itemData.ItemOID);
+            var item = Utilities.GetItem(study, itemData.ItemOID);
             var conceptCd = default(string);
 
             if (item.CodeListRef != null)
@@ -997,8 +529,8 @@ namespace PCF.OdmXml.i2b2Importer
                 clinicalDataInfo.ValTypeCd = "T";//TODO: Magic
                 clinicalDataInfo.NvalNum = null;
 
-                var codeList = ODMUtil.GetCodeList(study, item.CodeListRef.CodeListOID);
-                var codeListItem = ODMUtil.GetCodeListItem(codeList, itemValue);
+                var codeList = Utilities.GetCodeList(study, item.CodeListRef.CodeListOID);
+                var codeListItem = Utilities.GetCodeListItem(codeList, itemValue);
 
                 if (codeListItem == null)
                 {
@@ -1013,10 +545,10 @@ namespace PCF.OdmXml.i2b2Importer
                      */
                     conceptCd = GenerateConceptCode(study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, itemValue);
 
-                    clinicalDataInfo.TvalChar = ODMUtil.GetTranslatedValue(codeListItem, "en");
+                    clinicalDataInfo.TvalChar = Utilities.GetTranslatedValue(codeListItem, "en");
                 }
             }
-            else if (ODMUtil.IsNumeric(item.DataType))
+            else if (Utilities.IsNumeric(item.DataType))
             {
                 conceptCd = GenerateConceptCode(study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, null);
 
@@ -1064,13 +596,15 @@ namespace PCF.OdmXml.i2b2Importer
             }
         }
 
-        /**
-         * Create concept code with all OIDs and make the total length less than 50
-         * and unique
-         *
-         * @return the unique concept code.
-         */
-
+        /// <summary>
+        /// Create concept code with all OIDs and make the total length less than 50 and unique.
+        /// </summary>
+        /// <param name="studyOID"></param>
+        /// <param name="studyEventOID"></param>
+        /// <param name="formOID"></param>
+        /// <param name="itemOID"></param>
+        /// <param name="value"></param>
+        /// <returns>The unique concept code.</returns>
         private string GenerateConceptCode(string studyOID, string studyEventOID, string formOID, string itemOID, string value)
         {
             conceptBuffer.Length = 6;

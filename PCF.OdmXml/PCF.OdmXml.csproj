@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IOdmImporter.cs" />
     <Compile Include="odm1-3-2.xsd.cs">
       <DependentUpon>ODM1-3-2.xsd</DependentUpon>
     </Compile>

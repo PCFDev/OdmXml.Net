@@ -17,6 +17,6 @@ namespace PCF.OdmXml.i2b2Importer
         /// </summary>
         /// <param name="odm">Fully populated ODMXML model</param>
         /// <returns></returns>
-        Task ImportAsync(ODM odm);
+        Task ImportAsync(ODM odm, IDictionary<string, string> settings);
     }
 }

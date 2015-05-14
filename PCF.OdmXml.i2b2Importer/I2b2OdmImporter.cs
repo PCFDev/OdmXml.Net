@@ -5,7 +5,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using PCF.OdmXml.i2b2Importer.DTO;
 using PCF.OdmXml.i2b2Importer.Helpers;
 using PCF.OdmXml.i2b2Importer.Interfaces;
@@ -18,6 +17,17 @@ namespace PCF.OdmXml.i2b2Importer
     /// </summary>
     public class I2b2OdmImporter : IOdmImporter
     {
+        private IClinicalDataDao ClinicalDataDao = null;
+        private I2B2ClinicalDataInfo ClinicalDataInfo = new I2B2ClinicalDataInfo();
+        private StringBuilder ConceptBuffer = new StringBuilder("STUDY|");//Why not local instance?
+        private DateTime CurrentDate;//Why not local instance?
+        //private static Logger log = LoggerFactory.getLogger(I2B2ODMStudyHandler.class);
+        private HashAlgorithm MessageDigest = null;//Why not local instance?
+        private MetaDataXML MetaDataXML = new MetaDataXML();//Why not local instance?
+        private ODM ODM = null;
+        private IStudyDao StudyDao = null;
+        private I2B2StudyInfo StudyInfo = new I2B2StudyInfo();
+
         /// <summary>
         /// Takes a populated ODM model and inserts the data into an i2b2 database
         /// </summary>
@@ -30,24 +40,7 @@ namespace PCF.OdmXml.i2b2Importer
             throw new NotImplementedException();
         }
 
-        /**
-         * The log for this class.
-         */
-        //private static final Logger log = LoggerFactory.getLogger(I2B2ODMStudyHandler.class);
-
-        // initialize ODM object
-        private ODM ODM = null;
-
-        private I2B2StudyInfo StudyInfo = new I2B2StudyInfo();
-        private I2B2ClinicalDataInfo ClinicalDataInfo = new I2B2ClinicalDataInfo();
-
-        private IStudyDao StudyDao = null;//TODO: Entity framework
-        private IClinicalDataDao ClinicalDataDao = null;//TODO: Entity framework
-
-        private DateTime CurrentDate;// = null;
-        private HashAlgorithm MessageDigest = null;
-        private StringBuilder ConceptBuffer = new StringBuilder("STUDY|");
-        private MetaDataXML MetaDataXML = new MetaDataXML();
+        #region Constructors
 
         /// <summary>
         /// Constructor to set ODM object
@@ -67,51 +60,308 @@ namespace PCF.OdmXml.i2b2Importer
             MessageDigest = MD5.Create();
         }
 
+        #endregion Constructors
+
+        #region Public Methods
+
         /// <summary>
-        /// Set up i2b2 metadata level 1 (Study) info into STUDY
+        /// method to parse ODM and save data into i2b2
+        /// </summary>
+        public void ProcessODM()
+        {
+            //log.info("Start to parse ODM xml and save to i2b2");
+            Debug.WriteLine("Start to parse ODM xml and save to i2b2");
+
+            // build the call
+            ProcessODMStudy();
+            ProcessODMClinicalData();
+        }
+
+        /// <summary>
+        /// This method takes ODM XML io.File obj as input and parsed by JAXB API and
+        /// then traversal through ODM tree object and save clinical data into i2b2
+        /// demo database ini2b2 data format. Keep method public in case of only want
+        /// to parse demodata.
+        /// </summary>
+        public void ProcessODMClinicalData()
+        {
+            //log.info("Parse and save ODM clinical data into i2b2...");
+            Debug.WriteLine("Parse and save ODM clinical data into i2b2...");
+
+            // traverse through the clinical data to:
+            // 1) Lookup the concept path from odm study metadata.
+            // 2) Set patient and clinical information into observation fact.
+            if (ODM.ClinicalData == null || ODM.ClinicalData.Count == 0)
+            {
+                //log.info("ODM does not contain clinical data");
+                Debug.WriteLine("ODM does not contain clinical data");
+                return;
+            }
+
+            foreach (var study in ODM.Study)
+            {
+                ClinicalDataDao.CleanupClinicalData(study.OID, ODM.SourceSystem);
+            }
+
+            foreach (var clinicalData in ODM.ClinicalData)
+            {
+                if (clinicalData.SubjectData == null)
+                    continue;
+
+                //log.info("Save Clinical data for study OID " + clinicalData.getStudyOID() + " into i2b2...");
+                Debug.WriteLine("Save Clinical data for study OID " + clinicalData.StudyOID + " into i2b2...");
+                var timer = Stopwatch.StartNew();
+
+                var study = Utilities.GetStudy(ODM, clinicalData.StudyOID);
+                if (study == null)
+                {
+                    //log.error("ODM does not contain study metadata for study OID " + clinicalData.getStudyOID());
+                    Debug.WriteLine("ODM does not contain study metadata for study OID " + clinicalData.StudyOID);
+
+                    continue;
+                }
+
+                /*
+                 * Generate a unique encounter number per subject per study to ensure that
+                 * observation fact primary key is not violated.
+                 */
+                var encounterNum = 0;
+                //5 nested loops, gross.
+                foreach (var subjectData in clinicalData.SubjectData)
+                {
+                    if (subjectData.StudyEventData == null)
+                        continue;
+
+                    encounterNum++;
+
+                    foreach (var studyEventData in subjectData.StudyEventData)
+                    {
+                        if (studyEventData.FormData == null)
+                            continue;
+
+                        foreach (var formData in studyEventData.FormData)
+                        {
+                            if (formData.ItemGroupData == null)
+                                continue;
+
+                            foreach (var itemGroupData in formData.ItemGroupData)
+                            {
+                                if (itemGroupData.Items == null)
+                                    continue;
+
+                                foreach (var itemData in itemGroupData.Items.Where(_ => _ is ODMcomplexTypeDefinitionItemData).Select(_ => _ as ODMcomplexTypeDefinitionItemData).ToList())//getItemDataGroup()
+                                {
+                                    if (itemData.Value != null)
+                                        SaveItemData(study, subjectData, studyEventData, formData, itemData, encounterNum);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                /*
+                 * Flush any remaining batched up observations;
+                 */
+                ClinicalDataDao.ExecuteBatch();
+
+                timer.Stop();
+                //log.info("Completed Clinical data to i2b2 for study OID " + clinicalData.getStudyOID() + " in " + (endTime - startTime) + " ms");
+                Debug.WriteLine("Completed Clinical data to i2b2 for study OID " + clinicalData.StudyOID + " in " + timer.ElapsedMilliseconds + " ms");
+            }
+        }
+
+        /// <summary>
+        /// This method takes ODM XML io.File obj as input and parsed by JAXB API and
+        /// then traverses through ODM tree object and save data into i2b2 metadata
+        /// database in i2b2 data format.
+        /// </summary>
+        public void ProcessODMStudy()
+        {
+            /*
+             * Need to traverse through the study definition to: 1) Lookup all
+             * definition values in tree nodes. 2) Set node values into i2b2 bean
+             * info and ready for populating into i2b2 database.
+             */
+            foreach (var study in ODM.Study)
+            {
+                //log.info("Processing study metadata for study " + study.getGlobalVariables().getStudyName().getValue() + "(OID " + study.OID + ")");
+                Debug.WriteLine("Processing study metadata for study " + study.GlobalVariables.StudyName.Value + "(OID " + study.OID + ")");
+                //log.info("Deleting old study metadata and data");
+                Debug.WriteLine("Deleting old study metadata and data");
+
+                StudyDao.PreSetupI2B2Study(study.OID, ODM.SourceSystem);
+
+                //log.info("Inserting study metadata into i2b2");
+                Debug.WriteLine("Inserting study metadata into i2b2");
+                var timer = Stopwatch.StartNew();
+
+                SaveStudy(study);
+
+                timer.Stop();
+                //log.info("Completed loading study metadata into i2b2 in " + (endTime - startTime) + " ms");
+                Debug.WriteLine("Completed loading study metadata into i2b2 in " + timer.ElapsedMilliseconds + " ms");
+            }
+
+            /*
+             * Flush any remaining batched up records.
+             */
+            StudyDao.ExecuteBatch();
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private string CreateMetadataXml(ODMcomplexTypeDefinitionStudy study, ODMcomplexTypeDefinitionItemDef itemDef)
+        {
+            var metadataXml = default(string);
+
+            switch (itemDef.DataType)
+            {
+                case DataType.integer:
+                    metadataXml = MetaDataXML.GetIntegerMetadataXML(itemDef.OID, itemDef.Name);
+                    break;
+                case DataType.@float:
+                case DataType.@double:
+                    metadataXml = MetaDataXML.GetFloatMetadataXML(itemDef.OID, itemDef.Name);
+                    break;
+                case DataType.text:
+                case DataType.@string:
+                    if (itemDef.CodeListRef == null)
+                        metadataXml = MetaDataXML.GetStringMetadataXML(itemDef.OID, itemDef.Name);
+                    else
+                    {
+                        var codeList = Utilities.GetCodeList(study, itemDef.CodeListRef.CodeListOID);
+                        var codeListValues = Utilities.GetCodeListValues(codeList, "en");
+                        metadataXml = MetaDataXML.GetEnumMetadataXML(itemDef.OID, itemDef.Name, codeListValues);
+                    }
+                    break;
+                case DataType.boolean:
+                    break;
+                case DataType.date:
+                case DataType.time:
+                case DataType.datetime:
+                    metadataXml = MetaDataXML.GetStringMetadataXML(itemDef.OID, itemDef.Name);
+                    break;
+                default:
+                    break;
+            }
+
+            return metadataXml;
+        }
+
+        /// <summary>
+        /// Create concept code with all OIDs and make the total length less than 50 and unique.
+        /// </summary>
+        /// <param name="studyOID"></param>
+        /// <param name="studyEventOID"></param>
+        /// <param name="formOID"></param>
+        /// <param name="itemOID"></param>
+        /// <param name="value"></param>
+        /// <returns>The unique concept code.</returns>
+        private string GenerateConceptCode(string studyOID, string studyEventOID, string formOID, string itemOID, string value)
+        {
+            ConceptBuffer.Length = 6;
+            ConceptBuffer.Append(studyOID).Append("|");
+
+            //I don't think we want quite use StringBuilder here becuase the pipes are byte cast chars, not Unicode literals. md5("\x00\x7C") vs md5("\x7C")
+            var message = new ByteArrayBulder()
+                .Append(Encoding.UTF8.GetBytes(ODM.SourceSystem))
+                .Append((byte)'|')
+                .Append(Encoding.UTF8.GetBytes(studyEventOID))
+                .Append((byte)'|')
+                .Append(Encoding.UTF8.GetBytes(formOID))
+                .Append((byte)'|')
+                .Append(Encoding.UTF8.GetBytes(itemOID));
+
+            if (value != null)
+                message.Append((byte)'|').Append(Encoding.UTF8.GetBytes(value));
+
+            var digest = MessageDigest.ComputeHash(message.GetBytes());
+            foreach (var digestByte in digest)
+            {
+                //Case sensitive?
+                ConceptBuffer.Append(digestByte.ToString("x2"));//& 0xFF returns exactly the same byte, not sure why they did that.
+            }
+
+            var conceptCode = ConceptBuffer.ToString();
+            //if (log.isDebugEnabled()) {
+            //    log.debug(new StringBuffer("Concept code ").append(conceptCode)
+            //            .append(" generated for studyOID=").append(studyOID)
+            //            .append(", studyEventOID=").append(studyEventOID)
+            //            .append(", formOID=").append(formOID)
+            //            .append(", itemOID=").append(itemOID)
+            //            .append(", value=").append(value).toString());
+            //}
+            Debug.WriteLine(new StringBuilder("Concept code ")
+                .Append(conceptCode)
+                .Append(" generated for studyOID=").Append(studyOID)
+                .Append(", studyEventOID=").Append(studyEventOID)
+                .Append(", formOID=").Append(formOID)
+                .Append(", itemOID=").Append(itemOID)
+                .Append(", value=").Append(value).ToString());
+
+            return conceptCode;
+        }
+
+        private string GetTranslatedDescription(ODMcomplexTypeDefinitionDescription description, string lang, string defaultValue)
+        {
+            if (description != null)
+            {
+                foreach (var translatedText in description.TranslatedText)
+                {
+                    if (translatedText.lang.Equals(lang))
+                        return translatedText.Value;
+                }
+            }
+
+            return defaultValue;
+        }
+
+        private void LogStudyInfo()
+        {
+            //if (log.isDebugEnabled()) {
+            //    log.debug("Inserting study metadata record: " + studyInfo);
+            //}
+            Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
+        }
+
+        /// <summary>
+        /// Set up i2b2 metadata level 5 (TranslatedText) info into STUDY
         /// </summary>
         /// <param name="study"></param>
-        private void SaveStudy(ODMcomplexTypeDefinitionStudy study)
+        /// <param name="studyEventDef"></param>
+        /// <param name="formDef"></param>
+        /// <param name="itemDef"></param>
+        /// <param name="codeListItem"></param>
+        /// <param name="itemPath"></param>
+        /// <param name="itemToolTip"></param>
+        private void SaveCodeListItem(ODMcomplexTypeDefinitionStudy study,
+                                      ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
+                                      ODMcomplexTypeDefinitionFormDef formDef,
+                                      ODMcomplexTypeDefinitionItemDef itemDef,
+                                      ODMcomplexTypeDefinitionCodeListItem codeListItem,
+                                      string itemPath,
+                                      string itemToolTip)
         {
-            // Need to include source system in path to avoid conflicts between servers
-            var studyKey = ODM.SourceSystem + ":" + study.OID;
-            var studyPath = "\\STUDY\\" + studyKey + "\\";
-            var studyToolTip = "STUDY\\" + studyKey;
+            var value = Utilities.GetTranslatedValue(codeListItem, "en");
+            var codedValue = codeListItem.CodedValue;
+            var codeListItemPath = itemPath + codedValue + "\\";
+            var codeListItemToolTip = itemToolTip + "\\" + value;
 
-            // set c_hlevel 1 data (Study)
-            StudyInfo.Chlevel = Constants.C_HLEVEL_1;
-            StudyInfo.Cfullname = studyPath;
-            StudyInfo.Cname = study.GlobalVariables.StudyName.Value;
-            StudyInfo.CsynonmCd = Constants.C_SYNONYM_CD;
-            StudyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_FOLDER;
-            StudyInfo.CfactTableColumn = Constants.C_FACTTABLECOLUMN;
-            StudyInfo.Ctablename = Constants.C_TABLENAME;
-            StudyInfo.Ccolumnname = Constants.C_COLUMNNAME;
-            StudyInfo.CcolumnDatatype = Constants.C_COLUMNDATATYPE;
-            StudyInfo.Coperator = Constants.C_OPERATOR;
-            StudyInfo.SourceSystemCd = ODM.SourceSystem;
-            StudyInfo.UpdateDate = CurrentDate;
-            StudyInfo.DownloadDate = CurrentDate;
-            StudyInfo.ImportDate = CurrentDate;
-            StudyInfo.Cdimcode = studyPath;
-            StudyInfo.Ctooltip = studyToolTip;
+            // set c_hlevel 5 data (TranslatedText)
+            StudyInfo.Chlevel = Constants.C_HLEVEL_5;
+            StudyInfo.Cfullname = codeListItemPath;
+            StudyInfo.Cname = GetTranslatedDescription(itemDef.Description, "en", itemDef.Name) + ": " + value;
+            StudyInfo.Cbasecode = GenerateConceptCode(study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, codedValue);
+            StudyInfo.Cdimcode = codeListItemPath;
+            StudyInfo.Ctooltip = codeListItemToolTip;
+            StudyInfo.Cmetadataxml = null;
+            StudyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_LEAF;
 
             LogStudyInfo();
 
-            // insert level 1 data
             StudyDao.InsertMetadata(StudyInfo);
-
-            // save child events
-            var version = study.MetaDataVersion.First();//FirstOrDefault()?
-            if (version.Protocol.StudyEventRef != null)
-            {
-                foreach (var studyEventRef in version.Protocol.StudyEventRef)
-                {
-                    var studyEventDef = Utilities.GetStudyEvent(study, studyEventRef.StudyEventOID);
-
-                    SaveEvent(study, studyEventDef, studyPath, studyToolTip);
-                }
-            }
         }
 
         /// <summary>
@@ -247,248 +497,6 @@ namespace PCF.OdmXml.i2b2Importer
             }
         }
 
-        private string GetTranslatedDescription(ODMcomplexTypeDefinitionDescription description, string lang, string defaultValue)
-        {
-            if (description != null)
-            {
-                foreach (var translatedText in description.TranslatedText)
-                {
-                    if (translatedText.lang.Equals(lang))
-                        return translatedText.Value;
-                }
-            }
-
-            return defaultValue;
-        }
-
-        private string CreateMetadataXml(ODMcomplexTypeDefinitionStudy study, ODMcomplexTypeDefinitionItemDef itemDef)
-        {
-            var metadataXml = default(string);
-
-            switch (itemDef.DataType)
-            {
-                case DataType.integer:
-                    metadataXml = MetaDataXML.GetIntegerMetadataXML(itemDef.OID, itemDef.Name);
-                    break;
-                case DataType.@float:
-                case DataType.@double:
-                    metadataXml = MetaDataXML.GetFloatMetadataXML(itemDef.OID, itemDef.Name);
-                    break;
-                case DataType.text:
-                case DataType.@string:
-                    if (itemDef.CodeListRef == null)
-                        metadataXml = MetaDataXML.GetStringMetadataXML(itemDef.OID, itemDef.Name);
-                    else
-                    {
-                        var codeList = Utilities.GetCodeList(study, itemDef.CodeListRef.CodeListOID);
-                        var codeListValues = Utilities.GetCodeListValues(codeList, "en");
-                        metadataXml = MetaDataXML.GetEnumMetadataXML(itemDef.OID, itemDef.Name, codeListValues);
-                    }
-                    break;
-                case DataType.boolean:
-                    break;
-                case DataType.date:
-                case DataType.time:
-                case DataType.datetime:
-                    metadataXml = MetaDataXML.GetStringMetadataXML(itemDef.OID, itemDef.Name);
-                    break;
-                default:
-                    break;
-            }
-
-            return metadataXml;
-        }
-
-        /// <summary>
-        /// Set up i2b2 metadata level 5 (TranslatedText) info into STUDY
-        /// </summary>
-        /// <param name="study"></param>
-        /// <param name="studyEventDef"></param>
-        /// <param name="formDef"></param>
-        /// <param name="itemDef"></param>
-        /// <param name="codeListItem"></param>
-        /// <param name="itemPath"></param>
-        /// <param name="itemToolTip"></param>
-        private void SaveCodeListItem(ODMcomplexTypeDefinitionStudy study,
-                                      ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
-                                      ODMcomplexTypeDefinitionFormDef formDef,
-                                      ODMcomplexTypeDefinitionItemDef itemDef,
-                                      ODMcomplexTypeDefinitionCodeListItem codeListItem,
-                                      string itemPath,
-                                      string itemToolTip)
-        {
-            var value = Utilities.GetTranslatedValue(codeListItem, "en");
-            var codedValue = codeListItem.CodedValue;
-            var codeListItemPath = itemPath + codedValue + "\\";
-            var codeListItemToolTip = itemToolTip + "\\" + value;
-
-            // set c_hlevel 5 data (TranslatedText)
-            StudyInfo.Chlevel = Constants.C_HLEVEL_5;
-            StudyInfo.Cfullname = codeListItemPath;
-            StudyInfo.Cname = GetTranslatedDescription(itemDef.Description, "en", itemDef.Name) + ": " + value;
-            StudyInfo.Cbasecode = GenerateConceptCode(study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, codedValue);
-            StudyInfo.Cdimcode = codeListItemPath;
-            StudyInfo.Ctooltip = codeListItemToolTip;
-            StudyInfo.Cmetadataxml = null;
-            StudyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_LEAF;
-
-            LogStudyInfo();
-
-            StudyDao.InsertMetadata(StudyInfo);
-        }
-
-        /// <summary>
-        /// method to parse ODM and save data into i2b2
-        /// </summary>
-        public void ProcessODM()
-        {
-            //log.info("Start to parse ODM xml and save to i2b2");
-            Debug.WriteLine("Start to parse ODM xml and save to i2b2");
-
-            // build the call
-            ProcessODMStudy();
-            ProcessODMClinicalData();
-        }
-
-        /// <summary>
-        /// This method takes ODM XML io.File obj as input and parsed by JAXB API and
-        /// then traverses through ODM tree object and save data into i2b2 metadata
-        /// database in i2b2 data format.
-        /// </summary>
-        public void ProcessODMStudy()
-        {
-            /*
-             * Need to traverse through the study definition to: 1) Lookup all
-             * definition values in tree nodes. 2) Set node values into i2b2 bean
-             * info and ready for populating into i2b2 database.
-             */
-            foreach (var study in ODM.Study)
-            {
-                //log.info("Processing study metadata for study " + study.getGlobalVariables().getStudyName().getValue() + "(OID " + study.OID + ")");
-                Debug.WriteLine("Processing study metadata for study " + study.GlobalVariables.StudyName.Value + "(OID " + study.OID + ")");
-                //log.info("Deleting old study metadata and data");
-                Debug.WriteLine("Deleting old study metadata and data");
-
-                StudyDao.PreSetupI2B2Study(study.OID, ODM.SourceSystem);
-
-                //log.info("Inserting study metadata into i2b2");
-                Debug.WriteLine("Inserting study metadata into i2b2");
-                var timer = Stopwatch.StartNew();
-
-                SaveStudy(study);
-
-                timer.Stop();
-                //log.info("Completed loading study metadata into i2b2 in " + (endTime - startTime) + " ms");
-                Debug.WriteLine("Completed loading study metadata into i2b2 in " + timer.ElapsedMilliseconds + " ms");
-            }
-
-            /*
-             * Flush any remaining batched up records.
-             */
-            StudyDao.ExecuteBatch();
-        }
-
-        /// <summary>
-        /// This method takes ODM XML io.File obj as input and parsed by JAXB API and
-        /// then traversal through ODM tree object and save clinical data into i2b2
-        /// demo database ini2b2 data format. Keep method public in case of only want
-        /// to parse demodata.
-        /// </summary>
-        public void ProcessODMClinicalData()
-        {
-            //log.info("Parse and save ODM clinical data into i2b2...");
-            Debug.WriteLine("Parse and save ODM clinical data into i2b2...");
-
-            // traverse through the clinical data to:
-            // 1) Lookup the concept path from odm study metadata.
-            // 2) Set patient and clinical information into observation fact.
-            if (ODM.ClinicalData == null || ODM.ClinicalData.Count == 0)
-            {
-                //log.info("ODM does not contain clinical data");
-                Debug.WriteLine("ODM does not contain clinical data");
-                return;
-            }
-
-            foreach (var study in ODM.Study)
-            {
-                ClinicalDataDao.CleanupClinicalData(study.OID, ODM.SourceSystem);
-            }
-
-            foreach (var clinicalData in ODM.ClinicalData)
-            {
-                if (clinicalData.SubjectData == null)
-                    continue;
-
-                //log.info("Save Clinical data for study OID " + clinicalData.getStudyOID() + " into i2b2...");
-                Debug.WriteLine("Save Clinical data for study OID " + clinicalData.StudyOID + " into i2b2...");
-                var timer = Stopwatch.StartNew();
-
-                var study = Utilities.GetStudy(ODM, clinicalData.StudyOID);
-                if (study == null)
-                {
-                    //log.error("ODM does not contain study metadata for study OID " + clinicalData.getStudyOID());
-                    Debug.WriteLine("ODM does not contain study metadata for study OID " + clinicalData.StudyOID);
-
-                    continue;
-                }
-
-                /*
-                 * Generate a unique encounter number per subject per study to ensure that
-                 * observation fact primary key is not violated.
-                 */
-                var encounterNum = 0;
-                //5 nested loops, gross.
-                foreach (var subjectData in clinicalData.SubjectData)
-                {
-                    if (subjectData.StudyEventData == null)
-                        continue;
-
-                    encounterNum++;
-
-                    foreach (var studyEventData in subjectData.StudyEventData)
-                    {
-                        if (studyEventData.FormData == null)
-                            continue;
-
-                        foreach (var formData in studyEventData.FormData)
-                        {
-                            if (formData.ItemGroupData == null)
-                                continue;
-
-                            foreach (var itemGroupData in formData.ItemGroupData)
-                            {
-                                if (itemGroupData.Items == null)
-                                    continue;
-
-                                foreach (var itemData in itemGroupData.Items.Where(_ => _ is ODMcomplexTypeDefinitionItemData).Select(_ => _ as ODMcomplexTypeDefinitionItemData).ToList())//getItemDataGroup()
-                                {
-                                    if (itemData.Value != null)
-                                        SaveItemData(study, subjectData, studyEventData, formData, itemData, encounterNum);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                /*
-                 * Flush any remaining batched up observations;
-                 */
-                ClinicalDataDao.ExecuteBatch();
-
-                timer.Stop();
-                //log.info("Completed Clinical data to i2b2 for study OID " + clinicalData.getStudyOID() + " in " + (endTime - startTime) + " ms");
-                Debug.WriteLine("Completed Clinical data to i2b2 for study OID " + clinicalData.StudyOID + " in " + timer.ElapsedMilliseconds + " ms");
-            }
-        }
-
-        private void LogStudyInfo()
-        {
-            //if (log.isDebugEnabled()) {
-            //    log.debug("Inserting study metadata record: " + studyInfo);
-            //}
-            Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
-        }
-
         private void SaveItemData(ODMcomplexTypeDefinitionStudy study,
                                   ODMcomplexTypeDefinitionSubjectData subjectData,
                                   ODMcomplexTypeDefinitionStudyEventData studyEventData,
@@ -573,57 +581,52 @@ namespace PCF.OdmXml.i2b2Importer
         }
 
         /// <summary>
-        /// Create concept code with all OIDs and make the total length less than 50 and unique.
+        /// Set up i2b2 metadata level 1 (Study) info into STUDY
         /// </summary>
-        /// <param name="studyOID"></param>
-        /// <param name="studyEventOID"></param>
-        /// <param name="formOID"></param>
-        /// <param name="itemOID"></param>
-        /// <param name="value"></param>
-        /// <returns>The unique concept code.</returns>
-        private string GenerateConceptCode(string studyOID, string studyEventOID, string formOID, string itemOID, string value)
+        /// <param name="study"></param>
+        private void SaveStudy(ODMcomplexTypeDefinitionStudy study)
         {
-            ConceptBuffer.Length = 6;
-            ConceptBuffer.Append(studyOID).Append("|");
+            // Need to include source system in path to avoid conflicts between servers
+            var studyKey = ODM.SourceSystem + ":" + study.OID;
+            var studyPath = "\\STUDY\\" + studyKey + "\\";
+            var studyToolTip = "STUDY\\" + studyKey;
 
-            //I don't think we want quite use StringBuilder here becuase the pipes are byte cast chars, not Unicode literals. md5("\x00\x7C") vs md5("\x7C")
-            var message = new ByteArrayBulder()
-                .Append(Encoding.UTF8.GetBytes(ODM.SourceSystem))
-                .Append((byte)'|')
-                .Append(Encoding.UTF8.GetBytes(studyEventOID))
-                .Append((byte)'|')
-                .Append(Encoding.UTF8.GetBytes(formOID))
-                .Append((byte)'|')
-                .Append(Encoding.UTF8.GetBytes(itemOID));
+            // set c_hlevel 1 data (Study)
+            StudyInfo.Chlevel = Constants.C_HLEVEL_1;
+            StudyInfo.Cfullname = studyPath;
+            StudyInfo.Cname = study.GlobalVariables.StudyName.Value;
+            StudyInfo.CsynonmCd = Constants.C_SYNONYM_CD;
+            StudyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_FOLDER;
+            StudyInfo.CfactTableColumn = Constants.C_FACTTABLECOLUMN;
+            StudyInfo.Ctablename = Constants.C_TABLENAME;
+            StudyInfo.Ccolumnname = Constants.C_COLUMNNAME;
+            StudyInfo.CcolumnDatatype = Constants.C_COLUMNDATATYPE;
+            StudyInfo.Coperator = Constants.C_OPERATOR;
+            StudyInfo.SourceSystemCd = ODM.SourceSystem;
+            StudyInfo.UpdateDate = CurrentDate;
+            StudyInfo.DownloadDate = CurrentDate;
+            StudyInfo.ImportDate = CurrentDate;
+            StudyInfo.Cdimcode = studyPath;
+            StudyInfo.Ctooltip = studyToolTip;
 
-            if (value != null)
-                message.Append((byte)'|').Append(Encoding.UTF8.GetBytes(value));
+            LogStudyInfo();
 
-            var digest = MessageDigest.ComputeHash(message.GetBytes());
-            foreach (var digestByte in digest)
+            // insert level 1 data
+            StudyDao.InsertMetadata(StudyInfo);
+
+            // save child events
+            var version = study.MetaDataVersion.First();//FirstOrDefault()?
+            if (version.Protocol.StudyEventRef != null)
             {
-                //Case sensitive?
-                ConceptBuffer.Append(digestByte.ToString("x2"));//& 0xFF returns exactly the same byte, not sure why they did that.
+                foreach (var studyEventRef in version.Protocol.StudyEventRef)
+                {
+                    var studyEventDef = Utilities.GetStudyEvent(study, studyEventRef.StudyEventOID);
+
+                    SaveEvent(study, studyEventDef, studyPath, studyToolTip);
+                }
             }
-
-            var conceptCode = ConceptBuffer.ToString();
-            //if (log.isDebugEnabled()) {
-            //    log.debug(new StringBuffer("Concept code ").append(conceptCode)
-            //            .append(" generated for studyOID=").append(studyOID)
-            //            .append(", studyEventOID=").append(studyEventOID)
-            //            .append(", formOID=").append(formOID)
-            //            .append(", itemOID=").append(itemOID)
-            //            .append(", value=").append(value).toString());
-            //}
-            Debug.WriteLine(new StringBuilder("Concept code ")
-                .Append(conceptCode)
-                .Append(" generated for studyOID=").Append(studyOID)
-                .Append(", studyEventOID=").Append(studyEventOID)
-                .Append(", formOID=").Append(formOID)
-                .Append(", itemOID=").Append(itemOID)
-                .Append(", value=").Append(value).ToString());
-
-            return conceptCode;
         }
+
+        #endregion Private Methods
     }
 }

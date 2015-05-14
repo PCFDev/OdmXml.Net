@@ -26,12 +26,11 @@ namespace PCF.OdmXml.i2b2Importer
         public string GetEnumMetadataXML(string itemOID, string itemName, string[] enumValues)
         {
             var root = CreateBaseMetadata(itemOID, itemName, "Enum");
-
             var enumValuesElement = root.Element(ENUM_VALUES_ELEMENT_NAME);
-            foreach (string enumValue in enumValues) {
+            foreach (string enumValue in enumValues)
+            {
                 enumValuesElement.Add(new XElement("Val", enumValue));
             }
-
             return ToString(root);
         }
 
@@ -82,25 +81,27 @@ namespace PCF.OdmXml.i2b2Importer
             AddSimpleElements(root, testId, testName, dataType);
 
             // Add CommentsDeterminingExclusion element with sub element.
-            root.Add(new XElement("CommentsDeterminingExclusion", new XElement("Com")));
+            root.Add(new XElement(
+                "CommentsDeterminingExclusion",
+                new XElement("Com")));
 
             // Add UnitValues element with sub elements.
-            var unitValue = new XElement("UnitValues");
-            unitValue.Add(new XElement("NormalUnits", NOT_AVAILABLE_VALUE));
-            unitValue.Add(new XElement("EqualUnits", NOT_AVAILABLE_VALUE));
-            unitValue.Add(new XElement("ExcludingUnits"));
-            var convertUnit = new XElement("ConvertingUnits");
-            convertUnit.Add(new XElement("Units"));
-            convertUnit.Add(new XElement("MultiplyingFactor"));
-            unitValue.Add(convertUnit);
-            root.Add(unitValue);
+            root.Add(new XElement(
+                "UnitValues",
+                new XElement("NormalUnits", NOT_AVAILABLE_VALUE),
+                new XElement("EqualUnits", NOT_AVAILABLE_VALUE),
+                new XElement("ExcludingUnits"),
+                new XElement(
+                    "ConvertingUnits",
+                    new XElement("Units"),
+                    new XElement("MultiplyingFactor"))));
 
             // Add Analysis element with sub elements.
-            var analysis = new XElement("Analysis");
-            analysis.Add(new XElement("Enums"));
-            analysis.Add(new XElement("Counts"));
-            analysis.Add(new XElement("New"));
-            root.Add(analysis);
+            root.Add(new XElement(
+                "Analysis",
+                new XElement("Enums"),
+                new XElement("Counts"),
+                new XElement("New")));
 
             return root;
         }
@@ -117,23 +118,23 @@ namespace PCF.OdmXml.i2b2Importer
             var creationDateTime = DateTime.UtcNow.ToString(Constants.DATETIME_FORMAT);
 
             // Creating children for the root element.
-            root.Add(new XElement("Version", "3.02"));
-            root.Add(new XElement("CreationDateTime", creationDateTime));
-            root.Add(new XElement("TestID", testId));
-            root.Add(new XElement("TestName", testName));
-            root.Add(new XElement("DataType", dataType));
-            root.Add(new XElement("CodeType", "GRP"));
-            root.Add(new XElement("Loinc", "1"));
-            root.Add(new XElement("Flagstouse"));
-            root.Add(new XElement("Oktousevalues", "N"));
-            root.Add(new XElement("MaxStringLength"));
-            root.Add(new XElement("LowofLowValue"));
-            root.Add(new XElement("HighofLowValue"));
-            root.Add(new XElement("LowofHighValue"));
-            root.Add(new XElement("HighofHighValue"));
-            root.Add(new XElement("LowofToxicValue"));
-            root.Add(new XElement("HighofToxicValue"));
-            root.Add(new XElement(ENUM_VALUES_ELEMENT_NAME));
+            root.Add(new XElement("Version", "3.02"),
+                     new XElement("CreationDateTime", creationDateTime),
+                     new XElement("TestID", testId),
+                     new XElement("TestName", testName),
+                     new XElement("DataType", dataType),
+                     new XElement("CodeType", "GRP"),
+                     new XElement("Loinc", "1"),
+                     new XElement("Flagstouse"),
+                     new XElement("Oktousevalues", "N"),
+                     new XElement("MaxStringLength"),
+                     new XElement("LowofLowValue"),
+                     new XElement("HighofLowValue"),
+                     new XElement("LowofHighValue"),
+                     new XElement("HighofHighValue"),
+                     new XElement("LowofToxicValue"),
+                     new XElement("HighofToxicValue"),
+                     new XElement(ENUM_VALUES_ELEMENT_NAME));
         }
 
         /// <summary>

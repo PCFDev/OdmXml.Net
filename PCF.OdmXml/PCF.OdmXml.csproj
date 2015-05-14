@@ -46,6 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="ODM1-3-2-foundation.xsd">
       <SubType>Designer</SubType>
     </None>

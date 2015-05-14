@@ -49,14 +49,10 @@ namespace PCF.OdmXml.i2b2Importer
         private StringBuilder conceptBuffer = new StringBuilder("STUDY|");
         private MetaDataXML mdx = new MetaDataXML();
 
-        /**
-         * Constructor to set ODM object
-         *
-         * @param odm the entire ODM tree.
-         * @throws SQLException
-         * @throws NoSuchAlgorithmException
-         */
-
+        /// <summary>
+        /// Constructor to set ODM object
+        /// </summary>
+        /// <param name="odm">The entire ODM tree.</param>
         public I2b2OdmImporter(ODM odm)
         {
             this.odm = odm;
@@ -71,19 +67,16 @@ namespace PCF.OdmXml.i2b2Importer
             messageDigest = MD5.Create();
         }
 
-        /**
-         * set up i2b2 metadata level 1 (Study) info into STUDY
-         *
-         * @throws SQLException
-         * @throws JAXBException
-         */
-
+        /// <summary>
+        /// Set up i2b2 metadata level 1 (Study) info into STUDY
+        /// </summary>
+        /// <param name="study"></param>
         private void SaveStudy(ODMcomplexTypeDefinitionStudy study)
         {
             // Need to include source system in path to avoid conflicts between servers
             var studyKey = odm.SourceSystem + ":" + study.OID;
-            var studyPath = "\\" + "STUDY" + "\\" + studyKey + "\\";
-            var studyToolTip = "STUDY" + "\\" + studyKey;
+            var studyPath = "\\STUDY\\" + studyKey + "\\";
+            var studyToolTip = "STUDY\\" + studyKey;
 
             // set c_hlevel 1 data (Study)
             studyInfo.Chlevel = Constants.C_HLEVEL_1;
@@ -121,13 +114,13 @@ namespace PCF.OdmXml.i2b2Importer
             }
         }
 
-        /**
-         * set up i2b2 metadata level 2 (Event) info into STUDY
-         *
-         * @throws SQLException
-         * @throws JAXBException
-         */
-
+        /// <summary>
+        /// Set up i2b2 metadata level 2 (Event) info into STUDY
+        /// </summary>
+        /// <param name="study"></param>
+        /// <param name="studyEventDef"></param>
+        /// <param name="studyPath"></param>
+        /// <param name="studyToolTip"></param>
         private void SaveEvent(ODMcomplexTypeDefinitionStudy study,
                                ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
                                string studyPath,
@@ -157,13 +150,14 @@ namespace PCF.OdmXml.i2b2Importer
             }
         }
 
-        /**
-         * set up i2b2 metadata level 3 (Form) info into STUDY
-         *
-         * @throws SQLException
-         * @throws JAXBException
-         */
-
+        /// <summary>
+        /// Set up i2b2 metadata level 3 (Form) info into STUDY
+        /// </summary>
+        /// <param name="study"></param>
+        /// <param name="studyEventDef"></param>
+        /// <param name="formDef"></param>
+        /// <param name="eventPath"></param>
+        /// <param name="eventToolTip"></param>
         private void SaveForm(ODMcomplexTypeDefinitionStudy study,
                               ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
                               ODMcomplexTypeDefinitionFormDef formDef,
@@ -201,13 +195,15 @@ namespace PCF.OdmXml.i2b2Importer
             }
         }
 
-        /**
-         * set up i2b2 metadata level 4 (Item) info into STUDY and CONCEPT_DIMENSION
-         *
-         * @throws SQLException
-         * @throws JAXBException
-         */
-
+        /// <summary>
+        /// Set up i2b2 metadata level 4 (Item) info into STUDY and CONCEPT_DIMENSION
+        /// </summary>
+        /// <param name="study"></param>
+        /// <param name="studyEventDef"></param>
+        /// <param name="formDef"></param>
+        /// <param name="itemDef"></param>
+        /// <param name="formPath"></param>
+        /// <param name="formToolTip"></param>
         private void SaveItem(ODMcomplexTypeDefinitionStudy study,
                               ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
                               ODMcomplexTypeDefinitionFormDef formDef,
@@ -265,10 +261,6 @@ namespace PCF.OdmXml.i2b2Importer
             return defaultValue;
         }
 
-        /**
-         * @throws JAXBException
-         */
-
         private string CreateMetadataXml(ODMcomplexTypeDefinitionStudy study, ODMcomplexTypeDefinitionItemDef itemDef)
         {
             var metadataXml = default(string);
@@ -307,12 +299,16 @@ namespace PCF.OdmXml.i2b2Importer
             return metadataXml;
         }
 
-        /**
-         * set up i2b2 metadata level 5 (TranslatedText) info into STUDY
-         *
-         * @throws SQLException
-         */
-
+        /// <summary>
+        /// Set up i2b2 metadata level 5 (TranslatedText) info into STUDY
+        /// </summary>
+        /// <param name="study"></param>
+        /// <param name="studyEventDef"></param>
+        /// <param name="formDef"></param>
+        /// <param name="itemDef"></param>
+        /// <param name="codeListItem"></param>
+        /// <param name="itemPath"></param>
+        /// <param name="itemToolTip"></param>
         private void SaveCodeListItem(ODMcomplexTypeDefinitionStudy study,
                                       ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
                                       ODMcomplexTypeDefinitionFormDef formDef,
@@ -341,14 +337,9 @@ namespace PCF.OdmXml.i2b2Importer
             studyDao.InsertMetadata(studyInfo);
         }
 
-        /**
-         * method to parse ODM and save data into i2b2
-         *
-         * @throws SQLException
-         * @throws JAXBException
-         * @throws ParseException
-         */
-
+        /// <summary>
+        /// method to parse ODM and save data into i2b2
+        /// </summary>
         public void ProcessODM()
         {
             //log.info("Start to parse ODM xml and save to i2b2");
@@ -359,15 +350,11 @@ namespace PCF.OdmXml.i2b2Importer
             ProcessODMClinicalData();
         }
 
-        /*
-         * This method takes ODM XML io.File obj as input and parsed by JAXB API and
-         * then traverses through ODM tree object and save data into i2b2 metadata
-         * database in i2b2 data format.
-         *
-         * @throws SQLException
-         * @throws JAXBException
-         */
-
+        /// <summary>
+        /// This method takes ODM XML io.File obj as input and parsed by JAXB API and
+        /// then traverses through ODM tree object and save data into i2b2 metadata
+        /// database in i2b2 data format.
+        /// </summary>
         public void ProcessODMStudy()
         {
             /*
@@ -401,17 +388,12 @@ namespace PCF.OdmXml.i2b2Importer
             studyDao.ExecuteBatch();
         }
 
-        /*
-         * This method takes ODM XML io.File obj as input and parsed by JAXB API and
-         * then traversal through ODM tree object and save clinical data into i2b2
-         * demo database ini2b2 data format. Keep method public in case of only want
-         * to parse demodata.
-         *
-         * @throws JAXBException
-         * @throws ParseException
-         * @throws SQLException
-         */
-
+        /// <summary>
+        /// This method takes ODM XML io.File obj as input and parsed by JAXB API and
+        /// then traversal through ODM tree object and save clinical data into i2b2
+        /// demo database ini2b2 data format. Keep method public in case of only want
+        /// to parse demodata.
+        /// </summary>
         public void ProcessODMClinicalData()
         {
             //log.info("Parse and save ODM clinical data into i2b2...");
@@ -506,12 +488,6 @@ namespace PCF.OdmXml.i2b2Importer
             //}
             Debug.WriteLine("Inserting study metadata record: " + studyInfo);
         }
-
-        /**
-         * @throws JAXBException
-         * @throws ParseException
-         * @throws SQLException
-         */
 
         private void SaveItemData(ODMcomplexTypeDefinitionStudy study,
                                   ODMcomplexTypeDefinitionSubjectData subjectData,

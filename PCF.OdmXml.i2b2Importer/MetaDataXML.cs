@@ -5,7 +5,7 @@ namespace PCF.OdmXml.i2b2Importer
 {
     //TODO: Refactor
     //https://github.com/CTMM-TraIT/trait_odm_to_i2b2/blob/edbc360643d64a51ca13ce4c0c57e282c04ccb2d/src/main/java/com/recomdata/i2b2/MetaDataXML.java
-    public class MetaDataXML
+    public static class MetaDataXML
     {
         /// <summary>
         /// The element name used for the enumeration values.
@@ -23,7 +23,7 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="itemName">The name of the item.</param>
         /// <param name="enumValues">The enumeration values to add.</param>
         /// <returns>The metadata xml as a <see cref="System.String" />.</returns>
-        public string GetEnumMetadataXML(string itemOID, string itemName, string[] enumValues)
+        public static string GetEnumMetadataXML(string itemOID, string itemName, string[] enumValues)
         {
             var root = CreateBaseMetadata(itemOID, itemName, "Enum");
             var enumValuesElement = root.Element(ENUM_VALUES_ELEMENT_NAME);
@@ -31,7 +31,7 @@ namespace PCF.OdmXml.i2b2Importer
             {
                 enumValuesElement.Add(new XElement("Val", enumValue));
             }
-            return ToString(root);
+            return ToDocumentString(root);
         }
 
         /// <summary>
@@ -40,9 +40,9 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="itemOID">The OID of the item.</param>
         /// <param name="itemName">The name of the item.</param>
         /// <returns>The metadata xml as a <see cref="System.String" />.</returns>
-        public string GetIntegerMetadataXML(string itemOID, string itemName)
+        public static string GetIntegerMetadataXML(string itemOID, string itemName)
         {
-            return ToString(CreateBaseMetadata(itemOID, itemName, "Integer"));
+            return ToDocumentString(CreateBaseMetadata(itemOID, itemName, "Integer"));
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="itemOID">The OID of the item.</param>
         /// <param name="itemName">The name of the item.</param>
         /// <returns>The metadata xml as a <see cref="System.String" />.</returns>
-        public string GetFloatMetadataXML(string itemOID, string itemName)
+        public static string GetFloatMetadataXML(string itemOID, string itemName)
         {
-            return ToString(CreateBaseMetadata(itemOID, itemName, "Float"));
+            return ToDocumentString(CreateBaseMetadata(itemOID, itemName, "Float"));
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="itemOID">The OID of the item.</param>
         /// <param name="itemName">The name of the item.</param>
         /// <returns>The metadata xml as a <see cref="System.String" />.</returns>
-        public string GetStringMetadataXML(string itemOID, string itemName)
+        public static string GetStringMetadataXML(string itemOID, string itemName)
         {
-            return ToString(CreateBaseMetadata(itemOID, itemName, "String"));
+            return ToDocumentString(CreateBaseMetadata(itemOID, itemName, "String"));
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="testName">The value for the TestName element.</param>
         /// <param name="dataType">The value for the DataType element.</param>
         /// <returns>The metadata xml as a <see cref="System.Xml.Linq.XElement" />.</returns>
-        private XElement CreateBaseMetadata(string testId, string testName, string dataType)
+        private static XElement CreateBaseMetadata(string testId, string testName, string dataType)
         {
             var root = new XElement("ValueMetadata");
 
@@ -113,7 +113,7 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="testId">The value for the TestID element.</param>
         /// <param name="testName">The value for the TestName element.</param>
         /// <param name="dataType"The value for the DataType element.></param>
-        private void AddSimpleElements(XElement root, string testId, string testName, string dataType)
+        private static void AddSimpleElements(XElement root, string testId, string testName, string dataType)
         {
             var creationDateTime = DateTime.UtcNow.ToString(Constants.DATETIME_FORMAT);
 
@@ -142,11 +142,10 @@ namespace PCF.OdmXml.i2b2Importer
         /// </summary>
         /// <param name="rootElement">The root element to convert.</param>
         /// <returns>The compact formatted xml <see cref="System.String" />.</returns>
-        private string ToString(XElement rootElement)
+        private static string ToDocumentString(this XElement rootElement, SaveOptions options = SaveOptions.None)
         {
-            //Save option?
-            //return rootElement.ToString(SaveOptions.None);
-            return new XDocument(rootElement).ToString(SaveOptions.None);
+            //Why add element XDocument instead of just ToString-ing the element?
+            return new XDocument(rootElement).ToString(options);
         }
     }
 }

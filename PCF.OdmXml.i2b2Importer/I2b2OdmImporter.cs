@@ -24,7 +24,6 @@ namespace PCF.OdmXml.i2b2Importer
         private DateTime CurrentDate;//Why not local instance?
         //private static Logger log = LoggerFactory.getLogger(I2B2ODMStudyHandler.class);
         private HashAlgorithm MessageDigest = null;//Why not local instance?
-        private MetaDataXML MetaDataXML = new MetaDataXML();//Why not local instance?
         private ODM ODM = null;
         private IStudyDao StudyDao = null;
         private I2B2StudyInfo StudyInfo = new I2B2StudyInfo();

@@ -22,6 +22,9 @@ namespace PCF.OdmXml.i2b2Importer
         public const string C_VISUALATTRIBUTES_FOLDER = "FA";
         public const string C_VISUALATTRIBUTES_LEAF = "LA";
 
+        public const string VALUE_TYPE_TEXT = "T";
+        public const string VALUE_TYPE_NUMBER = "N";
+
         //ODM1-3-2-Final.htm#t_datetime
         //YYYY-MM-DDThh:mm:ss(.n+)?(((+|-)hh:mm)|Z)?
         //https://msdn.microsoft.com/en-us/library/az4se3k1%28v=vs.110%29.aspx#Roundtrip

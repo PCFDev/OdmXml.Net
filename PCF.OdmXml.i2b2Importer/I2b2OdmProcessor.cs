@@ -498,7 +498,7 @@ namespace PCF.OdmXml.i2b2Importer
 
             if (item.CodeListRef != null)
             {
-                ClinicalDataInfo.ValTypeCd = "T";//TODO: Magic
+                ClinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_TEXT;
                 ClinicalDataInfo.NvalNum = null;
 
                 var codeList = Utilities.GetCodeList(study, item.CodeListRef.CodeListOID);
@@ -524,7 +524,7 @@ namespace PCF.OdmXml.i2b2Importer
             {
                 conceptCd = GenerateConceptCode(study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, null);
 
-                ClinicalDataInfo.ValTypeCd = "N";//TODO: Magic
+                ClinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_NUMBER;
                 ClinicalDataInfo.TvalChar = "E";//TODO: Magic
                 ClinicalDataInfo.NvalNum = String.IsNullOrWhiteSpace(itemValue) ? default(decimal?) : Decimal.Parse(itemValue);// TryParse? BigDecimal == Decimal? not sure these are equivolent, but it may be close enough for our purposes.
             }
@@ -532,7 +532,7 @@ namespace PCF.OdmXml.i2b2Importer
             {
                 conceptCd = GenerateConceptCode(study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, null);
 
-                ClinicalDataInfo.ValTypeCd = "T";//TODO: Magic
+                ClinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_TEXT;
                 ClinicalDataInfo.TvalChar = itemValue;
                 ClinicalDataInfo.NvalNum = null;
             }

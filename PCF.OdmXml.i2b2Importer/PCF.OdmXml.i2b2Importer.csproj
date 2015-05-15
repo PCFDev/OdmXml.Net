@@ -45,6 +45,7 @@
     <Compile Include="Helpers\ByteArrayBuilder.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DTO\I2B2ClinicalDataInfo.cs" />
+    <Compile Include="I2b2OdmProcessor.cs" />
     <Compile Include="MetaDataXML.cs" />
     <Compile Include="I2b2OdmImporter.cs" />
     <Compile Include="DTO\I2B2StudyInfo.cs" />

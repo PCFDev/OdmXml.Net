@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using PCF.OdmXml.i2b2Importer.DB;
 using PCF.OdmXml.i2b2Importer.DTO;
 using PCF.OdmXml.i2b2Importer.Helpers;
 using PCF.OdmXml.i2b2Importer.Interfaces;

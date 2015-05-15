@@ -1,7 +1,8 @@
 ﻿using System;
+using PCF.OdmXml.i2b2Importer.DTO;
 using PCF.OdmXml.i2b2Importer.Interfaces;
 
-namespace PCF.OdmXml.i2b2Importer.DTO
+namespace PCF.OdmXml.i2b2Importer.DB
 {
     //TODO: Entity framework
     public class StudyDao : IStudyDao

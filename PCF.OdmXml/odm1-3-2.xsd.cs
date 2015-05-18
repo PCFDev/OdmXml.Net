@@ -2051,7 +2051,7 @@ namespace PCF.OdmXml
         public ODMcomplexTypeDefinitionStudy()
         {
             this.metaDataVersionField = new List<ODMcomplexTypeDefinitionMetaDataVersion>();
-            this.basicDefinitionsField = new ODMcomplexTypeDefinitionBasicDefinitions();
+            this.basicDefinitionsField = default(ODMcomplexTypeDefinitionBasicDefinitions);//TODO: Optional
             this.globalVariablesField = new ODMcomplexTypeDefinitionGlobalVariables();
         }
 
@@ -2607,8 +2607,8 @@ namespace PCF.OdmXml
             this.itemGroupDefField = new List<ODMcomplexTypeDefinitionItemGroupDef>();
             this.formDefField = new List<ODMcomplexTypeDefinitionFormDef>();
             this.studyEventDefField = new List<ODMcomplexTypeDefinitionStudyEventDef>();
-            this.protocolField = new ODMcomplexTypeDefinitionProtocol();
-            this.includeField = new ODMcomplexTypeDefinitionInclude();
+            this.protocolField = default(ODMcomplexTypeDefinitionProtocol);//TODO: Optional
+            this.includeField = default(ODMcomplexTypeDefinitionInclude);//TODO: Optional
         }
 
         public ODMcomplexTypeDefinitionInclude Include
@@ -3041,7 +3041,7 @@ namespace PCF.OdmXml
         {
             this.aliasField = new List<ODMcomplexTypeDefinitionAlias>();
             this.studyEventRefField = new List<ODMcomplexTypeDefinitionStudyEventRef>();
-            this.descriptionField = new ODMcomplexTypeDefinitionDescription();
+            this.descriptionField = default(ODMcomplexTypeDefinitionDescription);//TODO: Optional
         }
 
         public ODMcomplexTypeDefinitionDescription Description
@@ -3269,7 +3269,7 @@ namespace PCF.OdmXml
         {
             this.aliasField = new List<ODMcomplexTypeDefinitionAlias>();
             this.formRefField = new List<ODMcomplexTypeDefinitionFormRef>();
-            this.descriptionField = new ODMcomplexTypeDefinitionDescription();
+            this.descriptionField = default(ODMcomplexTypeDefinitionDescription);//TODO: Optional
         }
 
         public ODMcomplexTypeDefinitionDescription Description
@@ -3608,7 +3608,7 @@ namespace PCF.OdmXml
             this.aliasField = new List<ODMcomplexTypeDefinitionAlias>();
             this.archiveLayoutField = new List<ODMcomplexTypeDefinitionArchiveLayout>();
             this.itemGroupRefField = new List<ODMcomplexTypeDefinitionItemGroupRef>();
-            this.descriptionField = new ODMcomplexTypeDefinitionDescription();
+            this.descriptionField = default(ODMcomplexTypeDefinitionDescription);//TODO: Optional
         }
 
         public ODMcomplexTypeDefinitionDescription Description
@@ -4017,7 +4017,7 @@ namespace PCF.OdmXml
         {
             this.aliasField = new List<ODMcomplexTypeDefinitionAlias>();
             this.itemRefField = new List<ODMcomplexTypeDefinitionItemRef>();
-            this.descriptionField = new ODMcomplexTypeDefinitionDescription();
+            this.descriptionField = default(ODMcomplexTypeDefinitionDescription);//TODO: Optional
         }
 
         public ODMcomplexTypeDefinitionDescription Description
@@ -4636,12 +4636,12 @@ namespace PCF.OdmXml
         {
             this.aliasField = new List<ODMcomplexTypeDefinitionAlias>();
             this.roleField = new List<ODMcomplexTypeDefinitionRole>();
-            this.codeListRefField = new ODMcomplexTypeDefinitionCodeListRef();
+            this.codeListRefField = default(ODMcomplexTypeDefinitionCodeListRef);//TODO: Optional
             this.rangeCheckField = new List<ODMcomplexTypeDefinitionRangeCheck>();
             this.measurementUnitRefField = new List<ODMcomplexTypeDefinitionMeasurementUnitRef>();
-            this.externalQuestionField = new ODMcomplexTypeDefinitionExternalQuestion();
-            this.questionField = new ODMcomplexTypeDefinitionQuestion();
-            this.descriptionField = new ODMcomplexTypeDefinitionDescription();
+            this.externalQuestionField = default(ODMcomplexTypeDefinitionExternalQuestion);//TODO: Optional
+            this.questionField = default(ODMcomplexTypeDefinitionQuestion);//TODO: Optional
+            this.descriptionField = default(ODMcomplexTypeDefinitionDescription);//TODO: Optional
         }
 
         public ODMcomplexTypeDefinitionDescription Description
@@ -5247,8 +5247,8 @@ namespace PCF.OdmXml
 
         public ODMcomplexTypeDefinitionRangeCheck()
         {
-            this.errorMessageField = new ODMcomplexTypeDefinitionErrorMessage();
-            this.measurementUnitRefField = new ODMcomplexTypeDefinitionMeasurementUnitRef();
+            this.errorMessageField = default(ODMcomplexTypeDefinitionErrorMessage);//TODO: Optional
+            this.measurementUnitRefField = default(ODMcomplexTypeDefinitionMeasurementUnitRef);//TODO: Optional
             this.itemsField = new List<object>();
         }
 
@@ -6653,16 +6653,16 @@ namespace PCF.OdmXml
             this.locationRefField = new List<ODMcomplexTypeDefinitionLocationRef>();
             this.phoneField = new List<ODMcomplexTypeDefinitionPhone>();
             this.faxField = new List<ODMcomplexTypeDefinitionFax>();
-            this.pagerField = new ODMcomplexTypeDefinitionPager();
-            this.pictureField = new ODMcomplexTypeDefinitionPicture();
+            this.pagerField = default(ODMcomplexTypeDefinitionPager);//TODO: Optional
+            this.pictureField = default(ODMcomplexTypeDefinitionPicture);//TODO: Optional
             this.emailField = new List<ODMcomplexTypeDefinitionEmail>();
             this.addressField = new List<ODMcomplexTypeDefinitionAddress>();
-            this.organizationField = new ODMcomplexTypeDefinitionOrganization();
-            this.lastNameField = new ODMcomplexTypeDefinitionLastName();
-            this.firstNameField = new ODMcomplexTypeDefinitionFirstName();
-            this.fullNameField = new ODMcomplexTypeDefinitionFullName();
-            this.displayNameField = new ODMcomplexTypeDefinitionDisplayName();
-            this.loginNameField = new ODMcomplexTypeDefinitionLoginName();
+            this.organizationField = default(ODMcomplexTypeDefinitionOrganization);//TODO: Optional
+            this.lastNameField = default(ODMcomplexTypeDefinitionLastName);//TODO: Optional
+            this.firstNameField = default(ODMcomplexTypeDefinitionFirstName);//TODO: Optional
+            this.fullNameField = default(ODMcomplexTypeDefinitionFullName);//TODO: Optional
+            this.displayNameField = default(ODMcomplexTypeDefinitionDisplayName);//TODO: Optional
+            this.loginNameField = default(ODMcomplexTypeDefinitionLoginName);//TODO: Optional
         }
 
         public ODMcomplexTypeDefinitionLoginName LoginName
@@ -7305,11 +7305,11 @@ namespace PCF.OdmXml
 
         public ODMcomplexTypeDefinitionAddress()
         {
-            this.otherTextField = new ODMcomplexTypeDefinitionOtherText();
-            this.postalCodeField = new ODMcomplexTypeDefinitionPostalCode();
-            this.countryField = new ODMcomplexTypeDefinitionCountry();
-            this.stateProvField = new ODMcomplexTypeDefinitionStateProv();
-            this.cityField = new ODMcomplexTypeDefinitionCity();
+            this.otherTextField = default(ODMcomplexTypeDefinitionOtherText);//TODO: Optional
+            this.postalCodeField = default(ODMcomplexTypeDefinitionPostalCode);//TODO: Optional
+            this.countryField = default(ODMcomplexTypeDefinitionCountry);//TODO: Optional
+            this.stateProvField = default(ODMcomplexTypeDefinitionStateProv);//TODO: Optional
+            this.cityField = default(ODMcomplexTypeDefinitionCity);//TODO: Optional
             this.streetNameField = new List<ODMcomplexTypeDefinitionStreetName>();
         }
 
@@ -8634,8 +8634,8 @@ namespace PCF.OdmXml
         {
             this.itemsField = new List<object>();
             this.annotationField = new List<ODMcomplexTypeDefinitionAnnotation>();
-            this.signatureField = new ODMcomplexTypeDefinitionSignature();
-            this.auditRecordField = new ODMcomplexTypeDefinitionAuditRecord();
+            this.signatureField = default(ODMcomplexTypeDefinitionSignature);//TODO: Optional
+            this.auditRecordField = default(ODMcomplexTypeDefinitionAuditRecord);//TODO: Optional
         }
 
         public ODMcomplexTypeDefinitionAuditRecord AuditRecord
@@ -8873,8 +8873,8 @@ namespace PCF.OdmXml
 
         public ODMcomplexTypeDefinitionAuditRecord()
         {
-            this.sourceIDField = new ODMcomplexTypeDefinitionSourceID();
-            this.reasonForChangeField = new ODMcomplexTypeDefinitionReasonForChange();
+            this.sourceIDField = default(ODMcomplexTypeDefinitionSourceID);//TODO: Optional
+            this.reasonForChangeField = default(ODMcomplexTypeDefinitionReasonForChange);//TODO: Optional
             this.dateTimeStampField = new ODMcomplexTypeDefinitionDateTimeStamp();
             this.locationRefField = new ODMcomplexTypeDefinitionLocationRef();
             this.userRefField = new ODMcomplexTypeDefinitionUserRef();
@@ -9268,7 +9268,7 @@ namespace PCF.OdmXml
 
         public ODMcomplexTypeDefinitionSignature()
         {
-            this.cryptoBindingManifestField = new ODMcomplexTypeDefinitionCryptoBindingManifest();
+            this.cryptoBindingManifestField = default(ODMcomplexTypeDefinitionCryptoBindingManifest);//TODO: Optional
             this.dateTimeStampField = new ODMcomplexTypeDefinitionDateTimeStamp();
             this.signatureRefField = new ODMcomplexTypeDefinitionSignatureRef();
             this.locationRefField = new ODMcomplexTypeDefinitionLocationRef();
@@ -9516,7 +9516,7 @@ namespace PCF.OdmXml
         public ODMcomplexTypeDefinitionAnnotation()
         {
             this.flagField = new List<ODMcomplexTypeDefinitionFlag>();
-            this.commentField = new ODMcomplexTypeDefinitionComment();
+            this.commentField = default(ODMcomplexTypeDefinitionComment);//TODO: Optional
         }
 
         public ODMcomplexTypeDefinitionComment Comment
@@ -9754,7 +9754,7 @@ namespace PCF.OdmXml
 
         public ODMcomplexTypeDefinitionFlag()
         {
-            this.flagTypeField = new ODMcomplexTypeDefinitionFlagType();
+            this.flagTypeField = default(ODMcomplexTypeDefinitionFlagType);//TODO: Optional
             this.flagValueField = new ODMcomplexTypeDefinitionFlagValue();
         }
 
@@ -9986,9 +9986,9 @@ namespace PCF.OdmXml
         public ODMcomplexTypeDefinitionItemData()
         {
             this.annotationField = new List<ODMcomplexTypeDefinitionAnnotation>();
-            this.measurementUnitRefField = new ODMcomplexTypeDefinitionMeasurementUnitRef();
-            this.signatureField = new ODMcomplexTypeDefinitionSignature();
-            this.auditRecordField = new ODMcomplexTypeDefinitionAuditRecord();
+            this.measurementUnitRefField = default(ODMcomplexTypeDefinitionMeasurementUnitRef);//TODO: Optional
+            this.signatureField = default(ODMcomplexTypeDefinitionSignature);//TODO: Optional
+            this.auditRecordField = default(ODMcomplexTypeDefinitionAuditRecord);//TODO: Optional
         }
 
         public ODMcomplexTypeDefinitionAuditRecord AuditRecord
@@ -15030,10 +15030,10 @@ namespace PCF.OdmXml
         {
             this.studyEventDataField = new List<ODMcomplexTypeDefinitionStudyEventData>();
             this.annotationField = new List<ODMcomplexTypeDefinitionAnnotation>();
-            this.siteRefField = new ODMcomplexTypeDefinitionSiteRef();
-            this.investigatorRefField = new ODMcomplexTypeDefinitionInvestigatorRef();
-            this.signatureField = new ODMcomplexTypeDefinitionSignature();
-            this.auditRecordField = new ODMcomplexTypeDefinitionAuditRecord();
+            this.siteRefField = default(ODMcomplexTypeDefinitionSiteRef);//TODO: Optional
+            this.investigatorRefField = default(ODMcomplexTypeDefinitionInvestigatorRef);//TODO: Optional
+            this.signatureField = default(ODMcomplexTypeDefinitionSignature);//TODO: Optional
+            this.auditRecordField = default(ODMcomplexTypeDefinitionAuditRecord);//TODO: Optional
         }
 
         public ODMcomplexTypeDefinitionAuditRecord AuditRecord
@@ -15342,8 +15342,8 @@ namespace PCF.OdmXml
         {
             this.formDataField = new List<ODMcomplexTypeDefinitionFormData>();
             this.annotationField = new List<ODMcomplexTypeDefinitionAnnotation>();
-            this.signatureField = new ODMcomplexTypeDefinitionSignature();
-            this.auditRecordField = new ODMcomplexTypeDefinitionAuditRecord();
+            this.signatureField = default(ODMcomplexTypeDefinitionSignature);//TODO: Optional
+            this.auditRecordField = default(ODMcomplexTypeDefinitionAuditRecord);//TODO: Optional
         }
 
         public ODMcomplexTypeDefinitionAuditRecord AuditRecord
@@ -15559,9 +15559,9 @@ namespace PCF.OdmXml
         {
             this.itemGroupDataField = new List<ODMcomplexTypeDefinitionItemGroupData>();
             this.annotationField = new List<ODMcomplexTypeDefinitionAnnotation>();
-            this.archiveLayoutRefField = new ODMcomplexTypeDefinitionArchiveLayoutRef();
-            this.signatureField = new ODMcomplexTypeDefinitionSignature();
-            this.auditRecordField = new ODMcomplexTypeDefinitionAuditRecord();
+            this.archiveLayoutRefField = default(ODMcomplexTypeDefinitionArchiveLayoutRef);//TODO: Optional
+            this.signatureField = default(ODMcomplexTypeDefinitionSignature);//TODO: Optional
+            this.auditRecordField = default(ODMcomplexTypeDefinitionAuditRecord);//TODO: Optional
         }
 
         public ODMcomplexTypeDefinitionAuditRecord AuditRecord
@@ -16257,7 +16257,7 @@ namespace PCF.OdmXml
         public SignatureType()
         {
             this.objectField = new List<ObjectType>();
-            this.keyInfoField = new KeyInfoType();
+            this.keyInfoField = default(KeyInfoType);//TODO: Optional
             this.signatureValueField = new SignatureValueType();
             this.signedInfoField = new SignedInfoType();
         }
@@ -16403,8 +16403,8 @@ namespace PCF.OdmXml
         public SignedInfoType()
         {
             this.referenceField = new List<ReferenceType>();
-            this.signatureMethodField = new SignatureMethodType();
-            this.canonicalizationMethodField = new CanonicalizationMethodType();
+            this.signatureMethodField = new SignatureMethodType();//TODO: ?Optional?
+            this.canonicalizationMethodField = new CanonicalizationMethodType();//TODO: ?Optional?
         }
 
         public CanonicalizationMethodType CanonicalizationMethod
@@ -16690,8 +16690,8 @@ namespace PCF.OdmXml
 
         public ReferenceType()
         {
-            this.digestMethodField = new DigestMethodType();
-            this.transformsField = new List<TransformType>();
+            this.digestMethodField = new DigestMethodType();//TODO: ?Optional?
+            this.transformsField = new List<TransformType>();//TODO: ?Optional?
         }
 
         [XmlArrayItem("Transform", IsNullable = false)]

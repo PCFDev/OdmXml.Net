@@ -1,14 +1,13 @@
 ﻿using System;
-using PCF.OdmXml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PCF.OdmXml.i2b2Importer.Tests
 {
     [TestClass]
-    public class I2b2OdmProcessor
+    public class I2b2OdmImporterTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void ImportAsync()
         {
             ODM odm;
             Exception exception;
@@ -17,15 +16,6 @@ namespace PCF.OdmXml.i2b2Importer.Tests
             Assert.IsNull(exception);
 
             (new I2b2OdmImporter().ImportAsync(odm, null)).Wait();
-
-
-
-
-
-
         }
-
-
-   
     }
 }

@@ -9,17 +9,17 @@ namespace PCF.OdmXml.i2b2Importer.DB
     {
         public void ExecuteBatch()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void InsertMetadata(I2B2StudyInfo studyInfo)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void PreSetupI2B2Study(string projectId, string sourceSystem)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

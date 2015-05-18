@@ -9,17 +9,17 @@ namespace PCF.OdmXml.i2b2Importer.DB
     {
         public void CleanupClinicalData(string projectId, string sourceSystem)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void ExecuteBatch()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void InsertObservation(I2B2ClinicalDataInfo clinicalDataInfo)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

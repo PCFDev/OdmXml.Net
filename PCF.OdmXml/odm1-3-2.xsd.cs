@@ -1005,9 +1005,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("FormatExpression")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormalExpression))]
-        //[XmlElement("FormalExpression")]
+        //[XmlArray("FormatExpression")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormalExpression))]
+        [XmlElement("FormalExpression")]
         public List<ODMcomplexTypeDefinitionFormalExpression> FormalExpression
         {
             get
@@ -1032,9 +1032,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Alias")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
-        //[XmlElement("Alias")]
+        //[XmlArray("Alias")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        [XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -1125,9 +1125,9 @@ namespace PCF.OdmXml
             this.translatedTextField = new List<ODMcomplexTypeDefinitionTranslatedText>();
         }
 
-        [XmlArray("TranslatedText")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
-        //[XmlElement("TranslatedText")]
+        //[XmlArray("TranslatedText")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
+        [XmlElement("TranslatedText")]
         public List<ODMcomplexTypeDefinitionTranslatedText> TranslatedText
         {
             get
@@ -1332,9 +1332,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("FormalExpression")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormalExpression))]
-        //[XmlElement("FormalExpression")]
+        //[XmlArray("FormalExpression")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormalExpression))]
+        [XmlElement("FormalExpression")]
         public List<ODMcomplexTypeDefinitionFormalExpression> FormalExpression
         {
             get
@@ -1359,9 +1359,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Alias")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
-        //[XmlElement("Alias")]
+        //[XmlArray("Alias")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        [XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -1581,9 +1581,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("AdminData")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAdminData))]
-        //[XmlElement("AdminData")]
+        //[XmlArray("AdminData")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAdminData))]
+        [XmlElement("AdminData")]
         public List<ODMcomplexTypeDefinitionAdminData> AdminData
         {
             get
@@ -1608,9 +1608,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("ReferenceData")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionReferenceData))]
-        //[XmlElement("ReferenceData")]
+        //[XmlArray("ReferenceData")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionReferenceData))]
+        [XmlElement("ReferenceData")]
         public List<ODMcomplexTypeDefinitionReferenceData> ReferenceData
         {
             get
@@ -1635,9 +1635,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("ClinicalData")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionClinicalData))]
-        //[XmlElement("ClinicalData")]
+        //[XmlArray("ClinicalData")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionClinicalData))]
+        [XmlElement("ClinicalData")]
         public List<ODMcomplexTypeDefinitionClinicalData> ClinicalData
         {
             get
@@ -1662,9 +1662,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Association")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAssociation))]
-        //[XmlElement("Association")]
+        //[XmlArray("Association")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAssociation))]
+        [XmlElement("Association")]
         public List<ODMcomplexTypeDefinitionAssociation> Association
         {
             get
@@ -1689,9 +1689,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Signature", Namespace = "http://www.w3.org/2000/09/xmldsig#")]
-        [XmlArrayItem(typeof(SignatureType))]
-        //[XmlElement("Signature", Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+        //[XmlArray("Signature", Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+        //[XmlArrayItem(typeof(SignatureType))]
+        [XmlElement("Signature", Namespace = "http://www.w3.org/2000/09/xmldsig#")]
         public List<SignatureType> Signature
         {
             get
@@ -2133,9 +2133,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("MetaDataVersion")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionMetaDataVersion))]
-        //[XmlElement("MetaDataVersion")]
+        //[XmlArray("MetaDataVersion")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionMetaDataVersion))]
+        [XmlElement("MetaDataVersion")]
         public List<ODMcomplexTypeDefinitionMetaDataVersion> MetaDataVersion
         {
             get
@@ -2403,9 +2403,9 @@ namespace PCF.OdmXml
             this.measurementUnitField = new List<ODMcomplexTypeDefinitionMeasurementUnit>();
         }
 
-        [XmlArray("MeasurementUnit")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionMeasurementUnit))]
-        //[XmlElement("MeasurementUnit")]
+        //[XmlArray("MeasurementUnit")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionMeasurementUnit))]
+        [XmlElement("MeasurementUnit")]
         public List<ODMcomplexTypeDefinitionMeasurementUnit> MeasurementUnit
         {
             get
@@ -2477,9 +2477,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Alias")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
-        //[XmlElement("Alias")]
+        //[XmlArray("Alias")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        [XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -2570,9 +2570,9 @@ namespace PCF.OdmXml
             this.translatedTextField = new List<ODMcomplexTypeDefinitionTranslatedText>();
         }
 
-        [XmlArray("TranslatedText")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
-        //[XmlElement("TranslatedText")]
+        //[XmlArray("TranslatedText")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
+        [XmlElement("TranslatedText")]
         public List<ODMcomplexTypeDefinitionTranslatedText> TranslatedText
         {
             get
@@ -2697,9 +2697,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("StudyEventDef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionStudyEventDef))]
-        //[XmlElement("StudyEventDef")]
+        //[XmlArray("StudyEventDef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionStudyEventDef))]
+        [XmlElement("StudyEventDef")]
         public List<ODMcomplexTypeDefinitionStudyEventDef> StudyEventDef
         {
             get
@@ -2724,9 +2724,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("FormDef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormDef))]
-        //[XmlElement("FormDef")]
+        //[XmlArray("FormDef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormDef))]
+        [XmlElement("FormDef")]
         public List<ODMcomplexTypeDefinitionFormDef> FormDef
         {
             get
@@ -2751,9 +2751,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("ItemGroupDef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemGroupDef))]
-        //[XmlElement("ItemGroupDef")]
+        //[XmlArray("ItemGroupDef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemGroupDef))]
+        [XmlElement("ItemGroupDef")]
         public List<ODMcomplexTypeDefinitionItemGroupDef> ItemGroupDef
         {
             get
@@ -2778,9 +2778,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("ItemDef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemDef))]
-        //[XmlElement("ItemDef")]
+        //[XmlArray("ItemDef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemDef))]
+        [XmlElement("ItemDef")]
         public List<ODMcomplexTypeDefinitionItemDef> ItemDef
         {
             get
@@ -2805,9 +2805,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("CodeList")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionCodeList))]
-        //[XmlElement("CodeList")]
+        //[XmlArray("CodeList")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionCodeList))]
+        [XmlElement("CodeList")]
         public List<ODMcomplexTypeDefinitionCodeList> CodeList
         {
             get
@@ -2832,9 +2832,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("ImputationMethod")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionImputationMethod))]
-        //[XmlElement("ImputationMethod")]
+        //[XmlArray("ImputationMethod")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionImputationMethod))]
+        [XmlElement("ImputationMethod")]
         public List<ODMcomplexTypeDefinitionImputationMethod> ImputationMethod
         {
             get
@@ -2859,9 +2859,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Presentation")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionPresentation))]
-        //[XmlElement("Presentation")]
+        //[XmlArray("Presentation")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionPresentation))]
+        [XmlElement("Presentation")]
         public List<ODMcomplexTypeDefinitionPresentation> Presentation
         {
             get
@@ -2886,9 +2886,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("ConditionDef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionConditionDef))]
-        //[XmlElement("ConditionDef")]
+        //[XmlArray("ConditionDef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionConditionDef))]
+        [XmlElement("ConditionDef")]
         public List<ODMcomplexTypeDefinitionConditionDef> ConditionDef
         {
             get
@@ -2913,9 +2913,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("MethodDef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionMethodDef))]
-        //[XmlElement("MethodDef")]
+        //[XmlArray("MethodDef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionMethodDef))]
+        [XmlElement("MethodDef")]
         public List<ODMcomplexTypeDefinitionMethodDef> MethodDef
         {
             get
@@ -3124,9 +3124,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("StudyEventRef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionStudyEventRef))]
-        //[XmlElement("StudyEventRef")]
+        //[XmlArray("StudyEventRef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionStudyEventRef))]
+        [XmlElement("StudyEventRef")]
         public List<ODMcomplexTypeDefinitionStudyEventRef> StudyEventRef
         {
             get
@@ -3151,9 +3151,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Alias")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
-        //[XmlElement("Alias")]
+        //[XmlArray("Alias")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        [XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -3356,9 +3356,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("FormRef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormRef))]
-        //[XmlElement("FormRef")]
+        //[XmlArray("FormRef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormRef))]
+        [XmlElement("FormRef")]
         public List<ODMcomplexTypeDefinitionFormRef> FormRef
         {
             get
@@ -3383,9 +3383,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Alias")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
-        //[XmlElement("Alias")]
+        //[XmlArray("Alias")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        [XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -3699,9 +3699,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("ItemGroupRef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemGroupRef))]
-        //[XmlElement("ItemGroupRef")]
+        //[XmlArray("ItemGroupRef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemGroupRef))]
+        [XmlElement("ItemGroupRef")]
         public List<ODMcomplexTypeDefinitionItemGroupRef> ItemGroupRef
         {
             get
@@ -3726,9 +3726,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("ArchiveLayout")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionArchiveLayout))]
-        //[XmlElement("ArchiveLayout")]
+        //[XmlArray("ArchiveLayout")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionArchiveLayout))]
+        [XmlElement("ArchiveLayout")]
         public List<ODMcomplexTypeDefinitionArchiveLayout> ArchiveLayout
         {
             get
@@ -3753,9 +3753,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Alias")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
-        //[XmlElement("Alias")]
+        //[XmlArray("Alias")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        [XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -4114,9 +4114,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("ItemRef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemRef))]
-        //[XmlElement("ItemRef")]
+        //[XmlArray("ItemRef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemRef))]
+        [XmlElement("ItemRef")]
         public List<ODMcomplexTypeDefinitionItemRef> ItemRef
         {
             get
@@ -4141,9 +4141,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Alias")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
-        //[XmlElement("Alias")]
+        //[XmlArray("Alias")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        [XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -4790,9 +4790,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("MeasurementUnitRef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionMeasurementUnitRef))]
-        //[XmlElement("MeasurementUnitRef")]
+        //[XmlArray("MeasurementUnitRef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionMeasurementUnitRef))]
+        [XmlElement("MeasurementUnitRef")]
         public List<ODMcomplexTypeDefinitionMeasurementUnitRef> MeasurementUnitRef
         {
             get
@@ -4817,9 +4817,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("RangeCheck")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionRangeCheck))]
-        //[XmlElement("RangeCheck")]
+        //[XmlArray("RangeCheck")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionRangeCheck))]
+        [XmlElement("RangeCheck")]
         public List<ODMcomplexTypeDefinitionRangeCheck> RangeCheck
         {
             get
@@ -4868,9 +4868,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Role")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionRole))]
-        //[XmlElement("Role")]
+        //[XmlArray("Role")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionRole))]
+        [XmlElement("Role")]
         public List<ODMcomplexTypeDefinitionRole> Role
         {
             get
@@ -4895,9 +4895,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Alias")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
-        //[XmlElement("Alias")]
+        //[XmlArray("Alias")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        [XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -5155,9 +5155,9 @@ namespace PCF.OdmXml
             this.translatedTextField = new List<ODMcomplexTypeDefinitionTranslatedText>();
         }
 
-        [XmlArray("TranslatedText")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
-        //[XmlElement("TranslatedText")]
+        //[XmlArray("TranslatedText")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
+        [XmlElement("TranslatedText")]
         public List<ODMcomplexTypeDefinitionTranslatedText> TranslatedText
         {
             get
@@ -5336,11 +5336,11 @@ namespace PCF.OdmXml
             this.itemsField = new List<object>();
         }
 
-        [XmlArray("Items")]
-        [XmlArrayItem("CheckValue", typeof(ODMcomplexTypeDefinitionCheckValue))]
-        [XmlArrayItem("FormalExpression", typeof(ODMcomplexTypeDefinitionFormalExpression))]
-        //[XmlElement("CheckValue", typeof(ODMcomplexTypeDefinitionCheckValue))]
-        //[XmlElement("FormalExpression", typeof(ODMcomplexTypeDefinitionFormalExpression))]
+        //[XmlArray("Items")]
+        //[XmlArrayItem("CheckValue", typeof(ODMcomplexTypeDefinitionCheckValue))]
+        //[XmlArrayItem("FormalExpression", typeof(ODMcomplexTypeDefinitionFormalExpression))]
+        [XmlElement("CheckValue", typeof(ODMcomplexTypeDefinitionCheckValue))]
+        [XmlElement("FormalExpression", typeof(ODMcomplexTypeDefinitionFormalExpression))]
         public List<object> Items
         {
             get
@@ -5516,9 +5516,9 @@ namespace PCF.OdmXml
             this.translatedTextField = new List<ODMcomplexTypeDefinitionTranslatedText>();
         }
 
-        [XmlArray("TranslatedText")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
-        //[XmlElement("TranslatedText")]
+        //[XmlArray("TranslatedText")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
+        [XmlElement("TranslatedText")]
         public List<ODMcomplexTypeDefinitionTranslatedText> TranslatedText
         {
             get
@@ -5786,13 +5786,13 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Items")]
-        [XmlArrayItem("CodeListItem", typeof(ODMcomplexTypeDefinitionCodeListItem))]
-        [XmlArrayItem("EnumeratedItem", typeof(ODMcomplexTypeDefinitionEnumeratedItem))]
-        [XmlArrayItem("ExternalCodeList", typeof(ODMcomplexTypeDefinitionExternalCodeList))]
-        //[XmlElement("CodeListItem", typeof(ODMcomplexTypeDefinitionCodeListItem))]
-        //[XmlElement("EnumeratedItem", typeof(ODMcomplexTypeDefinitionEnumeratedItem))]
-        //[XmlElement("ExternalCodeList", typeof(ODMcomplexTypeDefinitionExternalCodeList))]
+        //[XmlArray("Items")]
+        //[XmlArrayItem("CodeListItem", typeof(ODMcomplexTypeDefinitionCodeListItem))]
+        //[XmlArrayItem("EnumeratedItem", typeof(ODMcomplexTypeDefinitionEnumeratedItem))]
+        //[XmlArrayItem("ExternalCodeList", typeof(ODMcomplexTypeDefinitionExternalCodeList))]
+        [XmlElement("CodeListItem", typeof(ODMcomplexTypeDefinitionCodeListItem))]
+        [XmlElement("EnumeratedItem", typeof(ODMcomplexTypeDefinitionEnumeratedItem))]
+        [XmlElement("ExternalCodeList", typeof(ODMcomplexTypeDefinitionExternalCodeList))]
         public List<object> Items
         {
             get
@@ -5817,9 +5817,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Alias")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
-        //[XmlElement("Alias")]
+        //[XmlArray("Alias")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        [XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -5987,9 +5987,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Alias")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
-        //[XmlElement("Alias")]
+        //[XmlArray("Alias")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        [XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -6122,9 +6122,9 @@ namespace PCF.OdmXml
             this.translatedTextField = new List<ODMcomplexTypeDefinitionTranslatedText>();
         }
 
-        [XmlArray("TranslatedText")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
-        //[XmlElement("TranslatedText")]
+        //[XmlArray("TranslatedText")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
+        [XmlElement("TranslatedText")]
         public List<ODMcomplexTypeDefinitionTranslatedText> TranslatedText
         {
             get
@@ -6173,9 +6173,9 @@ namespace PCF.OdmXml
             this.aliasField = new List<ODMcomplexTypeDefinitionAlias>();
         }
 
-        [XmlArray("Alias")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
-        //[XmlElement("Alias")]
+        //[XmlArray("Alias")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        [XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -6605,9 +6605,9 @@ namespace PCF.OdmXml
             this.userField = new List<ODMcomplexTypeDefinitionUser>();
         }
 
-        [XmlArray("User")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionUser))]
-        //[XmlElement("User")]
+        //[XmlArray("User")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionUser))]
+        [XmlElement("User")]
         public List<ODMcomplexTypeDefinitionUser> User
         {
             get
@@ -6632,9 +6632,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Location")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionLocation))]
-        //[XmlElement("Location")]
+        //[XmlArray("Location")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionLocation))]
+        [XmlElement("Location")]
         public List<ODMcomplexTypeDefinitionLocation> Location
         {
             get
@@ -6659,9 +6659,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("SignatureDef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionSignatureDef))]
-        //[XmlElement("SignatureDef")]
+        //[XmlArray("SignatureDef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionSignatureDef))]
+        [XmlElement("SignatureDef")]
         public List<ODMcomplexTypeDefinitionSignatureDef> SignatureDef
         {
             get
@@ -6916,9 +6916,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Address")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAddress))]
-        //[XmlElement("Address")]
+        //[XmlArray("Address")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAddress))]
+        [XmlElement("Address")]
         public List<ODMcomplexTypeDefinitionAddress> Address
         {
             get
@@ -6943,9 +6943,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Email")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionEmail))]
-        //[XmlElement("Email")]
+        //[XmlArray("Email")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionEmail))]
+        [XmlElement("Email")]
         public List<ODMcomplexTypeDefinitionEmail> Email
         {
             get
@@ -7018,9 +7018,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Fax")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFax))]
-        //[XmlElement("Fax")]
+        //[XmlArray("Fax")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionFax))]
+        [XmlElement("Fax")]
         public List<ODMcomplexTypeDefinitionFax> Fax
         {
             get
@@ -7045,9 +7045,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Phone")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionPhone))]
-        //[XmlElement("Phone")]
+        //[XmlArray("Phone")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionPhone))]
+        [XmlElement("Phone")]
         public List<ODMcomplexTypeDefinitionPhone> Phone
         {
             get
@@ -7072,9 +7072,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("LocationRef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionLocationRef))]
-        //[XmlElement("LocationRef")]
+        //[XmlArray("LocationRef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionLocationRef))]
+        [XmlElement("LocationRef")]
         public List<ODMcomplexTypeDefinitionLocationRef> LocationRef
         {
             get
@@ -7099,9 +7099,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Certificate")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionCertificate))]
-        //[XmlElement("Certificate")]
+        //[XmlArray("Certificate")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionCertificate))]
+        [XmlElement("Certificate")]
         public List<ODMcomplexTypeDefinitionCertificate> Certificate
         {
             get
@@ -7432,9 +7432,9 @@ namespace PCF.OdmXml
             this.streetNameField = new List<ODMcomplexTypeDefinitionStreetName>();
         }
 
-        [XmlArray("StreetName")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionStreetName))]
-        //[XmlElement("StreetName")]
+        //[XmlArray("StreetName")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionStreetName))]
+        [XmlElement("StreetName")]
         public List<ODMcomplexTypeDefinitionStreetName> StreetName
         {
             get
@@ -8117,9 +8117,9 @@ namespace PCF.OdmXml
             this.metaDataVersionRefField = new List<ODMcomplexTypeDefinitionMetaDataVersionRef>();
         }
 
-        [XmlArray("MetaDataVersionRef")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionMetaDataVersionRef))]
-        //[XmlElement("MetaDataVersionRef")]
+        //[XmlArray("MetaDataVersionRef")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionMetaDataVersionRef))]
+        [XmlElement("MetaDataVersionRef")]
         public List<ODMcomplexTypeDefinitionMetaDataVersionRef> MetaDataVersionRef
         {
             get
@@ -8578,9 +8578,9 @@ namespace PCF.OdmXml
             this.itemGroupDataField = new List<ODMcomplexTypeDefinitionItemGroupData>();
         }
 
-        [XmlArray("ItemGroupData")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemGroupData))]
-        //[XmlElement("ItemGroupData")]
+        //[XmlArray("ItemGroupData")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemGroupData))]
+        [XmlElement("ItemGroupData")]
         public List<ODMcomplexTypeDefinitionItemGroupData> ItemGroupData
         {
             get
@@ -8605,7 +8605,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("AuditRecords")]
+        //[XmlArray("AuditRecords")]
         [XmlArrayItem("AuditRecord", typeof(ODMcomplexTypeDefinitionAuditRecord), IsNullable = false)]
         public List<ODMcomplexTypeDefinitionAuditRecord> AuditRecords
         {
@@ -8631,7 +8631,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Signatures")]
+        //[XmlArray("Signatures")]
         [XmlArrayItem("Signature", typeof(ODMcomplexTypeDefinitionSignature), IsNullable = false)]
         public List<ODMcomplexTypeDefinitionSignature> Signatures
         {
@@ -8657,7 +8657,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Annotations")]
+        //[XmlArray("Annotations")]
         [XmlArrayItem("Annotation", typeof(ODMcomplexTypeDefinitionAnnotation), IsNullable = false)]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotations
         {
@@ -8814,9 +8814,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Annotation")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
-        //[XmlElement("Annotation")]
+        //[XmlArray("Annotation")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
+        [XmlElement("Annotation")]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotation
         {
             get
@@ -8841,53 +8841,53 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Items")]
-        [XmlArrayItem("ItemData", typeof(ODMcomplexTypeDefinitionItemData))]
-        [XmlArrayItem("ItemDataAny", typeof(ODMcomplexTypeDefinitionItemDataAny))]
-        [XmlArrayItem("ItemDataBase64Binary", typeof(ODMcomplexTypeDefinitionItemDataBase64Binary))]
-        [XmlArrayItem("ItemDataBase64Float", typeof(ODMcomplexTypeDefinitionItemDataBase64Float))]
-        [XmlArrayItem("ItemDataBoolean", typeof(ODMcomplexTypeDefinitionItemDataBoolean))]
-        [XmlArrayItem("ItemDataDate", typeof(ODMcomplexTypeDefinitionItemDataDate))]
-        [XmlArrayItem("ItemDataDatetime", typeof(ODMcomplexTypeDefinitionItemDataDatetime))]
-        [XmlArrayItem("ItemDataDouble", typeof(ODMcomplexTypeDefinitionItemDataDouble))]
-        [XmlArrayItem("ItemDataDurationDatetime", typeof(ODMcomplexTypeDefinitionItemDataDurationDatetime))]
-        [XmlArrayItem("ItemDataFloat", typeof(ODMcomplexTypeDefinitionItemDataFloat))]
-        [XmlArrayItem("ItemDataHexBinary", typeof(ODMcomplexTypeDefinitionItemDataHexBinary))]
-        [XmlArrayItem("ItemDataHexFloat", typeof(ODMcomplexTypeDefinitionItemDataHexFloat))]
-        [XmlArrayItem("ItemDataIncompleteDate", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDate))]
-        [XmlArrayItem("ItemDataIncompleteDatetime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDatetime))]
-        [XmlArrayItem("ItemDataIncompleteTime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteTime))]
-        [XmlArrayItem("ItemDataInteger", typeof(ODMcomplexTypeDefinitionItemDataInteger))]
-        [XmlArrayItem("ItemDataIntervalDatetime", typeof(ODMcomplexTypeDefinitionItemDataIntervalDatetime))]
-        [XmlArrayItem("ItemDataPartialDate", typeof(ODMcomplexTypeDefinitionItemDataPartialDate))]
-        [XmlArrayItem("ItemDataPartialDatetime", typeof(ODMcomplexTypeDefinitionItemDataPartialDatetime))]
-        [XmlArrayItem("ItemDataPartialTime", typeof(ODMcomplexTypeDefinitionItemDataPartialTime))]
-        [XmlArrayItem("ItemDataString", typeof(ODMcomplexTypeDefinitionItemDataString))]
-        [XmlArrayItem("ItemDataTime", typeof(ODMcomplexTypeDefinitionItemDataTime))]
-        [XmlArrayItem("ItemDataURI", typeof(ODMcomplexTypeDefinitionItemDataURI))]
-        //[XmlElement("ItemData", typeof(ODMcomplexTypeDefinitionItemData))]
-        //[XmlElement("ItemDataAny", typeof(ODMcomplexTypeDefinitionItemDataAny))]
-        //[XmlElement("ItemDataBase64Binary", typeof(ODMcomplexTypeDefinitionItemDataBase64Binary))]
-        //[XmlElement("ItemDataBase64Float", typeof(ODMcomplexTypeDefinitionItemDataBase64Float))]
-        //[XmlElement("ItemDataBoolean", typeof(ODMcomplexTypeDefinitionItemDataBoolean))]
-        //[XmlElement("ItemDataDate", typeof(ODMcomplexTypeDefinitionItemDataDate))]
-        //[XmlElement("ItemDataDatetime", typeof(ODMcomplexTypeDefinitionItemDataDatetime))]
-        //[XmlElement("ItemDataDouble", typeof(ODMcomplexTypeDefinitionItemDataDouble))]
-        //[XmlElement("ItemDataDurationDatetime", typeof(ODMcomplexTypeDefinitionItemDataDurationDatetime))]
-        //[XmlElement("ItemDataFloat", typeof(ODMcomplexTypeDefinitionItemDataFloat))]
-        //[XmlElement("ItemDataHexBinary", typeof(ODMcomplexTypeDefinitionItemDataHexBinary))]
-        //[XmlElement("ItemDataHexFloat", typeof(ODMcomplexTypeDefinitionItemDataHexFloat))]
-        //[XmlElement("ItemDataIncompleteDate", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDate))]
-        //[XmlElement("ItemDataIncompleteDatetime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDatetime))]
-        //[XmlElement("ItemDataIncompleteTime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteTime))]
-        //[XmlElement("ItemDataInteger", typeof(ODMcomplexTypeDefinitionItemDataInteger))]
-        //[XmlElement("ItemDataIntervalDatetime", typeof(ODMcomplexTypeDefinitionItemDataIntervalDatetime))]
-        //[XmlElement("ItemDataPartialDate", typeof(ODMcomplexTypeDefinitionItemDataPartialDate))]
-        //[XmlElement("ItemDataPartialDatetime", typeof(ODMcomplexTypeDefinitionItemDataPartialDatetime))]
-        //[XmlElement("ItemDataPartialTime", typeof(ODMcomplexTypeDefinitionItemDataPartialTime))]
-        //[XmlElement("ItemDataString", typeof(ODMcomplexTypeDefinitionItemDataString))]
-        //[XmlElement("ItemDataTime", typeof(ODMcomplexTypeDefinitionItemDataTime))]
-        //[XmlElement("ItemDataURI", typeof(ODMcomplexTypeDefinitionItemDataURI))]
+        //[XmlArray("Items")]
+        //[XmlArrayItem("ItemData", typeof(ODMcomplexTypeDefinitionItemData))]
+        //[XmlArrayItem("ItemDataAny", typeof(ODMcomplexTypeDefinitionItemDataAny))]
+        //[XmlArrayItem("ItemDataBase64Binary", typeof(ODMcomplexTypeDefinitionItemDataBase64Binary))]
+        //[XmlArrayItem("ItemDataBase64Float", typeof(ODMcomplexTypeDefinitionItemDataBase64Float))]
+        //[XmlArrayItem("ItemDataBoolean", typeof(ODMcomplexTypeDefinitionItemDataBoolean))]
+        //[XmlArrayItem("ItemDataDate", typeof(ODMcomplexTypeDefinitionItemDataDate))]
+        //[XmlArrayItem("ItemDataDatetime", typeof(ODMcomplexTypeDefinitionItemDataDatetime))]
+        //[XmlArrayItem("ItemDataDouble", typeof(ODMcomplexTypeDefinitionItemDataDouble))]
+        //[XmlArrayItem("ItemDataDurationDatetime", typeof(ODMcomplexTypeDefinitionItemDataDurationDatetime))]
+        //[XmlArrayItem("ItemDataFloat", typeof(ODMcomplexTypeDefinitionItemDataFloat))]
+        //[XmlArrayItem("ItemDataHexBinary", typeof(ODMcomplexTypeDefinitionItemDataHexBinary))]
+        //[XmlArrayItem("ItemDataHexFloat", typeof(ODMcomplexTypeDefinitionItemDataHexFloat))]
+        //[XmlArrayItem("ItemDataIncompleteDate", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDate))]
+        //[XmlArrayItem("ItemDataIncompleteDatetime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDatetime))]
+        //[XmlArrayItem("ItemDataIncompleteTime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteTime))]
+        //[XmlArrayItem("ItemDataInteger", typeof(ODMcomplexTypeDefinitionItemDataInteger))]
+        //[XmlArrayItem("ItemDataIntervalDatetime", typeof(ODMcomplexTypeDefinitionItemDataIntervalDatetime))]
+        //[XmlArrayItem("ItemDataPartialDate", typeof(ODMcomplexTypeDefinitionItemDataPartialDate))]
+        //[XmlArrayItem("ItemDataPartialDatetime", typeof(ODMcomplexTypeDefinitionItemDataPartialDatetime))]
+        //[XmlArrayItem("ItemDataPartialTime", typeof(ODMcomplexTypeDefinitionItemDataPartialTime))]
+        //[XmlArrayItem("ItemDataString", typeof(ODMcomplexTypeDefinitionItemDataString))]
+        //[XmlArrayItem("ItemDataTime", typeof(ODMcomplexTypeDefinitionItemDataTime))]
+        //[XmlArrayItem("ItemDataURI", typeof(ODMcomplexTypeDefinitionItemDataURI))]
+        [XmlElement("ItemData", typeof(ODMcomplexTypeDefinitionItemData))]
+        [XmlElement("ItemDataAny", typeof(ODMcomplexTypeDefinitionItemDataAny))]
+        [XmlElement("ItemDataBase64Binary", typeof(ODMcomplexTypeDefinitionItemDataBase64Binary))]
+        [XmlElement("ItemDataBase64Float", typeof(ODMcomplexTypeDefinitionItemDataBase64Float))]
+        [XmlElement("ItemDataBoolean", typeof(ODMcomplexTypeDefinitionItemDataBoolean))]
+        [XmlElement("ItemDataDate", typeof(ODMcomplexTypeDefinitionItemDataDate))]
+        [XmlElement("ItemDataDatetime", typeof(ODMcomplexTypeDefinitionItemDataDatetime))]
+        [XmlElement("ItemDataDouble", typeof(ODMcomplexTypeDefinitionItemDataDouble))]
+        [XmlElement("ItemDataDurationDatetime", typeof(ODMcomplexTypeDefinitionItemDataDurationDatetime))]
+        [XmlElement("ItemDataFloat", typeof(ODMcomplexTypeDefinitionItemDataFloat))]
+        [XmlElement("ItemDataHexBinary", typeof(ODMcomplexTypeDefinitionItemDataHexBinary))]
+        [XmlElement("ItemDataHexFloat", typeof(ODMcomplexTypeDefinitionItemDataHexFloat))]
+        [XmlElement("ItemDataIncompleteDate", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDate))]
+        [XmlElement("ItemDataIncompleteDatetime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDatetime))]
+        [XmlElement("ItemDataIncompleteTime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteTime))]
+        [XmlElement("ItemDataInteger", typeof(ODMcomplexTypeDefinitionItemDataInteger))]
+        [XmlElement("ItemDataIntervalDatetime", typeof(ODMcomplexTypeDefinitionItemDataIntervalDatetime))]
+        [XmlElement("ItemDataPartialDate", typeof(ODMcomplexTypeDefinitionItemDataPartialDate))]
+        [XmlElement("ItemDataPartialDatetime", typeof(ODMcomplexTypeDefinitionItemDataPartialDatetime))]
+        [XmlElement("ItemDataPartialTime", typeof(ODMcomplexTypeDefinitionItemDataPartialTime))]
+        [XmlElement("ItemDataString", typeof(ODMcomplexTypeDefinitionItemDataString))]
+        [XmlElement("ItemDataTime", typeof(ODMcomplexTypeDefinitionItemDataTime))]
+        [XmlElement("ItemDataURI", typeof(ODMcomplexTypeDefinitionItemDataURI))]
         public List<object> Items
         {
             get
@@ -9697,9 +9697,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Flag")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFlag))]
-        //[XmlElement("Flag")]
+        //[XmlArray("Flag")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionFlag))]
+        [XmlElement("Flag")]
         public List<ODMcomplexTypeDefinitionFlag> Flag
         {
             get
@@ -10219,9 +10219,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Annotation")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
-        //[XmlElement("Annotation")]
+        //[XmlArray("Annotation")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
+        [XmlElement("Annotation")]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotation
         {
             get
@@ -15007,9 +15007,9 @@ namespace PCF.OdmXml
             this.subjectDataField = new List<ODMcomplexTypeDefinitionSubjectData>();
         }
 
-        [XmlArray("SubjectData")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionSubjectData))]
-        //[XmlElement("SubjectData")]
+        //[XmlArray("SubjectData")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionSubjectData))]
+        [XmlElement("SubjectData")]
         public List<ODMcomplexTypeDefinitionSubjectData> SubjectData
         {
             get
@@ -15034,7 +15034,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("AuditRecords")]
+        //[XmlArray("AuditRecords")]
         [XmlArrayItem("AuditRecord", typeof(ODMcomplexTypeDefinitionAuditRecord), IsNullable = false)]
         public List<ODMcomplexTypeDefinitionAuditRecord> AuditRecords
         {
@@ -15060,7 +15060,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Signatures")]
+        //[XmlArray("Signatures")]
         [XmlArrayItem("Signature", typeof(ODMcomplexTypeDefinitionSignature), IsNullable = false)]
         public List<ODMcomplexTypeDefinitionSignature> Signatures
         {
@@ -15086,7 +15086,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Annotations")]
+        //[XmlArray("Annotations")]
         [XmlArrayItem("Annotation", typeof(ODMcomplexTypeDefinitionAnnotation), IsNullable = false)]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotations
         {
@@ -15295,9 +15295,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Annotation")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
-        //[XmlElement("Annotation")]
+        //[XmlArray("Annotation")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
+        [XmlElement("Annotation")]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotation
         {
             get
@@ -15322,9 +15322,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("StudyEventData")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionStudyEventData))]
-        //[XmlElement("StudyEventData")]
+        //[XmlArray("StudyEventData")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionStudyEventData))]
+        [XmlElement("StudyEventData")]
         public List<ODMcomplexTypeDefinitionStudyEventData> StudyEventData
         {
             get
@@ -15561,9 +15561,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Annotation")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
-        //[XmlElement("Annotation")]
+        //[XmlArray("Annotation")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
+        [XmlElement("Annotation")]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotation
         {
             get
@@ -15588,9 +15588,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("FormData")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormData))]
-        //[XmlElement("FormData")]
+        //[XmlArray("FormData")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormData))]
+        [XmlElement("FormData")]
         public List<ODMcomplexTypeDefinitionFormData> FormData
         {
             get
@@ -15807,9 +15807,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Annotation")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
-        //[XmlElement("Annotation")]
+        //[XmlArray("Annotation")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
+        [XmlElement("Annotation")]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotation
         {
             get
@@ -15834,9 +15834,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("ItemGroupData")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemGroupData))]
-        //[XmlElement("ItemGroupData")]
+        //[XmlArray("ItemGroupData")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemGroupData))]
+        [XmlElement("ItemGroupData")]
         public List<ODMcomplexTypeDefinitionItemGroupData> ItemGroupData
         {
             get
@@ -16509,9 +16509,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Object")]
-        [XmlArrayItem(typeof(ObjectType))]
-        //[XmlElement("Object")]
+        //[XmlArray("Object")]
+        //[XmlArrayItem(typeof(ObjectType))]
+        [XmlElement("Object")]
         public List<ObjectType> Object
         {
             get
@@ -16632,9 +16632,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Reference")]
-        [XmlArrayItem(typeof(ReferenceType))]
-        //[XmlElement("Reference")]
+        //[XmlArray("Reference")]
+        //[XmlArrayItem(typeof(ReferenceType))]
+        [XmlElement("Reference")]
         public List<ReferenceType> Reference
         {
             get
@@ -16701,10 +16701,10 @@ namespace PCF.OdmXml
             this.anyField = new List<XmlNode>();
         }
 
-        [XmlArray("Any")]
-        [XmlArrayItem(typeof(XmlNode))]
-        //[XmlText]
-        //[XmlAnyElement]
+        //[XmlArray("Any")]
+        //[XmlArrayItem(typeof(XmlNode))]
+        [XmlText]
+        [XmlAnyElement]
         public List<XmlNode> Any
         {
             get
@@ -16798,10 +16798,10 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Any")]
-        [XmlArrayItem(typeof(XmlNode))]
-        //[XmlText]
-        //[XmlAnyElement]
+        //[XmlArray("Any")]
+        //[XmlArrayItem(typeof(XmlNode))]
+        [XmlText]
+        [XmlAnyElement]
         public List<XmlNode> Any
         {
             get
@@ -16877,7 +16877,7 @@ namespace PCF.OdmXml
             this.transformsField = new List<TransformType>();
         }
 
-        [XmlArray("Transforms")]
+        //[XmlArray("Transforms")]
         [XmlArrayItem("Transform", IsNullable = false)]
         public List<TransformType> Transforms
         {
@@ -17047,10 +17047,10 @@ namespace PCF.OdmXml
             this.itemsField = new List<object>();
         }
 
-        [XmlArray("Items")]
-        [XmlArrayItem("XPath", typeof(string))]
-        //[XmlAnyElement]
-        //[XmlElement("XPath", typeof(string))]
+        //[XmlArray("Items")]
+        //[XmlArrayItem("XPath", typeof(string))]
+        [XmlAnyElement]
+        [XmlElement("XPath", typeof(string))]
         public List<object> Items
         {
             get
@@ -17075,9 +17075,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Text")]
-        [XmlArrayItem(typeof(string))]
-        //[XmlText]
+        //[XmlArray("Text")]
+        //[XmlArrayItem(typeof(string))]
+        [XmlText]
         public List<string> Text
         {
             get
@@ -17144,10 +17144,10 @@ namespace PCF.OdmXml
             this.anyField = new List<XmlNode>();
         }
 
-        [XmlArray("Any")]
-        [XmlArrayItem(typeof(XmlNode))]
-        //[XmlText]
-        //[XmlAnyElement]
+        //[XmlArray("Any")]
+        //[XmlArrayItem(typeof(XmlNode))]
+        [XmlText]
+        [XmlAnyElement]
         public List<XmlNode> Any
         {
             get
@@ -17351,9 +17351,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Text")]
-        [XmlArrayItem(typeof(string))]
-        //[XmlText]
+        //[XmlArray("Text")]
+        //[XmlArrayItem(typeof(string))]
+        [XmlText]
         public List<string> Text
         {
             get
@@ -17447,9 +17447,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [XmlArray("Text")]
-        [XmlArrayItem(typeof(string))]
-        //[XmlText]
+        //[XmlArray("Text")]
+        //[XmlArrayItem(typeof(string))]
+        [XmlText]
         public List<string> Text
         {
             get
@@ -17847,7 +17847,7 @@ namespace PCF.OdmXml
             this.transformsField = new List<TransformType>();
         }
 
-        [XmlArray("Transforms")]
+        //[XmlArray("Transforms")]
         [XmlArrayItem("Transform", IsNullable = false)]
         public List<TransformType> Transforms
         {
@@ -18209,10 +18209,10 @@ namespace PCF.OdmXml
             this.anyField = new List<XmlNode>();
         }
 
-        [XmlArray("Any")]
-        [XmlArrayItem(typeof(XmlNode))]
-        //[XmlText]
-        //[XmlAnyElement]
+        //[XmlArray("Any")]
+        //[XmlArrayItem(typeof(XmlNode))]
+        [XmlText]
+        [XmlAnyElement]
         public List<XmlNode> Any
         {
             get
@@ -18396,9 +18396,9 @@ namespace PCF.OdmXml
             this.auditRecordField = new List<ODMcomplexTypeDefinitionAuditRecord>();
         }
 
-        [XmlArray("AuditRecord")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAuditRecord))]
-        //[XmlElement("AuditRecord")]
+        //[XmlArray("AuditRecord")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAuditRecord))]
+        [XmlElement("AuditRecord")]
         public List<ODMcomplexTypeDefinitionAuditRecord> AuditRecord
         {
             get
@@ -18439,9 +18439,9 @@ namespace PCF.OdmXml
             this.signatureField = new List<ODMcomplexTypeDefinitionSignature>();
         }
 
-        [XmlArray("Signature")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionSignature))]
-        //[XmlElement("Signature")]
+        //[XmlArray("Signature")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionSignature))]
+        [XmlElement("Signature")]
         public List<ODMcomplexTypeDefinitionSignature> Signature
         {
             get
@@ -18482,9 +18482,9 @@ namespace PCF.OdmXml
             this.annotationField = new List<ODMcomplexTypeDefinitionAnnotation>();
         }
 
-        [XmlArray("Annotation")]
-        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
-        //[XmlElement("Annotation")]
+        //[XmlArray("Annotation")]
+        //[XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
+        [XmlElement("Annotation")]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotation
         {
             get

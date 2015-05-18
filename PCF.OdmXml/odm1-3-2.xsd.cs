@@ -4,21 +4,22 @@
 //    <NameSpace>PCF.OdmXml</NameSpace><Collection>List</Collection><codeType>CSharp</codeType><EnableDataBinding>True</EnableDataBinding><EnableLazyLoading>False</EnableLazyLoading><TrackingChangesEnable>True</TrackingChangesEnable><GenTrackingClasses>True</GenTrackingClasses><HidePrivateFieldInIDE>False</HidePrivateFieldInIDE><EnableSummaryComment>False</EnableSummaryComment><VirtualProp>False</VirtualProp><IncludeSerializeMethod>True</IncludeSerializeMethod><UseBaseClass>True</UseBaseClass><GenBaseClass>True</GenBaseClass><GenerateCloneMethod>False</GenerateCloneMethod><GenerateDataContracts>False</GenerateDataContracts><CodeBaseTag>Net35</CodeBaseTag><SerializeMethodName>Serialize</SerializeMethodName><DeserializeMethodName>Deserialize</DeserializeMethodName><SaveToFileMethodName>Save</SaveToFileMethodName><LoadFromFileMethodName>Load</LoadFromFileMethodName><GenerateXMLAttributes>True</GenerateXMLAttributes><OrderXMLAttrib>False</OrderXMLAttrib><EnableEncoding>False</EnableEncoding><AutomaticProperties>False</AutomaticProperties><GenerateShouldSerialize>False</GenerateShouldSerialize><DisableDebug>False</DisableDebug><PropNameSpecified>Default</PropNameSpecified><Encoder>UTF8</Encoder><CustomUsings></CustomUsings><ExcludeIncludedTypes>False</ExcludeIncludedTypes><EnableInitializeFields>True</EnableInitializeFields>
 //  </auto-generated>
 // ------------------------------------------------------------------------------
+// This file has been modified from it's generated state.
 namespace PCF.OdmXml
 {
     using System;
-    using System.Diagnostics;
-    using System.Xml.Serialization;
+    using System.CodeDom.Compiler;
     using System.Collections;
-    using System.Xml.Schema;
-    using System.ComponentModel;
-    using System.Collections.Specialized;
-    using System.Runtime.Serialization;
-    using System.Collections.ObjectModel;
-    using System.Reflection;
-    using System.IO;
-    using System.Text;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Reflection;
+    using System.Runtime.Serialization;
+    using System.Xml;
+    using System.Xml.Serialization;
 
 
     #region Base entity class
@@ -27,9 +28,9 @@ namespace PCF.OdmXml
 
         private ObjectChangeTracker changeTrackerField;
 
-        private static System.Xml.Serialization.XmlSerializer serializer;
+        private static XmlSerializer serializer;
 
-        [XmlIgnore()]
+        [XmlIgnore]
         public ObjectChangeTracker ChangeTracker
         {
             get
@@ -42,13 +43,13 @@ namespace PCF.OdmXml
             }
         }
 
-        private static System.Xml.Serialization.XmlSerializer Serializer
+        private static XmlSerializer Serializer
         {
             get
             {
                 if ((serializer == null))
                 {
-                    serializer = new System.Xml.Serialization.XmlSerializer(typeof(T));
+                    serializer = new XmlSerializer(typeof(T));
                 }
                 return serializer;
             }
@@ -131,7 +132,15 @@ namespace PCF.OdmXml
             try
             {
                 stringReader = new System.IO.StringReader(xml);
-                return ((T)(Serializer.Deserialize(System.Xml.XmlReader.Create(stringReader))));
+                var test1 = XmlReader.Create(stringReader);
+                var test2 = Serializer.Deserialize(test1);
+
+                return ((T)(test2));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return default(T);
             }
             finally
             {
@@ -884,11 +893,11 @@ namespace PCF.OdmXml
     }
     #endregion
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-FormalExpression", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("FormalExpression", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-FormalExpression", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("FormalExpression", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionFormalExpression : EntityBase<ODMcomplexTypeDefinitionFormalExpression>
     {
 
@@ -896,7 +905,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Context
         {
             get
@@ -921,7 +930,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -947,11 +956,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ConditionDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ConditionDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ConditionDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ConditionDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionConditionDef : EntityBase<ODMcomplexTypeDefinitionConditionDef>
     {
 
@@ -996,7 +1005,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("FormalExpression")]
+        [XmlArray("FormatExpression")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormalExpression))]
+        //[XmlElement("FormalExpression")]
         public List<ODMcomplexTypeDefinitionFormalExpression> FormalExpression
         {
             get
@@ -1021,7 +1032,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Alias")]
+        [XmlArray("Alias")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        //[XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -1046,7 +1059,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -1071,7 +1084,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Name
         {
             get
@@ -1097,11 +1110,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Description", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Description", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Description", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Description", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionDescription : EntityBase<ODMcomplexTypeDefinitionDescription>
     {
 
@@ -1112,7 +1125,9 @@ namespace PCF.OdmXml
             this.translatedTextField = new List<ODMcomplexTypeDefinitionTranslatedText>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("TranslatedText")]
+        [XmlArray("TranslatedText")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
+        //[XmlElement("TranslatedText")]
         public List<ODMcomplexTypeDefinitionTranslatedText> TranslatedText
         {
             get
@@ -1138,11 +1153,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-TranslatedText", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("TranslatedText", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-TranslatedText", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("TranslatedText", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionTranslatedText : EntityBase<ODMcomplexTypeDefinitionTranslatedText>
     {
 
@@ -1150,7 +1165,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/XML/1998/namespace")]
+        [XmlAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/XML/1998/namespace")]
         public string lang
         {
             get
@@ -1175,7 +1190,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -1201,11 +1216,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Alias", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Alias", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Alias", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Alias", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionAlias : EntityBase<ODMcomplexTypeDefinitionAlias>
     {
 
@@ -1213,7 +1228,7 @@ namespace PCF.OdmXml
 
         private string nameField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Context
         {
             get
@@ -1238,7 +1253,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Name
         {
             get
@@ -1264,11 +1279,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-MethodDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("MethodDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-MethodDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("MethodDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionMethodDef : EntityBase<ODMcomplexTypeDefinitionMethodDef>
     {
 
@@ -1317,7 +1332,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("FormalExpression")]
+        [XmlArray("FormalExpression")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormalExpression))]
+        //[XmlElement("FormalExpression")]
         public List<ODMcomplexTypeDefinitionFormalExpression> FormalExpression
         {
             get
@@ -1342,7 +1359,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Alias")]
+        [XmlArray("Alias")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        //[XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -1367,7 +1386,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -1392,7 +1411,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Name
         {
             get
@@ -1417,7 +1436,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public MethodType Type
         {
             get
@@ -1434,7 +1453,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TypeSpecified
         {
             get
@@ -1452,9 +1471,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum MethodType
     {
 
@@ -1471,11 +1490,11 @@ namespace PCF.OdmXml
         Other,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true, Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot(Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODM : EntityBase<ODM>
     {
 
@@ -1535,7 +1554,9 @@ namespace PCF.OdmXml
             this.studyField = new List<ODMcomplexTypeDefinitionStudy>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Study")]
+        [XmlArray("Study")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionStudy))]
+        //[XmlElement("Study")]
         public List<ODMcomplexTypeDefinitionStudy> Study
         {
             get
@@ -1560,7 +1581,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("AdminData")]
+        [XmlArray("AdminData")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAdminData))]
+        //[XmlElement("AdminData")]
         public List<ODMcomplexTypeDefinitionAdminData> AdminData
         {
             get
@@ -1585,7 +1608,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ReferenceData")]
+        [XmlArray("ReferenceData")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionReferenceData))]
+        //[XmlElement("ReferenceData")]
         public List<ODMcomplexTypeDefinitionReferenceData> ReferenceData
         {
             get
@@ -1610,7 +1635,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ClinicalData")]
+        [XmlArray("ClinicalData")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionClinicalData))]
+        //[XmlElement("ClinicalData")]
         public List<ODMcomplexTypeDefinitionClinicalData> ClinicalData
         {
             get
@@ -1635,7 +1662,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Association")]
+        [XmlArray("Association")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAssociation))]
+        //[XmlElement("Association")]
         public List<ODMcomplexTypeDefinitionAssociation> Association
         {
             get
@@ -1660,7 +1689,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Signature", Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+        [XmlArray("Signature", Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+        [XmlArrayItem(typeof(SignatureType))]
+        //[XmlElement("Signature", Namespace = "http://www.w3.org/2000/09/xmldsig#")]
         public List<SignatureType> Signature
         {
             get
@@ -1685,7 +1716,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Description
         {
             get
@@ -1710,7 +1741,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public FileType FileType
         {
             get
@@ -1727,7 +1758,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public Granularity Granularity
         {
             get
@@ -1744,7 +1775,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool GranularitySpecified
         {
             get
@@ -1761,7 +1792,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public YesOnly Archival
         {
             get
@@ -1778,7 +1809,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool ArchivalSpecified
         {
             get
@@ -1795,7 +1826,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string FileOID
         {
             get
@@ -1820,7 +1851,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public System.DateTime CreationDateTime
         {
             get
@@ -1837,7 +1868,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string PriorFileOID
         {
             get
@@ -1862,7 +1893,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public System.DateTime AsOfDateTime
         {
             get
@@ -1879,7 +1910,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool AsOfDateTimeSpecified
         {
             get
@@ -1896,7 +1927,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public ODMVersion ODMVersion
         {
             get
@@ -1913,7 +1944,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool ODMVersionSpecified
         {
             get
@@ -1930,7 +1961,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Originator
         {
             get
@@ -1955,7 +1986,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string SourceSystem
         {
             get
@@ -1980,7 +2011,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string SourceSystemVersion
         {
             get
@@ -2005,7 +2036,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
+        [XmlAttribute(DataType = "ID")]
         public string ID
         {
             get
@@ -2031,11 +2062,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Study", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Study", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Study", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Study", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionStudy : EntityBase<ODMcomplexTypeDefinitionStudy>
     {
 
@@ -2102,7 +2133,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("MetaDataVersion")]
+        [XmlArray("MetaDataVersion")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionMetaDataVersion))]
+        //[XmlElement("MetaDataVersion")]
         public List<ODMcomplexTypeDefinitionMetaDataVersion> MetaDataVersion
         {
             get
@@ -2127,7 +2160,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -2153,11 +2186,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-GlobalVariables", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("GlobalVariables", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-GlobalVariables", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("GlobalVariables", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionGlobalVariables : EntityBase<ODMcomplexTypeDefinitionGlobalVariables>
     {
 
@@ -2247,17 +2280,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-StudyName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("StudyName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-StudyName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("StudyName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionStudyName : EntityBase<ODMcomplexTypeDefinitionStudyName>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -2283,17 +2316,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-StudyDescription", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("StudyDescription", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-StudyDescription", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("StudyDescription", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionStudyDescription : EntityBase<ODMcomplexTypeDefinitionStudyDescription>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -2319,17 +2352,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ProtocolName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ProtocolName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ProtocolName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ProtocolName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionProtocolName : EntityBase<ODMcomplexTypeDefinitionProtocolName>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -2355,11 +2388,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-BasicDefinitions", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("BasicDefinitions", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-BasicDefinitions", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("BasicDefinitions", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionBasicDefinitions : EntityBase<ODMcomplexTypeDefinitionBasicDefinitions>
     {
 
@@ -2370,7 +2403,9 @@ namespace PCF.OdmXml
             this.measurementUnitField = new List<ODMcomplexTypeDefinitionMeasurementUnit>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("MeasurementUnit")]
+        [XmlArray("MeasurementUnit")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionMeasurementUnit))]
+        //[XmlElement("MeasurementUnit")]
         public List<ODMcomplexTypeDefinitionMeasurementUnit> MeasurementUnit
         {
             get
@@ -2396,11 +2431,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-MeasurementUnit", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("MeasurementUnit", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-MeasurementUnit", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("MeasurementUnit", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionMeasurementUnit : EntityBase<ODMcomplexTypeDefinitionMeasurementUnit>
     {
 
@@ -2442,7 +2477,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Alias")]
+        [XmlArray("Alias")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        //[XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -2467,7 +2504,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -2492,7 +2529,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Name
         {
             get
@@ -2518,11 +2555,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Symbol", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Symbol", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Symbol", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Symbol", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionSymbol : EntityBase<ODMcomplexTypeDefinitionSymbol>
     {
 
@@ -2533,7 +2570,9 @@ namespace PCF.OdmXml
             this.translatedTextField = new List<ODMcomplexTypeDefinitionTranslatedText>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("TranslatedText")]
+        [XmlArray("TranslatedText")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
+        //[XmlElement("TranslatedText")]
         public List<ODMcomplexTypeDefinitionTranslatedText> TranslatedText
         {
             get
@@ -2559,11 +2598,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-MetaDataVersion", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("MetaDataVersion", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-MetaDataVersion", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("MetaDataVersion", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionMetaDataVersion : EntityBase<ODMcomplexTypeDefinitionMetaDataVersion>
     {
 
@@ -2658,7 +2697,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("StudyEventDef")]
+        [XmlArray("StudyEventDef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionStudyEventDef))]
+        //[XmlElement("StudyEventDef")]
         public List<ODMcomplexTypeDefinitionStudyEventDef> StudyEventDef
         {
             get
@@ -2683,7 +2724,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("FormDef")]
+        [XmlArray("FormDef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormDef))]
+        //[XmlElement("FormDef")]
         public List<ODMcomplexTypeDefinitionFormDef> FormDef
         {
             get
@@ -2708,7 +2751,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ItemGroupDef")]
+        [XmlArray("ItemGroupDef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemGroupDef))]
+        //[XmlElement("ItemGroupDef")]
         public List<ODMcomplexTypeDefinitionItemGroupDef> ItemGroupDef
         {
             get
@@ -2733,7 +2778,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ItemDef")]
+        [XmlArray("ItemDef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemDef))]
+        //[XmlElement("ItemDef")]
         public List<ODMcomplexTypeDefinitionItemDef> ItemDef
         {
             get
@@ -2758,7 +2805,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("CodeList")]
+        [XmlArray("CodeList")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionCodeList))]
+        //[XmlElement("CodeList")]
         public List<ODMcomplexTypeDefinitionCodeList> CodeList
         {
             get
@@ -2783,7 +2832,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ImputationMethod")]
+        [XmlArray("ImputationMethod")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionImputationMethod))]
+        //[XmlElement("ImputationMethod")]
         public List<ODMcomplexTypeDefinitionImputationMethod> ImputationMethod
         {
             get
@@ -2808,7 +2859,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Presentation")]
+        [XmlArray("Presentation")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionPresentation))]
+        //[XmlElement("Presentation")]
         public List<ODMcomplexTypeDefinitionPresentation> Presentation
         {
             get
@@ -2833,7 +2886,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ConditionDef")]
+        [XmlArray("ConditionDef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionConditionDef))]
+        //[XmlElement("ConditionDef")]
         public List<ODMcomplexTypeDefinitionConditionDef> ConditionDef
         {
             get
@@ -2858,7 +2913,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("MethodDef")]
+        [XmlArray("MethodDef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionMethodDef))]
+        //[XmlElement("MethodDef")]
         public List<ODMcomplexTypeDefinitionMethodDef> MethodDef
         {
             get
@@ -2883,7 +2940,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -2908,7 +2965,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Name
         {
             get
@@ -2933,7 +2990,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Description
         {
             get
@@ -2959,11 +3016,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Include", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Include", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Include", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Include", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionInclude : EntityBase<ODMcomplexTypeDefinitionInclude>
     {
 
@@ -2971,7 +3028,7 @@ namespace PCF.OdmXml
 
         private string metaDataVersionOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string StudyOID
         {
             get
@@ -2996,7 +3053,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MetaDataVersionOID
         {
             get
@@ -3022,11 +3079,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Protocol", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Protocol", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Protocol", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Protocol", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionProtocol : EntityBase<ODMcomplexTypeDefinitionProtocol>
     {
 
@@ -3067,7 +3124,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("StudyEventRef")]
+        [XmlArray("StudyEventRef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionStudyEventRef))]
+        //[XmlElement("StudyEventRef")]
         public List<ODMcomplexTypeDefinitionStudyEventRef> StudyEventRef
         {
             get
@@ -3092,7 +3151,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Alias")]
+        [XmlArray("Alias")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        //[XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -3118,11 +3179,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-StudyEventRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("StudyEventRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-StudyEventRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("StudyEventRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionStudyEventRef : EntityBase<ODMcomplexTypeDefinitionStudyEventRef>
     {
 
@@ -3134,7 +3195,7 @@ namespace PCF.OdmXml
 
         private string collectionExceptionConditionOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string StudyEventOID
         {
             get
@@ -3159,7 +3220,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
+        [XmlAttribute(DataType = "integer")]
         public string OrderNumber
         {
             get
@@ -3184,7 +3245,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public YesOrNo Mandatory
         {
             get
@@ -3201,7 +3262,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string CollectionExceptionConditionOID
         {
             get
@@ -3227,9 +3288,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum YesOrNo
     {
 
@@ -3240,11 +3301,11 @@ namespace PCF.OdmXml
         No,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-StudyEventDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("StudyEventDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-StudyEventDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("StudyEventDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionStudyEventDef : EntityBase<ODMcomplexTypeDefinitionStudyEventDef>
     {
 
@@ -3295,7 +3356,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("FormRef")]
+        [XmlArray("FormRef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormRef))]
+        //[XmlElement("FormRef")]
         public List<ODMcomplexTypeDefinitionFormRef> FormRef
         {
             get
@@ -3320,7 +3383,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Alias")]
+        [XmlArray("Alias")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        //[XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -3345,7 +3410,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -3370,7 +3435,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Name
         {
             get
@@ -3395,7 +3460,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public YesOrNo Repeating
         {
             get
@@ -3412,7 +3477,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public EventType Type
         {
             get
@@ -3429,7 +3494,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Category
         {
             get
@@ -3455,11 +3520,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-FormRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("FormRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-FormRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("FormRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionFormRef : EntityBase<ODMcomplexTypeDefinitionFormRef>
     {
 
@@ -3471,7 +3536,7 @@ namespace PCF.OdmXml
 
         private string collectionExceptionConditionOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string FormOID
         {
             get
@@ -3496,7 +3561,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
+        [XmlAttribute(DataType = "integer")]
         public string OrderNumber
         {
             get
@@ -3521,7 +3586,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public YesOrNo Mandatory
         {
             get
@@ -3538,7 +3603,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string CollectionExceptionConditionOID
         {
             get
@@ -3564,9 +3629,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum EventType
     {
 
@@ -3580,11 +3645,11 @@ namespace PCF.OdmXml
         Common,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-FormDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("FormDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-FormDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("FormDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionFormDef : EntityBase<ODMcomplexTypeDefinitionFormDef>
     {
 
@@ -3634,7 +3699,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ItemGroupRef")]
+        [XmlArray("ItemGroupRef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemGroupRef))]
+        //[XmlElement("ItemGroupRef")]
         public List<ODMcomplexTypeDefinitionItemGroupRef> ItemGroupRef
         {
             get
@@ -3659,7 +3726,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ArchiveLayout")]
+        [XmlArray("ArchiveLayout")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionArchiveLayout))]
+        //[XmlElement("ArchiveLayout")]
         public List<ODMcomplexTypeDefinitionArchiveLayout> ArchiveLayout
         {
             get
@@ -3684,7 +3753,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Alias")]
+        [XmlArray("Alias")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        //[XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -3709,7 +3780,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -3734,7 +3805,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Name
         {
             get
@@ -3759,7 +3830,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public YesOrNo Repeating
         {
             get
@@ -3777,11 +3848,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemGroupRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemGroupRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemGroupRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemGroupRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemGroupRef : EntityBase<ODMcomplexTypeDefinitionItemGroupRef>
     {
 
@@ -3793,7 +3864,7 @@ namespace PCF.OdmXml
 
         private string collectionExceptionConditionOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemGroupOID
         {
             get
@@ -3818,7 +3889,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
+        [XmlAttribute(DataType = "integer")]
         public string OrderNumber
         {
             get
@@ -3843,7 +3914,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public YesOrNo Mandatory
         {
             get
@@ -3860,7 +3931,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string CollectionExceptionConditionOID
         {
             get
@@ -3886,11 +3957,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ArchiveLayout", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ArchiveLayout", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ArchiveLayout", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ArchiveLayout", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionArchiveLayout : EntityBase<ODMcomplexTypeDefinitionArchiveLayout>
     {
 
@@ -3900,7 +3971,7 @@ namespace PCF.OdmXml
 
         private string presentationOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -3925,7 +3996,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        [XmlAttribute(DataType = "anyURI")]
         public string PdfFileName
         {
             get
@@ -3950,7 +4021,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string PresentationOID
         {
             get
@@ -3976,11 +4047,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemGroupDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemGroupDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemGroupDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemGroupDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemGroupDef : EntityBase<ODMcomplexTypeDefinitionItemGroupDef>
     {
 
@@ -4043,7 +4114,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ItemRef")]
+        [XmlArray("ItemRef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemRef))]
+        //[XmlElement("ItemRef")]
         public List<ODMcomplexTypeDefinitionItemRef> ItemRef
         {
             get
@@ -4068,7 +4141,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Alias")]
+        [XmlArray("Alias")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        //[XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -4093,7 +4168,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -4118,7 +4193,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Name
         {
             get
@@ -4143,7 +4218,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public YesOrNo Repeating
         {
             get
@@ -4160,7 +4235,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public YesOrNo IsReferenceData
         {
             get
@@ -4177,7 +4252,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool IsReferenceDataSpecified
         {
             get
@@ -4194,7 +4269,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string SASDatasetName
         {
             get
@@ -4219,7 +4294,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Domain
         {
             get
@@ -4244,7 +4319,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Origin
         {
             get
@@ -4269,7 +4344,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Role
         {
             get
@@ -4294,7 +4369,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Purpose
         {
             get
@@ -4319,7 +4394,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Comment
         {
             get
@@ -4345,11 +4420,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemRef : EntityBase<ODMcomplexTypeDefinitionItemRef>
     {
 
@@ -4371,7 +4446,7 @@ namespace PCF.OdmXml
 
         private string collectionExceptionConditionOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -4396,7 +4471,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
+        [XmlAttribute(DataType = "integer")]
         public string KeySequence
         {
             get
@@ -4421,7 +4496,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MethodOID
         {
             get
@@ -4446,7 +4521,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ImputationMethodOID
         {
             get
@@ -4471,7 +4546,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Role
         {
             get
@@ -4496,7 +4571,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string RoleCodeListOID
         {
             get
@@ -4521,7 +4596,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
+        [XmlAttribute(DataType = "integer")]
         public string OrderNumber
         {
             get
@@ -4546,7 +4621,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public YesOrNo Mandatory
         {
             get
@@ -4563,7 +4638,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string CollectionExceptionConditionOID
         {
             get
@@ -4589,11 +4664,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDef : EntityBase<ODMcomplexTypeDefinitionItemDef>
     {
 
@@ -4715,7 +4790,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("MeasurementUnitRef")]
+        [XmlArray("MeasurementUnitRef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionMeasurementUnitRef))]
+        //[XmlElement("MeasurementUnitRef")]
         public List<ODMcomplexTypeDefinitionMeasurementUnitRef> MeasurementUnitRef
         {
             get
@@ -4740,7 +4817,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("RangeCheck")]
+        [XmlArray("RangeCheck")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionRangeCheck))]
+        //[XmlElement("RangeCheck")]
         public List<ODMcomplexTypeDefinitionRangeCheck> RangeCheck
         {
             get
@@ -4789,7 +4868,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Role")]
+        [XmlArray("Role")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionRole))]
+        //[XmlElement("Role")]
         public List<ODMcomplexTypeDefinitionRole> Role
         {
             get
@@ -4814,7 +4895,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Alias")]
+        [XmlArray("Alias")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        //[XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -4839,7 +4922,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -4864,7 +4947,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Name
         {
             get
@@ -4889,7 +4972,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public DataType DataType
         {
             get
@@ -4906,7 +4989,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "positiveInteger")]
+        [XmlAttribute(DataType = "positiveInteger")]
         public string Length
         {
             get
@@ -4931,7 +5014,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "nonNegativeInteger")]
+        [XmlAttribute(DataType = "nonNegativeInteger")]
         public string SignificantDigits
         {
             get
@@ -4956,7 +5039,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string SASFieldName
         {
             get
@@ -4981,7 +5064,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string SDSVarName
         {
             get
@@ -5006,7 +5089,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Origin
         {
             get
@@ -5031,7 +5114,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Comment
         {
             get
@@ -5057,11 +5140,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Question", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Question", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Question", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Question", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionQuestion : EntityBase<ODMcomplexTypeDefinitionQuestion>
     {
 
@@ -5072,7 +5155,9 @@ namespace PCF.OdmXml
             this.translatedTextField = new List<ODMcomplexTypeDefinitionTranslatedText>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("TranslatedText")]
+        [XmlArray("TranslatedText")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
+        //[XmlElement("TranslatedText")]
         public List<ODMcomplexTypeDefinitionTranslatedText> TranslatedText
         {
             get
@@ -5098,11 +5183,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ExternalQuestion", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ExternalQuestion", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ExternalQuestion", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ExternalQuestion", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionExternalQuestion : EntityBase<ODMcomplexTypeDefinitionExternalQuestion>
     {
 
@@ -5112,7 +5197,7 @@ namespace PCF.OdmXml
 
         private string codeField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Dictionary
         {
             get
@@ -5137,7 +5222,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Version
         {
             get
@@ -5162,7 +5247,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Code
         {
             get
@@ -5188,17 +5273,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-MeasurementUnitRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("MeasurementUnitRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-MeasurementUnitRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("MeasurementUnitRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionMeasurementUnitRef : EntityBase<ODMcomplexTypeDefinitionMeasurementUnitRef>
     {
 
         private string measurementUnitOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -5224,11 +5309,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-RangeCheck", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("RangeCheck", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-RangeCheck", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("RangeCheck", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionRangeCheck : EntityBase<ODMcomplexTypeDefinitionRangeCheck>
     {
 
@@ -5251,8 +5336,11 @@ namespace PCF.OdmXml
             this.itemsField = new List<object>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("CheckValue", typeof(ODMcomplexTypeDefinitionCheckValue))]
-        [System.Xml.Serialization.XmlElementAttribute("FormalExpression", typeof(ODMcomplexTypeDefinitionFormalExpression))]
+        [XmlArray("Items")]
+        [XmlArrayItem("CheckValue", typeof(ODMcomplexTypeDefinitionCheckValue))]
+        [XmlArrayItem("FormalExpression", typeof(ODMcomplexTypeDefinitionFormalExpression))]
+        //[XmlElement("CheckValue", typeof(ODMcomplexTypeDefinitionCheckValue))]
+        //[XmlElement("FormalExpression", typeof(ODMcomplexTypeDefinitionFormalExpression))]
         public List<object> Items
         {
             get
@@ -5325,7 +5413,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public Comparator Comparator
         {
             get
@@ -5342,7 +5430,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool ComparatorSpecified
         {
             get
@@ -5359,7 +5447,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public SoftOrHard SoftHard
         {
             get
@@ -5377,17 +5465,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-CheckValue", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("CheckValue", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-CheckValue", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("CheckValue", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionCheckValue : EntityBase<ODMcomplexTypeDefinitionCheckValue>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -5413,11 +5501,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ErrorMessage", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ErrorMessage", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ErrorMessage", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ErrorMessage", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionErrorMessage : EntityBase<ODMcomplexTypeDefinitionErrorMessage>
     {
 
@@ -5428,7 +5516,9 @@ namespace PCF.OdmXml
             this.translatedTextField = new List<ODMcomplexTypeDefinitionTranslatedText>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("TranslatedText")]
+        [XmlArray("TranslatedText")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
+        //[XmlElement("TranslatedText")]
         public List<ODMcomplexTypeDefinitionTranslatedText> TranslatedText
         {
             get
@@ -5454,9 +5544,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum Comparator
     {
 
@@ -5485,9 +5575,9 @@ namespace PCF.OdmXml
         NOTIN,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum SoftOrHard
     {
 
@@ -5498,17 +5588,17 @@ namespace PCF.OdmXml
         Hard,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-CodeListRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("CodeListRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-CodeListRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("CodeListRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionCodeListRef : EntityBase<ODMcomplexTypeDefinitionCodeListRef>
     {
 
         private string codeListOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string CodeListOID
         {
             get
@@ -5534,17 +5624,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Role", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Role", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Role", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Role", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionRole : EntityBase<ODMcomplexTypeDefinitionRole>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -5570,9 +5660,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum DataType
     {
 
@@ -5643,11 +5733,11 @@ namespace PCF.OdmXml
         incompleteTime,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-CodeList", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("CodeList", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-CodeList", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("CodeList", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionCodeList : EntityBase<ODMcomplexTypeDefinitionCodeList>
     {
 
@@ -5696,9 +5786,13 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("CodeListItem", typeof(ODMcomplexTypeDefinitionCodeListItem))]
-        [System.Xml.Serialization.XmlElementAttribute("EnumeratedItem", typeof(ODMcomplexTypeDefinitionEnumeratedItem))]
-        [System.Xml.Serialization.XmlElementAttribute("ExternalCodeList", typeof(ODMcomplexTypeDefinitionExternalCodeList))]
+        [XmlArray("Items")]
+        [XmlArrayItem("CodeListItem", typeof(ODMcomplexTypeDefinitionCodeListItem))]
+        [XmlArrayItem("EnumeratedItem", typeof(ODMcomplexTypeDefinitionEnumeratedItem))]
+        [XmlArrayItem("ExternalCodeList", typeof(ODMcomplexTypeDefinitionExternalCodeList))]
+        //[XmlElement("CodeListItem", typeof(ODMcomplexTypeDefinitionCodeListItem))]
+        //[XmlElement("EnumeratedItem", typeof(ODMcomplexTypeDefinitionEnumeratedItem))]
+        //[XmlElement("ExternalCodeList", typeof(ODMcomplexTypeDefinitionExternalCodeList))]
         public List<object> Items
         {
             get
@@ -5723,7 +5817,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Alias")]
+        [XmlArray("Alias")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        //[XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -5748,7 +5844,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -5773,7 +5869,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Name
         {
             get
@@ -5798,7 +5894,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public CLDataType DataType
         {
             get
@@ -5815,7 +5911,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string SASFormatName
         {
             get
@@ -5841,11 +5937,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-CodeListItem", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("CodeListItem", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-CodeListItem", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("CodeListItem", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionCodeListItem : EntityBase<ODMcomplexTypeDefinitionCodeListItem>
     {
 
@@ -5891,7 +5987,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Alias")]
+        [XmlArray("Alias")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        //[XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -5916,7 +6014,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string CodedValue
         {
             get
@@ -5941,7 +6039,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public decimal Rank
         {
             get
@@ -5966,7 +6064,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool RankSpecified
         {
             get
@@ -5983,7 +6081,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
+        [XmlAttribute(DataType = "integer")]
         public string OrderNumber
         {
             get
@@ -6009,11 +6107,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Decode", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Decode", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Decode", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Decode", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionDecode : EntityBase<ODMcomplexTypeDefinitionDecode>
     {
 
@@ -6024,7 +6122,9 @@ namespace PCF.OdmXml
             this.translatedTextField = new List<ODMcomplexTypeDefinitionTranslatedText>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("TranslatedText")]
+        [XmlArray("TranslatedText")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionTranslatedText))]
+        //[XmlElement("TranslatedText")]
         public List<ODMcomplexTypeDefinitionTranslatedText> TranslatedText
         {
             get
@@ -6050,11 +6150,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-EnumeratedItem", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("EnumeratedItem", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-EnumeratedItem", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("EnumeratedItem", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionEnumeratedItem : EntityBase<ODMcomplexTypeDefinitionEnumeratedItem>
     {
 
@@ -6073,7 +6173,9 @@ namespace PCF.OdmXml
             this.aliasField = new List<ODMcomplexTypeDefinitionAlias>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Alias")]
+        [XmlArray("Alias")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAlias))]
+        //[XmlElement("Alias")]
         public List<ODMcomplexTypeDefinitionAlias> Alias
         {
             get
@@ -6098,7 +6200,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string CodedValue
         {
             get
@@ -6123,7 +6225,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public decimal Rank
         {
             get
@@ -6148,7 +6250,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool RankSpecified
         {
             get
@@ -6165,7 +6267,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
+        [XmlAttribute(DataType = "integer")]
         public string OrderNumber
         {
             get
@@ -6191,11 +6293,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ExternalCodeList", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ExternalCodeList", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ExternalCodeList", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ExternalCodeList", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionExternalCodeList : EntityBase<ODMcomplexTypeDefinitionExternalCodeList>
     {
 
@@ -6207,7 +6309,7 @@ namespace PCF.OdmXml
 
         private string refField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Dictionary
         {
             get
@@ -6232,7 +6334,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Version
         {
             get
@@ -6257,7 +6359,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        [XmlAttribute(DataType = "anyURI")]
         public string href
         {
             get
@@ -6282,7 +6384,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string @ref
         {
             get
@@ -6308,9 +6410,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum CLDataType
     {
 
@@ -6327,11 +6429,11 @@ namespace PCF.OdmXml
         @string,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ImputationMethod", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ImputationMethod", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ImputationMethod", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ImputationMethod", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionImputationMethod : EntityBase<ODMcomplexTypeDefinitionImputationMethod>
     {
 
@@ -6339,7 +6441,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -6364,7 +6466,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -6390,11 +6492,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Presentation", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Presentation", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Presentation", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Presentation", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionPresentation : EntityBase<ODMcomplexTypeDefinitionPresentation>
     {
 
@@ -6404,7 +6506,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -6429,7 +6531,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/XML/1998/namespace")]
+        [XmlAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/XML/1998/namespace")]
         public string lang
         {
             get
@@ -6454,7 +6556,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -6480,11 +6582,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-AdminData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("AdminData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-AdminData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("AdminData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionAdminData : EntityBase<ODMcomplexTypeDefinitionAdminData>
     {
 
@@ -6503,7 +6605,9 @@ namespace PCF.OdmXml
             this.userField = new List<ODMcomplexTypeDefinitionUser>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("User")]
+        [XmlArray("User")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionUser))]
+        //[XmlElement("User")]
         public List<ODMcomplexTypeDefinitionUser> User
         {
             get
@@ -6528,7 +6632,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Location")]
+        [XmlArray("Location")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionLocation))]
+        //[XmlElement("Location")]
         public List<ODMcomplexTypeDefinitionLocation> Location
         {
             get
@@ -6553,7 +6659,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("SignatureDef")]
+        [XmlArray("SignatureDef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionSignatureDef))]
+        //[XmlElement("SignatureDef")]
         public List<ODMcomplexTypeDefinitionSignatureDef> SignatureDef
         {
             get
@@ -6578,7 +6686,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string StudyOID
         {
             get
@@ -6604,11 +6712,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-User", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("User", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-User", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("User", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionUser : EntityBase<ODMcomplexTypeDefinitionUser>
     {
 
@@ -6808,7 +6916,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Address")]
+        [XmlArray("Address")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAddress))]
+        //[XmlElement("Address")]
         public List<ODMcomplexTypeDefinitionAddress> Address
         {
             get
@@ -6833,7 +6943,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Email")]
+        [XmlArray("Email")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionEmail))]
+        //[XmlElement("Email")]
         public List<ODMcomplexTypeDefinitionEmail> Email
         {
             get
@@ -6906,7 +7018,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Fax")]
+        [XmlArray("Fax")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFax))]
+        //[XmlElement("Fax")]
         public List<ODMcomplexTypeDefinitionFax> Fax
         {
             get
@@ -6931,7 +7045,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Phone")]
+        [XmlArray("Phone")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionPhone))]
+        //[XmlElement("Phone")]
         public List<ODMcomplexTypeDefinitionPhone> Phone
         {
             get
@@ -6956,7 +7072,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("LocationRef")]
+        [XmlArray("LocationRef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionLocationRef))]
+        //[XmlElement("LocationRef")]
         public List<ODMcomplexTypeDefinitionLocationRef> LocationRef
         {
             get
@@ -6981,7 +7099,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Certificate")]
+        [XmlArray("Certificate")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionCertificate))]
+        //[XmlElement("Certificate")]
         public List<ODMcomplexTypeDefinitionCertificate> Certificate
         {
             get
@@ -7006,7 +7126,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -7031,7 +7151,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public UserType UserType
         {
             get
@@ -7048,7 +7168,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool UserTypeSpecified
         {
             get
@@ -7066,17 +7186,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-LoginName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("LoginName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-LoginName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("LoginName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionLoginName : EntityBase<ODMcomplexTypeDefinitionLoginName>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7102,17 +7222,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-DisplayName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("DisplayName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-DisplayName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("DisplayName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionDisplayName : EntityBase<ODMcomplexTypeDefinitionDisplayName>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7138,17 +7258,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-FullName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("FullName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-FullName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("FullName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionFullName : EntityBase<ODMcomplexTypeDefinitionFullName>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7174,17 +7294,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-FirstName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("FirstName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-FirstName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("FirstName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionFirstName : EntityBase<ODMcomplexTypeDefinitionFirstName>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7210,17 +7330,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-LastName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("LastName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-LastName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("LastName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionLastName : EntityBase<ODMcomplexTypeDefinitionLastName>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7246,17 +7366,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Organization", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Organization", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Organization", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Organization", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionOrganization : EntityBase<ODMcomplexTypeDefinitionOrganization>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7282,11 +7402,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Address", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Address", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Address", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Address", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionAddress : EntityBase<ODMcomplexTypeDefinitionAddress>
     {
 
@@ -7312,7 +7432,9 @@ namespace PCF.OdmXml
             this.streetNameField = new List<ODMcomplexTypeDefinitionStreetName>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("StreetName")]
+        [XmlArray("StreetName")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionStreetName))]
+        //[XmlElement("StreetName")]
         public List<ODMcomplexTypeDefinitionStreetName> StreetName
         {
             get
@@ -7458,17 +7580,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-StreetName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("StreetName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-StreetName", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("StreetName", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionStreetName : EntityBase<ODMcomplexTypeDefinitionStreetName>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7494,17 +7616,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-City", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("City", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-City", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("City", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionCity : EntityBase<ODMcomplexTypeDefinitionCity>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7530,17 +7652,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-StateProv", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("StateProv", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-StateProv", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("StateProv", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionStateProv : EntityBase<ODMcomplexTypeDefinitionStateProv>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7566,17 +7688,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Country", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Country", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Country", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Country", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionCountry : EntityBase<ODMcomplexTypeDefinitionCountry>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7602,17 +7724,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-PostalCode", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("PostalCode", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-PostalCode", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("PostalCode", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionPostalCode : EntityBase<ODMcomplexTypeDefinitionPostalCode>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7638,17 +7760,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-OtherText", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("OtherText", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-OtherText", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("OtherText", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionOtherText : EntityBase<ODMcomplexTypeDefinitionOtherText>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7674,17 +7796,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Email", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Email", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Email", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Email", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionEmail : EntityBase<ODMcomplexTypeDefinitionEmail>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7710,11 +7832,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Picture", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Picture", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Picture", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Picture", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionPicture : EntityBase<ODMcomplexTypeDefinitionPicture>
     {
 
@@ -7722,7 +7844,7 @@ namespace PCF.OdmXml
 
         private string imageTypeField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        [XmlAttribute(DataType = "anyURI")]
         public string PictureFileName
         {
             get
@@ -7747,7 +7869,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ImageType
         {
             get
@@ -7773,17 +7895,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Pager", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Pager", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Pager", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Pager", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionPager : EntityBase<ODMcomplexTypeDefinitionPager>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7809,17 +7931,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Fax", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Fax", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Fax", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Fax", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionFax : EntityBase<ODMcomplexTypeDefinitionFax>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7845,17 +7967,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Phone", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Phone", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Phone", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Phone", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionPhone : EntityBase<ODMcomplexTypeDefinitionPhone>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7881,17 +8003,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-LocationRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("LocationRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-LocationRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("LocationRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionLocationRef : EntityBase<ODMcomplexTypeDefinitionLocationRef>
     {
 
         private string locationOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string LocationOID
         {
             get
@@ -7917,17 +8039,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Certificate", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Certificate", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Certificate", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Certificate", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionCertificate : EntityBase<ODMcomplexTypeDefinitionCertificate>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -7953,9 +8075,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum UserType
     {
 
@@ -7972,11 +8094,11 @@ namespace PCF.OdmXml
         Other,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Location", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Location", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Location", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Location", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionLocation : EntityBase<ODMcomplexTypeDefinitionLocation>
     {
 
@@ -7995,7 +8117,9 @@ namespace PCF.OdmXml
             this.metaDataVersionRefField = new List<ODMcomplexTypeDefinitionMetaDataVersionRef>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("MetaDataVersionRef")]
+        [XmlArray("MetaDataVersionRef")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionMetaDataVersionRef))]
+        //[XmlElement("MetaDataVersionRef")]
         public List<ODMcomplexTypeDefinitionMetaDataVersionRef> MetaDataVersionRef
         {
             get
@@ -8020,7 +8144,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -8045,7 +8169,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Name
         {
             get
@@ -8070,7 +8194,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public LocationType LocationType
         {
             get
@@ -8087,7 +8211,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool LocationTypeSpecified
         {
             get
@@ -8105,11 +8229,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-MetaDataVersionRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("MetaDataVersionRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-MetaDataVersionRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("MetaDataVersionRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionMetaDataVersionRef : EntityBase<ODMcomplexTypeDefinitionMetaDataVersionRef>
     {
 
@@ -8119,7 +8243,7 @@ namespace PCF.OdmXml
 
         private System.DateTime effectiveDateField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string StudyOID
         {
             get
@@ -8144,7 +8268,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MetaDataVersionOID
         {
             get
@@ -8169,7 +8293,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
+        [XmlAttribute(DataType = "date")]
         public System.DateTime EffectiveDate
         {
             get
@@ -8187,9 +8311,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum LocationType
     {
 
@@ -8209,11 +8333,11 @@ namespace PCF.OdmXml
         Other,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-SignatureDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("SignatureDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-SignatureDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("SignatureDef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionSignatureDef : EntityBase<ODMcomplexTypeDefinitionSignatureDef>
     {
 
@@ -8281,7 +8405,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -8306,7 +8430,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public SignMethod Methodology
         {
             get
@@ -8323,7 +8447,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool MethodologySpecified
         {
             get
@@ -8341,17 +8465,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Meaning", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Meaning", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Meaning", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Meaning", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionMeaning : EntityBase<ODMcomplexTypeDefinitionMeaning>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -8377,17 +8501,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-LegalReason", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("LegalReason", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-LegalReason", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("LegalReason", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionLegalReason : EntityBase<ODMcomplexTypeDefinitionLegalReason>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -8413,9 +8537,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum SignMethod
     {
 
@@ -8426,11 +8550,11 @@ namespace PCF.OdmXml
         Electronic,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ReferenceData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ReferenceData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ReferenceData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ReferenceData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionReferenceData : EntityBase<ODMcomplexTypeDefinitionReferenceData>
     {
 
@@ -8454,7 +8578,9 @@ namespace PCF.OdmXml
             this.itemGroupDataField = new List<ODMcomplexTypeDefinitionItemGroupData>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ItemGroupData")]
+        [XmlArray("ItemGroupData")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemGroupData))]
+        //[XmlElement("ItemGroupData")]
         public List<ODMcomplexTypeDefinitionItemGroupData> ItemGroupData
         {
             get
@@ -8479,7 +8605,8 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlArrayItemAttribute("AuditRecord", typeof(ODMcomplexTypeDefinitionAuditRecord), IsNullable = false)]
+        [XmlArray("AuditRecords")]
+        [XmlArrayItem("AuditRecord", typeof(ODMcomplexTypeDefinitionAuditRecord), IsNullable = false)]
         public List<ODMcomplexTypeDefinitionAuditRecord> AuditRecords
         {
             get
@@ -8504,7 +8631,8 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlArrayItemAttribute("Signature", typeof(ODMcomplexTypeDefinitionSignature), IsNullable = false)]
+        [XmlArray("Signatures")]
+        [XmlArrayItem("Signature", typeof(ODMcomplexTypeDefinitionSignature), IsNullable = false)]
         public List<ODMcomplexTypeDefinitionSignature> Signatures
         {
             get
@@ -8529,7 +8657,8 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlArrayItemAttribute("Annotation", typeof(ODMcomplexTypeDefinitionAnnotation), IsNullable = false)]
+        [XmlArray("Annotations")]
+        [XmlArrayItem("Annotation", typeof(ODMcomplexTypeDefinitionAnnotation), IsNullable = false)]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotations
         {
             get
@@ -8554,7 +8683,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string StudyOID
         {
             get
@@ -8579,7 +8708,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MetaDataVersionOID
         {
             get
@@ -8605,11 +8734,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemGroupData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemGroupData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemGroupData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemGroupData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemGroupData : EntityBase<ODMcomplexTypeDefinitionItemGroupData>
     {
 
@@ -8685,7 +8814,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Annotation")]
+        [XmlArray("Annotation")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
+        //[XmlElement("Annotation")]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotation
         {
             get
@@ -8710,29 +8841,53 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ItemData", typeof(ODMcomplexTypeDefinitionItemData))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataAny", typeof(ODMcomplexTypeDefinitionItemDataAny))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataBase64Binary", typeof(ODMcomplexTypeDefinitionItemDataBase64Binary))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataBase64Float", typeof(ODMcomplexTypeDefinitionItemDataBase64Float))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataBoolean", typeof(ODMcomplexTypeDefinitionItemDataBoolean))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataDate", typeof(ODMcomplexTypeDefinitionItemDataDate))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataDatetime", typeof(ODMcomplexTypeDefinitionItemDataDatetime))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataDouble", typeof(ODMcomplexTypeDefinitionItemDataDouble))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataDurationDatetime", typeof(ODMcomplexTypeDefinitionItemDataDurationDatetime))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataFloat", typeof(ODMcomplexTypeDefinitionItemDataFloat))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataHexBinary", typeof(ODMcomplexTypeDefinitionItemDataHexBinary))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataHexFloat", typeof(ODMcomplexTypeDefinitionItemDataHexFloat))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataIncompleteDate", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDate))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataIncompleteDatetime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDatetime))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataIncompleteTime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteTime))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataInteger", typeof(ODMcomplexTypeDefinitionItemDataInteger))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataIntervalDatetime", typeof(ODMcomplexTypeDefinitionItemDataIntervalDatetime))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataPartialDate", typeof(ODMcomplexTypeDefinitionItemDataPartialDate))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataPartialDatetime", typeof(ODMcomplexTypeDefinitionItemDataPartialDatetime))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataPartialTime", typeof(ODMcomplexTypeDefinitionItemDataPartialTime))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataString", typeof(ODMcomplexTypeDefinitionItemDataString))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataTime", typeof(ODMcomplexTypeDefinitionItemDataTime))]
-        [System.Xml.Serialization.XmlElementAttribute("ItemDataURI", typeof(ODMcomplexTypeDefinitionItemDataURI))]
+        [XmlArray("Items")]
+        [XmlArrayItem("ItemData", typeof(ODMcomplexTypeDefinitionItemData))]
+        [XmlArrayItem("ItemDataAny", typeof(ODMcomplexTypeDefinitionItemDataAny))]
+        [XmlArrayItem("ItemDataBase64Binary", typeof(ODMcomplexTypeDefinitionItemDataBase64Binary))]
+        [XmlArrayItem("ItemDataBase64Float", typeof(ODMcomplexTypeDefinitionItemDataBase64Float))]
+        [XmlArrayItem("ItemDataBoolean", typeof(ODMcomplexTypeDefinitionItemDataBoolean))]
+        [XmlArrayItem("ItemDataDate", typeof(ODMcomplexTypeDefinitionItemDataDate))]
+        [XmlArrayItem("ItemDataDatetime", typeof(ODMcomplexTypeDefinitionItemDataDatetime))]
+        [XmlArrayItem("ItemDataDouble", typeof(ODMcomplexTypeDefinitionItemDataDouble))]
+        [XmlArrayItem("ItemDataDurationDatetime", typeof(ODMcomplexTypeDefinitionItemDataDurationDatetime))]
+        [XmlArrayItem("ItemDataFloat", typeof(ODMcomplexTypeDefinitionItemDataFloat))]
+        [XmlArrayItem("ItemDataHexBinary", typeof(ODMcomplexTypeDefinitionItemDataHexBinary))]
+        [XmlArrayItem("ItemDataHexFloat", typeof(ODMcomplexTypeDefinitionItemDataHexFloat))]
+        [XmlArrayItem("ItemDataIncompleteDate", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDate))]
+        [XmlArrayItem("ItemDataIncompleteDatetime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDatetime))]
+        [XmlArrayItem("ItemDataIncompleteTime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteTime))]
+        [XmlArrayItem("ItemDataInteger", typeof(ODMcomplexTypeDefinitionItemDataInteger))]
+        [XmlArrayItem("ItemDataIntervalDatetime", typeof(ODMcomplexTypeDefinitionItemDataIntervalDatetime))]
+        [XmlArrayItem("ItemDataPartialDate", typeof(ODMcomplexTypeDefinitionItemDataPartialDate))]
+        [XmlArrayItem("ItemDataPartialDatetime", typeof(ODMcomplexTypeDefinitionItemDataPartialDatetime))]
+        [XmlArrayItem("ItemDataPartialTime", typeof(ODMcomplexTypeDefinitionItemDataPartialTime))]
+        [XmlArrayItem("ItemDataString", typeof(ODMcomplexTypeDefinitionItemDataString))]
+        [XmlArrayItem("ItemDataTime", typeof(ODMcomplexTypeDefinitionItemDataTime))]
+        [XmlArrayItem("ItemDataURI", typeof(ODMcomplexTypeDefinitionItemDataURI))]
+        //[XmlElement("ItemData", typeof(ODMcomplexTypeDefinitionItemData))]
+        //[XmlElement("ItemDataAny", typeof(ODMcomplexTypeDefinitionItemDataAny))]
+        //[XmlElement("ItemDataBase64Binary", typeof(ODMcomplexTypeDefinitionItemDataBase64Binary))]
+        //[XmlElement("ItemDataBase64Float", typeof(ODMcomplexTypeDefinitionItemDataBase64Float))]
+        //[XmlElement("ItemDataBoolean", typeof(ODMcomplexTypeDefinitionItemDataBoolean))]
+        //[XmlElement("ItemDataDate", typeof(ODMcomplexTypeDefinitionItemDataDate))]
+        //[XmlElement("ItemDataDatetime", typeof(ODMcomplexTypeDefinitionItemDataDatetime))]
+        //[XmlElement("ItemDataDouble", typeof(ODMcomplexTypeDefinitionItemDataDouble))]
+        //[XmlElement("ItemDataDurationDatetime", typeof(ODMcomplexTypeDefinitionItemDataDurationDatetime))]
+        //[XmlElement("ItemDataFloat", typeof(ODMcomplexTypeDefinitionItemDataFloat))]
+        //[XmlElement("ItemDataHexBinary", typeof(ODMcomplexTypeDefinitionItemDataHexBinary))]
+        //[XmlElement("ItemDataHexFloat", typeof(ODMcomplexTypeDefinitionItemDataHexFloat))]
+        //[XmlElement("ItemDataIncompleteDate", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDate))]
+        //[XmlElement("ItemDataIncompleteDatetime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteDatetime))]
+        //[XmlElement("ItemDataIncompleteTime", typeof(ODMcomplexTypeDefinitionItemDataIncompleteTime))]
+        //[XmlElement("ItemDataInteger", typeof(ODMcomplexTypeDefinitionItemDataInteger))]
+        //[XmlElement("ItemDataIntervalDatetime", typeof(ODMcomplexTypeDefinitionItemDataIntervalDatetime))]
+        //[XmlElement("ItemDataPartialDate", typeof(ODMcomplexTypeDefinitionItemDataPartialDate))]
+        //[XmlElement("ItemDataPartialDatetime", typeof(ODMcomplexTypeDefinitionItemDataPartialDatetime))]
+        //[XmlElement("ItemDataPartialTime", typeof(ODMcomplexTypeDefinitionItemDataPartialTime))]
+        //[XmlElement("ItemDataString", typeof(ODMcomplexTypeDefinitionItemDataString))]
+        //[XmlElement("ItemDataTime", typeof(ODMcomplexTypeDefinitionItemDataTime))]
+        //[XmlElement("ItemDataURI", typeof(ODMcomplexTypeDefinitionItemDataURI))]
         public List<object> Items
         {
             get
@@ -8757,7 +8912,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemGroupOID
         {
             get
@@ -8782,7 +8937,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemGroupRepeatKey
         {
             get
@@ -8807,7 +8962,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -8824,7 +8979,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -8842,11 +8997,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-AuditRecord", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("AuditRecord", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-AuditRecord", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("AuditRecord", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionAuditRecord : EntityBase<ODMcomplexTypeDefinitionAuditRecord>
     {
 
@@ -8999,7 +9154,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public EditPointType EditPoint
         {
             get
@@ -9016,7 +9171,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool EditPointSpecified
         {
             get
@@ -9033,7 +9188,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public YesOrNo UsedImputationMethod
         {
             get
@@ -9050,7 +9205,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool UsedImputationMethodSpecified
         {
             get
@@ -9067,7 +9222,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
+        [XmlAttribute(DataType = "ID")]
         public string ID
         {
             get
@@ -9093,17 +9248,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-UserRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("UserRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-UserRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("UserRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionUserRef : EntityBase<ODMcomplexTypeDefinitionUserRef>
     {
 
         private string userOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string UserOID
         {
             get
@@ -9129,17 +9284,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-DateTimeStamp", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("DateTimeStamp", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-DateTimeStamp", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("DateTimeStamp", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionDateTimeStamp : EntityBase<ODMcomplexTypeDefinitionDateTimeStamp>
     {
 
         private System.DateTime valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlAttribute]
         public System.DateTime Value
         {
             get
@@ -9157,17 +9312,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ReasonForChange", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ReasonForChange", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ReasonForChange", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ReasonForChange", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionReasonForChange : EntityBase<ODMcomplexTypeDefinitionReasonForChange>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -9193,17 +9348,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-SourceID", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("SourceID", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-SourceID", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("SourceID", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionSourceID : EntityBase<ODMcomplexTypeDefinitionSourceID>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -9229,9 +9384,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum EditPointType
     {
 
@@ -9245,11 +9400,11 @@ namespace PCF.OdmXml
         DBAudit,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Signature", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Signature", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Signature", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Signature", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionSignature : EntityBase<ODMcomplexTypeDefinitionSignature>
     {
 
@@ -9394,7 +9549,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
+        [XmlAttribute(DataType = "ID")]
         public string ID
         {
             get
@@ -9420,17 +9575,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-SignatureRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("SignatureRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-SignatureRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("SignatureRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionSignatureRef : EntityBase<ODMcomplexTypeDefinitionSignatureRef>
     {
 
         private string signatureOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string SignatureOID
         {
             get
@@ -9456,17 +9611,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-CryptoBindingManifest", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("CryptoBindingManifest", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-CryptoBindingManifest", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("CryptoBindingManifest", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionCryptoBindingManifest : EntityBase<ODMcomplexTypeDefinitionCryptoBindingManifest>
     {
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -9492,11 +9647,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Annotation", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Annotation", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Annotation", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Annotation", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionAnnotation : EntityBase<ODMcomplexTypeDefinitionAnnotation>
     {
 
@@ -9542,7 +9697,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Flag")]
+        [XmlArray("Flag")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFlag))]
+        //[XmlElement("Flag")]
         public List<ODMcomplexTypeDefinitionFlag> Flag
         {
             get
@@ -9567,7 +9724,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "integer")]
+        [XmlAttribute(DataType = "integer")]
         public string SeqNum
         {
             get
@@ -9592,7 +9749,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -9609,7 +9766,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -9626,7 +9783,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
+        [XmlAttribute(DataType = "ID")]
         public string ID
         {
             get
@@ -9652,11 +9809,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Comment", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Comment", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Comment", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Comment", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionComment : EntityBase<ODMcomplexTypeDefinitionComment>
     {
 
@@ -9666,7 +9823,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public CommentType SponsorOrSite
         {
             get
@@ -9683,7 +9840,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool SponsorOrSiteSpecified
         {
             get
@@ -9700,7 +9857,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -9726,9 +9883,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum CommentType
     {
 
@@ -9739,11 +9896,11 @@ namespace PCF.OdmXml
         Site,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Flag", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Flag", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Flag", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Flag", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionFlag : EntityBase<ODMcomplexTypeDefinitionFlag>
     {
 
@@ -9806,11 +9963,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-FlagValue", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("FlagValue", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-FlagValue", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("FlagValue", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionFlagValue : EntityBase<ODMcomplexTypeDefinitionFlagValue>
     {
 
@@ -9818,7 +9975,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string CodeListOID
         {
             get
@@ -9843,7 +10000,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -9869,11 +10026,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-FlagType", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("FlagType", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-FlagType", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("FlagType", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionFlagType : EntityBase<ODMcomplexTypeDefinitionFlagType>
     {
 
@@ -9881,7 +10038,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string CodeListOID
         {
             get
@@ -9906,7 +10063,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -9932,9 +10089,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum TransactionType
     {
 
@@ -9954,11 +10111,11 @@ namespace PCF.OdmXml
         Context,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemData : EntityBase<ODMcomplexTypeDefinitionItemData>
     {
 
@@ -10062,7 +10219,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Annotation")]
+        [XmlArray("Annotation")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
+        //[XmlElement("Annotation")]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotation
         {
             get
@@ -10087,7 +10246,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -10112,7 +10271,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -10129,7 +10288,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -10146,7 +10305,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public YesOnly IsNull
         {
             get
@@ -10163,7 +10322,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool IsNullSpecified
         {
             get
@@ -10180,7 +10339,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string Value
         {
             get
@@ -10206,9 +10365,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum YesOnly
     {
 
@@ -10216,11 +10375,11 @@ namespace PCF.OdmXml
         Yes,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataAny", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataAny", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataAny", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataAny", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataAny : EntityBase<ODMcomplexTypeDefinitionItemDataAny>
     {
 
@@ -10244,7 +10403,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -10269,7 +10428,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -10286,7 +10445,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -10303,7 +10462,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public YesOnly IsNull
         {
             get
@@ -10320,7 +10479,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool IsNullSpecified
         {
             get
@@ -10337,7 +10496,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -10362,7 +10521,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -10387,7 +10546,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -10412,7 +10571,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -10437,7 +10596,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -10463,11 +10622,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataBase64Binary", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataBase64Binary", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataBase64Binary", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataBase64Binary", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataBase64Binary : EntityBase<ODMcomplexTypeDefinitionItemDataBase64Binary>
     {
 
@@ -10487,7 +10646,7 @@ namespace PCF.OdmXml
 
         private byte[] valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -10512,7 +10671,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -10529,7 +10688,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -10546,7 +10705,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -10571,7 +10730,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -10596,7 +10755,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -10621,7 +10780,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -10646,7 +10805,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute(DataType = "base64Binary")]
+        [XmlAttribute(DataType = "base64Binary")]
         public byte[] Value
         {
             get
@@ -10672,11 +10831,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataBase64Float", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataBase64Float", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataBase64Float", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataBase64Float", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataBase64Float : EntityBase<ODMcomplexTypeDefinitionItemDataBase64Float>
     {
 
@@ -10696,7 +10855,7 @@ namespace PCF.OdmXml
 
         private byte[] valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -10721,7 +10880,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -10738,7 +10897,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -10755,7 +10914,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -10780,7 +10939,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -10805,7 +10964,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -10830,7 +10989,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -10855,7 +11014,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute(DataType = "base64Binary")]
+        [XmlAttribute(DataType = "base64Binary")]
         public byte[] Value
         {
             get
@@ -10881,11 +11040,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataBoolean", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataBoolean", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataBoolean", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataBoolean", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataBoolean : EntityBase<ODMcomplexTypeDefinitionItemDataBoolean>
     {
 
@@ -10905,7 +11064,7 @@ namespace PCF.OdmXml
 
         private bool valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -10930,7 +11089,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -10947,7 +11106,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -10964,7 +11123,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -10989,7 +11148,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -11014,7 +11173,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -11039,7 +11198,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -11064,7 +11223,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlAttribute]
         public bool Value
         {
             get
@@ -11082,11 +11241,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataDate", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataDate", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataDate", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataDate", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataDate : EntityBase<ODMcomplexTypeDefinitionItemDataDate>
     {
 
@@ -11106,7 +11265,7 @@ namespace PCF.OdmXml
 
         private System.DateTime valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -11131,7 +11290,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -11148,7 +11307,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -11165,7 +11324,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -11190,7 +11349,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -11215,7 +11374,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -11240,7 +11399,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -11265,7 +11424,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute(DataType = "date")]
+        [XmlAttribute(DataType = "date")]
         public System.DateTime Value
         {
             get
@@ -11283,11 +11442,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataDatetime : EntityBase<ODMcomplexTypeDefinitionItemDataDatetime>
     {
 
@@ -11307,7 +11466,7 @@ namespace PCF.OdmXml
 
         private System.DateTime valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -11332,7 +11491,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -11349,7 +11508,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -11366,7 +11525,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -11391,7 +11550,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -11416,7 +11575,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -11441,7 +11600,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -11466,7 +11625,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlAttribute]
         public System.DateTime Value
         {
             get
@@ -11484,11 +11643,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataDouble", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataDouble", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataDouble", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataDouble", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataDouble : EntityBase<ODMcomplexTypeDefinitionItemDataDouble>
     {
 
@@ -11508,7 +11667,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -11533,7 +11692,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -11550,7 +11709,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -11567,7 +11726,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -11592,7 +11751,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -11617,7 +11776,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -11642,7 +11801,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -11667,7 +11826,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -11693,11 +11852,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataDurationDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataDurationDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataDurationDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataDurationDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataDurationDatetime : EntityBase<ODMcomplexTypeDefinitionItemDataDurationDatetime>
     {
 
@@ -11717,7 +11876,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -11742,7 +11901,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -11759,7 +11918,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -11776,7 +11935,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -11801,7 +11960,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -11826,7 +11985,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -11851,7 +12010,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -11876,7 +12035,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -11902,11 +12061,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataFloat", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataFloat", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataFloat", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataFloat", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataFloat : EntityBase<ODMcomplexTypeDefinitionItemDataFloat>
     {
 
@@ -11926,7 +12085,7 @@ namespace PCF.OdmXml
 
         private decimal valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -11951,7 +12110,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -11968,7 +12127,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -11985,7 +12144,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -12010,7 +12169,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -12035,7 +12194,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -12060,7 +12219,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -12085,7 +12244,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlAttribute]
         public decimal Value
         {
             get
@@ -12111,11 +12270,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataHexBinary", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataHexBinary", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataHexBinary", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataHexBinary", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataHexBinary : EntityBase<ODMcomplexTypeDefinitionItemDataHexBinary>
     {
 
@@ -12135,7 +12294,7 @@ namespace PCF.OdmXml
 
         private byte[] valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -12160,7 +12319,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -12177,7 +12336,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -12194,7 +12353,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -12219,7 +12378,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -12244,7 +12403,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -12269,7 +12428,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -12294,7 +12453,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute(DataType = "hexBinary")]
+        [XmlAttribute(DataType = "hexBinary")]
         public byte[] Value
         {
             get
@@ -12320,11 +12479,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataHexFloat", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataHexFloat", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataHexFloat", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataHexFloat", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataHexFloat : EntityBase<ODMcomplexTypeDefinitionItemDataHexFloat>
     {
 
@@ -12344,7 +12503,7 @@ namespace PCF.OdmXml
 
         private byte[] valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -12369,7 +12528,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -12386,7 +12545,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -12403,7 +12562,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -12428,7 +12587,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -12453,7 +12612,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -12478,7 +12637,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -12503,7 +12662,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute(DataType = "hexBinary")]
+        [XmlAttribute(DataType = "hexBinary")]
         public byte[] Value
         {
             get
@@ -12529,11 +12688,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataIncompleteDate", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataIncompleteDate", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataIncompleteDate", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataIncompleteDate", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataIncompleteDate : EntityBase<ODMcomplexTypeDefinitionItemDataIncompleteDate>
     {
 
@@ -12553,7 +12712,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -12578,7 +12737,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -12595,7 +12754,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -12612,7 +12771,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -12637,7 +12796,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -12662,7 +12821,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -12687,7 +12846,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -12712,7 +12871,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -12738,11 +12897,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataIncompleteDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataIncompleteDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataIncompleteDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataIncompleteDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataIncompleteDatetime : EntityBase<ODMcomplexTypeDefinitionItemDataIncompleteDatetime>
     {
 
@@ -12762,7 +12921,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -12787,7 +12946,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -12804,7 +12963,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -12821,7 +12980,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -12846,7 +13005,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -12871,7 +13030,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -12896,7 +13055,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -12921,7 +13080,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -12947,11 +13106,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataIncompleteTime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataIncompleteTime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataIncompleteTime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataIncompleteTime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataIncompleteTime : EntityBase<ODMcomplexTypeDefinitionItemDataIncompleteTime>
     {
 
@@ -12971,7 +13130,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -12996,7 +13155,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -13013,7 +13172,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -13030,7 +13189,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -13055,7 +13214,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -13080,7 +13239,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -13105,7 +13264,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -13130,7 +13289,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -13156,11 +13315,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataInteger", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataInteger", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataInteger", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataInteger", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataInteger : EntityBase<ODMcomplexTypeDefinitionItemDataInteger>
     {
 
@@ -13180,7 +13339,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -13205,7 +13364,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -13222,7 +13381,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -13239,7 +13398,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -13264,7 +13423,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -13289,7 +13448,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -13314,7 +13473,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -13339,7 +13498,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute(DataType = "integer")]
+        [XmlText(DataType = "integer")]
         public string Value
         {
             get
@@ -13365,11 +13524,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataIntervalDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataIntervalDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataIntervalDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataIntervalDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataIntervalDatetime : EntityBase<ODMcomplexTypeDefinitionItemDataIntervalDatetime>
     {
 
@@ -13389,7 +13548,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -13414,7 +13573,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -13431,7 +13590,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -13448,7 +13607,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -13473,7 +13632,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -13498,7 +13657,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -13523,7 +13682,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -13548,7 +13707,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -13574,11 +13733,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataPartialDate", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataPartialDate", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataPartialDate", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataPartialDate", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataPartialDate : EntityBase<ODMcomplexTypeDefinitionItemDataPartialDate>
     {
 
@@ -13598,7 +13757,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -13623,7 +13782,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -13640,7 +13799,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -13657,7 +13816,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -13682,7 +13841,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -13707,7 +13866,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -13732,7 +13891,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -13757,7 +13916,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -13783,11 +13942,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataPartialDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataPartialDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataPartialDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataPartialDatetime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataPartialDatetime : EntityBase<ODMcomplexTypeDefinitionItemDataPartialDatetime>
     {
 
@@ -13807,7 +13966,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -13832,7 +13991,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -13849,7 +14008,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -13866,7 +14025,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -13891,7 +14050,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -13916,7 +14075,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -13941,7 +14100,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -13966,7 +14125,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -13992,11 +14151,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataPartialTime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataPartialTime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataPartialTime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataPartialTime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataPartialTime : EntityBase<ODMcomplexTypeDefinitionItemDataPartialTime>
     {
 
@@ -14016,7 +14175,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -14041,7 +14200,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -14058,7 +14217,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -14075,7 +14234,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -14100,7 +14259,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -14125,7 +14284,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -14150,7 +14309,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -14175,7 +14334,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -14201,11 +14360,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataString", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataString", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataString", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataString", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataString : EntityBase<ODMcomplexTypeDefinitionItemDataString>
     {
 
@@ -14225,7 +14384,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -14250,7 +14409,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -14267,7 +14426,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -14284,7 +14443,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -14309,7 +14468,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -14334,7 +14493,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -14359,7 +14518,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -14384,7 +14543,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText]
         public string Value
         {
             get
@@ -14410,11 +14569,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataTime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataTime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataTime", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataTime", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataTime : EntityBase<ODMcomplexTypeDefinitionItemDataTime>
     {
 
@@ -14434,7 +14593,7 @@ namespace PCF.OdmXml
 
         private System.DateTime valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -14459,7 +14618,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -14476,7 +14635,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -14493,7 +14652,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -14518,7 +14677,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -14543,7 +14702,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -14568,7 +14727,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -14593,7 +14752,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute(DataType = "time")]
+        [XmlAttribute(DataType = "time")]
         public System.DateTime Value
         {
             get
@@ -14611,11 +14770,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ItemDataURI", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ItemDataURI", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ItemDataURI", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ItemDataURI", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionItemDataURI : EntityBase<ODMcomplexTypeDefinitionItemDataURI>
     {
 
@@ -14635,7 +14794,7 @@ namespace PCF.OdmXml
 
         private string valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -14660,7 +14819,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -14677,7 +14836,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -14694,7 +14853,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AuditRecordID
         {
             get
@@ -14719,7 +14878,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string SignatureID
         {
             get
@@ -14744,7 +14903,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "IDREF")]
+        [XmlAttribute(DataType = "IDREF")]
         public string AnnotationID
         {
             get
@@ -14769,7 +14928,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MeasurementUnitOID
         {
             get
@@ -14794,7 +14953,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute(DataType = "anyURI")]
+        [XmlText(DataType = "anyURI")]
         public string Value
         {
             get
@@ -14820,11 +14979,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ClinicalData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ClinicalData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ClinicalData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ClinicalData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionClinicalData : EntityBase<ODMcomplexTypeDefinitionClinicalData>
     {
 
@@ -14848,7 +15007,9 @@ namespace PCF.OdmXml
             this.subjectDataField = new List<ODMcomplexTypeDefinitionSubjectData>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("SubjectData")]
+        [XmlArray("SubjectData")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionSubjectData))]
+        //[XmlElement("SubjectData")]
         public List<ODMcomplexTypeDefinitionSubjectData> SubjectData
         {
             get
@@ -14873,7 +15034,8 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlArrayItemAttribute("AuditRecord", typeof(ODMcomplexTypeDefinitionAuditRecord), IsNullable = false)]
+        [XmlArray("AuditRecords")]
+        [XmlArrayItem("AuditRecord", typeof(ODMcomplexTypeDefinitionAuditRecord), IsNullable = false)]
         public List<ODMcomplexTypeDefinitionAuditRecord> AuditRecords
         {
             get
@@ -14898,7 +15060,8 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlArrayItemAttribute("Signature", typeof(ODMcomplexTypeDefinitionSignature), IsNullable = false)]
+        [XmlArray("Signatures")]
+        [XmlArrayItem("Signature", typeof(ODMcomplexTypeDefinitionSignature), IsNullable = false)]
         public List<ODMcomplexTypeDefinitionSignature> Signatures
         {
             get
@@ -14923,7 +15086,8 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlArrayItemAttribute("Annotation", typeof(ODMcomplexTypeDefinitionAnnotation), IsNullable = false)]
+        [XmlArray("Annotations")]
+        [XmlArrayItem("Annotation", typeof(ODMcomplexTypeDefinitionAnnotation), IsNullable = false)]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotations
         {
             get
@@ -14948,7 +15112,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string StudyOID
         {
             get
@@ -14973,7 +15137,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MetaDataVersionOID
         {
             get
@@ -14999,11 +15163,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-SubjectData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("SubjectData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-SubjectData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("SubjectData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionSubjectData : EntityBase<ODMcomplexTypeDefinitionSubjectData>
     {
 
@@ -15131,7 +15295,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Annotation")]
+        [XmlArray("Annotation")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
+        //[XmlElement("Annotation")]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotation
         {
             get
@@ -15156,7 +15322,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("StudyEventData")]
+        [XmlArray("StudyEventData")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionStudyEventData))]
+        //[XmlElement("StudyEventData")]
         public List<ODMcomplexTypeDefinitionStudyEventData> StudyEventData
         {
             get
@@ -15181,7 +15349,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string SubjectKey
         {
             get
@@ -15206,7 +15374,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -15223,7 +15391,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -15241,17 +15409,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-InvestigatorRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("InvestigatorRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-InvestigatorRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("InvestigatorRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionInvestigatorRef : EntityBase<ODMcomplexTypeDefinitionInvestigatorRef>
     {
 
         private string userOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string UserOID
         {
             get
@@ -15277,17 +15445,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-SiteRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("SiteRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-SiteRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("SiteRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionSiteRef : EntityBase<ODMcomplexTypeDefinitionSiteRef>
     {
 
         private string locationOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string LocationOID
         {
             get
@@ -15313,11 +15481,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-StudyEventData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("StudyEventData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-StudyEventData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("StudyEventData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionStudyEventData : EntityBase<ODMcomplexTypeDefinitionStudyEventData>
     {
 
@@ -15393,7 +15561,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Annotation")]
+        [XmlArray("Annotation")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
+        //[XmlElement("Annotation")]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotation
         {
             get
@@ -15418,7 +15588,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("FormData")]
+        [XmlArray("FormData")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionFormData))]
+        //[XmlElement("FormData")]
         public List<ODMcomplexTypeDefinitionFormData> FormData
         {
             get
@@ -15443,7 +15615,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string StudyEventOID
         {
             get
@@ -15468,7 +15640,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string StudyEventRepeatKey
         {
             get
@@ -15493,7 +15665,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -15510,7 +15682,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -15528,11 +15700,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-FormData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("FormData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-FormData", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("FormData", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionFormData : EntityBase<ODMcomplexTypeDefinitionFormData>
     {
 
@@ -15635,7 +15807,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Annotation")]
+        [XmlArray("Annotation")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
+        //[XmlElement("Annotation")]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotation
         {
             get
@@ -15660,7 +15834,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ItemGroupData")]
+        [XmlArray("ItemGroupData")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionItemGroupData))]
+        //[XmlElement("ItemGroupData")]
         public List<ODMcomplexTypeDefinitionItemGroupData> ItemGroupData
         {
             get
@@ -15685,7 +15861,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string FormOID
         {
             get
@@ -15710,7 +15886,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string FormRepeatKey
         {
             get
@@ -15735,7 +15911,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public TransactionType TransactionType
         {
             get
@@ -15752,7 +15928,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [XmlIgnore]
         public bool TransactionTypeSpecified
         {
             get
@@ -15770,17 +15946,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-ArchiveLayoutRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("ArchiveLayoutRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-ArchiveLayoutRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("ArchiveLayoutRef", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionArchiveLayoutRef : EntityBase<ODMcomplexTypeDefinitionArchiveLayoutRef>
     {
 
         private string archiveLayoutOIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ArchiveLayoutOID
         {
             get
@@ -15806,11 +15982,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Association", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Association", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Association", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Association", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionAssociation : EntityBase<ODMcomplexTypeDefinitionAssociation>
     {
 
@@ -15831,7 +16007,7 @@ namespace PCF.OdmXml
             this.keySetField = new ODMcomplexTypeDefinitionKeySet();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [XmlElement(Order = 0)]
         public ODMcomplexTypeDefinitionKeySet KeySet
         {
             get
@@ -15856,7 +16032,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("KeySet", Order = 1)]
+        [XmlElement("KeySet", Order = 1)]
         public ODMcomplexTypeDefinitionKeySet KeySet1
         {
             get
@@ -15881,7 +16057,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [XmlElement(Order = 2)]
         public ODMcomplexTypeDefinitionAnnotation Annotation
         {
             get
@@ -15906,7 +16082,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string StudyOID
         {
             get
@@ -15931,7 +16107,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MetaDataVersionOID
         {
             get
@@ -15957,11 +16133,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-KeySet", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("KeySet", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-KeySet", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("KeySet", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionKeySet : EntityBase<ODMcomplexTypeDefinitionKeySet>
     {
 
@@ -15985,7 +16161,7 @@ namespace PCF.OdmXml
 
         private string oIDField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string StudyOID
         {
             get
@@ -16010,7 +16186,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string SubjectKey
         {
             get
@@ -16035,7 +16211,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string StudyEventOID
         {
             get
@@ -16060,7 +16236,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string StudyEventRepeatKey
         {
             get
@@ -16085,7 +16261,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string FormOID
         {
             get
@@ -16110,7 +16286,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string FormRepeatKey
         {
             get
@@ -16135,7 +16311,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemGroupOID
         {
             get
@@ -16160,7 +16336,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemGroupRepeatKey
         {
             get
@@ -16185,7 +16361,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string ItemOID
         {
             get
@@ -16210,7 +16386,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string OID
         {
             get
@@ -16236,10 +16412,10 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class SignatureType : EntityBase<SignatureType>
     {
 
@@ -16333,7 +16509,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Object")]
+        [XmlArray("Object")]
+        [XmlArrayItem(typeof(ObjectType))]
+        //[XmlElement("Object")]
         public List<ObjectType> Object
         {
             get
@@ -16358,7 +16536,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
+        [XmlAttribute(DataType = "ID")]
         public string Id
         {
             get
@@ -16384,10 +16562,10 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class SignedInfoType : EntityBase<SignedInfoType>
     {
 
@@ -16454,7 +16632,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Reference")]
+        [XmlArray("Reference")]
+        [XmlArrayItem(typeof(ReferenceType))]
+        //[XmlElement("Reference")]
         public List<ReferenceType> Reference
         {
             get
@@ -16479,7 +16659,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
+        [XmlAttribute(DataType = "ID")]
         public string Id
         {
             get
@@ -16505,25 +16685,27 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class CanonicalizationMethodType : EntityBase<CanonicalizationMethodType>
     {
 
-        private List<System.Xml.XmlNode> anyField;
+        private List<XmlNode> anyField;
 
         private string algorithmField;
 
         public CanonicalizationMethodType()
         {
-            this.anyField = new List<System.Xml.XmlNode>();
+            this.anyField = new List<XmlNode>();
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public List<System.Xml.XmlNode> Any
+        [XmlArray("Any")]
+        [XmlArrayItem(typeof(XmlNode))]
+        //[XmlText]
+        //[XmlAnyElement]
+        public List<XmlNode> Any
         {
             get
             {
@@ -16547,7 +16729,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        [XmlAttribute(DataType = "anyURI")]
         public string Algorithm
         {
             get
@@ -16573,25 +16755,25 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class SignatureMethodType : EntityBase<SignatureMethodType>
     {
 
         private string hMACOutputLengthField;
 
-        private List<System.Xml.XmlNode> anyField;
+        private List<XmlNode> anyField;
 
         private string algorithmField;
 
         public SignatureMethodType()
         {
-            this.anyField = new List<System.Xml.XmlNode>();
+            this.anyField = new List<XmlNode>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer")]
+        [XmlElement(DataType = "integer")]
         public string HMACOutputLength
         {
             get
@@ -16616,9 +16798,11 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public List<System.Xml.XmlNode> Any
+        [XmlArray("Any")]
+        [XmlArrayItem(typeof(XmlNode))]
+        //[XmlText]
+        //[XmlAnyElement]
+        public List<XmlNode> Any
         {
             get
             {
@@ -16642,7 +16826,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        [XmlAttribute(DataType = "anyURI")]
         public string Algorithm
         {
             get
@@ -16668,10 +16852,10 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class ReferenceType : EntityBase<ReferenceType>
     {
 
@@ -16693,7 +16877,8 @@ namespace PCF.OdmXml
             this.transformsField = new List<TransformType>();
         }
 
-        [System.Xml.Serialization.XmlArrayItemAttribute("Transform", IsNullable = false)]
+        [XmlArray("Transforms")]
+        [XmlArrayItem("Transform", IsNullable = false)]
         public List<TransformType> Transforms
         {
             get
@@ -16742,7 +16927,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
+        [XmlElement(DataType = "base64Binary")]
         public byte[] DigestValue
         {
             get
@@ -16767,7 +16952,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
+        [XmlAttribute(DataType = "ID")]
         public string Id
         {
             get
@@ -16792,7 +16977,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        [XmlAttribute(DataType = "anyURI")]
         public string URI
         {
             get
@@ -16817,7 +17002,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        [XmlAttribute(DataType = "anyURI")]
         public string Type
         {
             get
@@ -16843,10 +17028,10 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class TransformType : EntityBase<TransformType>
     {
 
@@ -16862,8 +17047,10 @@ namespace PCF.OdmXml
             this.itemsField = new List<object>();
         }
 
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        [System.Xml.Serialization.XmlElementAttribute("XPath", typeof(string))]
+        [XmlArray("Items")]
+        [XmlArrayItem("XPath", typeof(string))]
+        //[XmlAnyElement]
+        //[XmlElement("XPath", typeof(string))]
         public List<object> Items
         {
             get
@@ -16888,7 +17075,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlArray("Text")]
+        [XmlArrayItem(typeof(string))]
+        //[XmlText]
         public List<string> Text
         {
             get
@@ -16913,7 +17102,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        [XmlAttribute(DataType = "anyURI")]
         public string Algorithm
         {
             get
@@ -16939,25 +17128,27 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class DigestMethodType : EntityBase<DigestMethodType>
     {
 
-        private List<System.Xml.XmlNode> anyField;
+        private List<XmlNode> anyField;
 
         private string algorithmField;
 
         public DigestMethodType()
         {
-            this.anyField = new List<System.Xml.XmlNode>();
+            this.anyField = new List<XmlNode>();
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public List<System.Xml.XmlNode> Any
+        [XmlArray("Any")]
+        [XmlArrayItem(typeof(XmlNode))]
+        //[XmlText]
+        //[XmlAnyElement]
+        public List<XmlNode> Any
         {
             get
             {
@@ -16981,7 +17172,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        [XmlAttribute(DataType = "anyURI")]
         public string Algorithm
         {
             get
@@ -17007,10 +17198,10 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class SignatureValueType : EntityBase<SignatureValueType>
     {
 
@@ -17018,7 +17209,7 @@ namespace PCF.OdmXml
 
         private byte[] valueField;
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
+        [XmlAttribute(DataType = "ID")]
         public string Id
         {
             get
@@ -17043,7 +17234,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute(DataType = "base64Binary")]
+        [XmlAttribute(DataType = "base64Binary")]
         public byte[] Value
         {
             get
@@ -17069,16 +17260,17 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class KeyInfoType : EntityBase<KeyInfoType>
     {
 
-        private List<object> itemsField;
+        //private List<object> itemsField;
+        private object[] itemsField;
 
-        private List<ItemsChoiceType2> itemsElementNameField;
+        private ItemsChoiceType2[] itemsElementNameField;
 
         private List<string> textField;
 
@@ -17087,20 +17279,29 @@ namespace PCF.OdmXml
         public KeyInfoType()
         {
             this.textField = new List<string>();
-            this.itemsElementNameField = new List<ItemsChoiceType2>();
-            this.itemsField = new List<object>();
+            this.itemsElementNameField = new ItemsChoiceType2[0];
+            //this.itemsField = new List<object>();
+            this.itemsField = new object[0];
         }
 
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        [System.Xml.Serialization.XmlElementAttribute("KeyName", typeof(string))]
-        [System.Xml.Serialization.XmlElementAttribute("KeyValue", typeof(KeyValueType))]
-        [System.Xml.Serialization.XmlElementAttribute("MgmtData", typeof(string))]
-        [System.Xml.Serialization.XmlElementAttribute("PGPData", typeof(PGPDataType))]
-        [System.Xml.Serialization.XmlElementAttribute("RetrievalMethod", typeof(RetrievalMethodType))]
-        [System.Xml.Serialization.XmlElementAttribute("SPKIData", typeof(SPKIDataType))]
-        [System.Xml.Serialization.XmlElementAttribute("X509Data", typeof(X509DataType))]
-        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
-        public List<object> Items
+        //[XmlArray("Items")]
+        //[XmlArrayItem("KeyValue", typeof(KeyValueType))]
+        //[XmlArrayItem("MgmtData", typeof(string))]
+        //[XmlArrayItem("PGPData", typeof(PGPDataType))]
+        //[XmlArrayItem("RetrievalMethod", typeof(RetrievalMethodType))]
+        //[XmlArrayItem("SPKIData", typeof(SPKIDataType))]
+        //[XmlArrayItem("X509Data", typeof(X509DataType))]
+        [XmlAnyElement]
+        [XmlElement("KeyName", typeof(string))]
+        [XmlElement("KeyValue", typeof(KeyValueType))]
+        [XmlElement("MgmtData", typeof(string))]
+        [XmlElement("PGPData", typeof(PGPDataType))]
+        [XmlElement("RetrievalMethod", typeof(RetrievalMethodType))]
+        [XmlElement("SPKIData", typeof(SPKIDataType))]
+        [XmlElement("X509Data", typeof(X509DataType))]
+        [XmlChoiceIdentifier("ItemsElementName")]
+        //public List<object> Items
+        public object[] Items
         {
             get
             {
@@ -17124,9 +17325,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public List<ItemsChoiceType2> ItemsElementName
+        [XmlElement("ItemsElementName")]
+        [XmlIgnore]
+        public ItemsChoiceType2[] ItemsElementName
         {
             get
             {
@@ -17150,7 +17351,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlArray("Text")]
+        [XmlArrayItem(typeof(string))]
+        //[XmlText]
         public List<string> Text
         {
             get
@@ -17175,7 +17378,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
+        [XmlAttribute(DataType = "ID")]
         public string Id
         {
             get
@@ -17201,10 +17404,10 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class KeyValueType : EntityBase<KeyValueType>
     {
 
@@ -17217,9 +17420,9 @@ namespace PCF.OdmXml
             this.textField = new List<string>();
         }
 
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        [System.Xml.Serialization.XmlElementAttribute("DSAKeyValue", typeof(DSAKeyValueType))]
-        [System.Xml.Serialization.XmlElementAttribute("RSAKeyValue", typeof(RSAKeyValueType))]
+        [XmlAnyElement]
+        [XmlElement("DSAKeyValue", typeof(DSAKeyValueType))]
+        [XmlElement("RSAKeyValue", typeof(RSAKeyValueType))]
         public object Item
         {
             get
@@ -17244,7 +17447,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlArray("Text")]
+        [XmlArrayItem(typeof(string))]
+        //[XmlText]
         public List<string> Text
         {
             get
@@ -17270,10 +17475,10 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class DSAKeyValueType : EntityBase<DSAKeyValueType>
     {
 
@@ -17291,7 +17496,7 @@ namespace PCF.OdmXml
 
         private byte[] pgenCounterField;
 
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
+        [XmlElement(DataType = "base64Binary")]
         public byte[] P
         {
             get
@@ -17316,7 +17521,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
+        [XmlElement(DataType = "base64Binary")]
         public byte[] Q
         {
             get
@@ -17341,7 +17546,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
+        [XmlElement(DataType = "base64Binary")]
         public byte[] G
         {
             get
@@ -17366,7 +17571,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
+        [XmlElement(DataType = "base64Binary")]
         public byte[] Y
         {
             get
@@ -17391,7 +17596,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
+        [XmlElement(DataType = "base64Binary")]
         public byte[] J
         {
             get
@@ -17416,7 +17621,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
+        [XmlElement(DataType = "base64Binary")]
         public byte[] Seed
         {
             get
@@ -17441,7 +17646,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
+        [XmlElement(DataType = "base64Binary")]
         public byte[] PgenCounter
         {
             get
@@ -17467,10 +17672,10 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class RSAKeyValueType : EntityBase<RSAKeyValueType>
     {
 
@@ -17478,7 +17683,7 @@ namespace PCF.OdmXml
 
         private byte[] exponentField;
 
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
+        [XmlElement(DataType = "base64Binary")]
         public byte[] Modulus
         {
             get
@@ -17503,7 +17708,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")]
+        [XmlElement(DataType = "base64Binary")]
         public byte[] Exponent
         {
             get
@@ -17529,28 +17734,34 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class PGPDataType : EntityBase<PGPDataType>
     {
 
-        private List<object> itemsField;
+        //private List<object> itemsField;
+        private object[] itemsField;
 
-        private List<ItemsChoiceType1> itemsElementNameField;
+        private ItemsChoiceType1[] itemsElementNameField;
 
         public PGPDataType()
         {
-            this.itemsElementNameField = new List<ItemsChoiceType1>();
-            this.itemsField = new List<object>();
+            this.itemsElementNameField = new ItemsChoiceType1[0];
+            //this.itemsField = new List<object>();
+            this.itemsField = new object[0];
         }
 
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        [System.Xml.Serialization.XmlElementAttribute("PGPKeyID", typeof(byte[]), DataType = "base64Binary")]
-        [System.Xml.Serialization.XmlElementAttribute("PGPKeyPacket", typeof(byte[]), DataType = "base64Binary")]
-        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
-        public List<object> Items
+        //[XmlArray("Items")]
+        //[XmlArrayItem("PGPKeyID", typeof(byte[]), DataType = "base64Binary")]
+        //[XmlArrayItem("PGPKeyPacket", typeof(byte[]), DataType = "base64Binary")]
+        [XmlAnyElement]
+        [XmlElement("PGPKeyID", typeof(byte[]), DataType = "base64Binary")]
+        [XmlElement("PGPKeyPacket", typeof(byte[]), DataType = "base64Binary")]
+        [XmlChoiceIdentifier("ItemsElementName")]
+        //public List<object> Items
+        public object[] Items
         {
             get
             {
@@ -17574,9 +17785,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public List<ItemsChoiceType1> ItemsElementName
+        [XmlElement("ItemsElementName")]
+        [XmlIgnore]
+        public ItemsChoiceType1[] ItemsElementName
         {
             get
             {
@@ -17601,14 +17812,14 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#", IncludeInSchema = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#", IncludeInSchema = false)]
     public enum ItemsChoiceType1
     {
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("##any:")]
+        [XmlEnum("##any:")]
         Item,
 
         /// <remarks/>
@@ -17618,10 +17829,10 @@ namespace PCF.OdmXml
         PGPKeyPacket,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class RetrievalMethodType : EntityBase<RetrievalMethodType>
     {
 
@@ -17636,7 +17847,8 @@ namespace PCF.OdmXml
             this.transformsField = new List<TransformType>();
         }
 
-        [System.Xml.Serialization.XmlArrayItemAttribute("Transform", IsNullable = false)]
+        [XmlArray("Transforms")]
+        [XmlArrayItem("Transform", IsNullable = false)]
         public List<TransformType> Transforms
         {
             get
@@ -17661,7 +17873,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        [XmlAttribute(DataType = "anyURI")]
         public string URI
         {
             get
@@ -17686,7 +17898,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        [XmlAttribute(DataType = "anyURI")]
         public string Type
         {
             get
@@ -17712,18 +17924,18 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class SPKIDataType : EntityBase<SPKIDataType>
     {
 
         private byte[][] sPKISexpField;
 
-        private System.Xml.XmlElement anyField;
+        private XmlElement anyField;
 
-        [System.Xml.Serialization.XmlElementAttribute("SPKISexp", DataType = "base64Binary")]
+        [XmlElement("SPKISexp", DataType = "base64Binary")]
         public byte[][] SPKISexp
         {
             get
@@ -17748,8 +17960,8 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public System.Xml.XmlElement Any
+        [XmlAnyElement]
+        public XmlElement Any
         {
             get
             {
@@ -17774,31 +17986,40 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class X509DataType : EntityBase<X509DataType>
     {
 
-        private List<object> itemsField;
+        //private List<object> itemsField;
+        private object[] itemsField;
 
-        private List<ItemsChoiceType> itemsElementNameField;
+        private ItemsChoiceType[] itemsElementNameField;
 
         public X509DataType()
         {
-            this.itemsElementNameField = new List<ItemsChoiceType>();
-            this.itemsField = new List<object>();
+            this.itemsElementNameField = new ItemsChoiceType[0];
+            //this.itemsField = new List<object>();
+            this.itemsField = new object[0];
         }
 
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        [System.Xml.Serialization.XmlElementAttribute("X509CRL", typeof(byte[]), DataType = "base64Binary")]
-        [System.Xml.Serialization.XmlElementAttribute("X509Certificate", typeof(byte[]), DataType = "base64Binary")]
-        [System.Xml.Serialization.XmlElementAttribute("X509IssuerSerial", typeof(X509IssuerSerialType))]
-        [System.Xml.Serialization.XmlElementAttribute("X509SKI", typeof(byte[]), DataType = "base64Binary")]
-        [System.Xml.Serialization.XmlElementAttribute("X509SubjectName", typeof(string))]
-        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
-        public List<object> Items
+        //[XmlArray("Items")]
+        //[XmlArrayItem("X509CRL", typeof(byte[]), DataType = "base64Binary")]
+        //[XmlArrayItem("X509Certificate", typeof(byte[]), DataType = "base64Binary")]
+        //[XmlArrayItem("X509IssuerSerial", typeof(X509IssuerSerialType))]
+        //[XmlArrayItem("X509SKI", typeof(byte[]), DataType = "base64Binary")]
+        //[XmlArrayItem("X509SubjectName", typeof(string))]
+        [XmlAnyElement]
+        [XmlElement("X509CRL", typeof(byte[]), DataType = "base64Binary")]
+        [XmlElement("X509Certificate", typeof(byte[]), DataType = "base64Binary")]
+        [XmlElement("X509IssuerSerial", typeof(X509IssuerSerialType))]
+        [XmlElement("X509SKI", typeof(byte[]), DataType = "base64Binary")]
+        [XmlElement("X509SubjectName", typeof(string))]
+        [XmlChoiceIdentifier("ItemsElementName")]
+        //public List<object> Items
+        public object[] Items
         {
             get
             {
@@ -17822,9 +18043,9 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public List<ItemsChoiceType> ItemsElementName
+        [XmlElement("ItemsElementName")]
+        [XmlIgnore]
+        public ItemsChoiceType[] ItemsElementName
         {
             get
             {
@@ -17849,10 +18070,10 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class X509IssuerSerialType : EntityBase<X509IssuerSerialType>
     {
 
@@ -17884,7 +18105,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer")]
+        [XmlElement(DataType = "integer")]
         public string X509SerialNumber
         {
             get
@@ -17910,14 +18131,14 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#", IncludeInSchema = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#", IncludeInSchema = false)]
     public enum ItemsChoiceType
     {
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("##any:")]
+        [XmlEnum("##any:")]
         Item,
 
         /// <remarks/>
@@ -17936,14 +18157,14 @@ namespace PCF.OdmXml
         X509SubjectName,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#", IncludeInSchema = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#", IncludeInSchema = false)]
     public enum ItemsChoiceType2
     {
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("##any:")]
+        [XmlEnum("##any:")]
         Item,
 
         /// <remarks/>
@@ -17968,14 +18189,14 @@ namespace PCF.OdmXml
         X509Data,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(Namespace = "http://www.w3.org/2000/09/xmldsig#")]
     public partial class ObjectType : EntityBase<ObjectType>
     {
 
-        private List<System.Xml.XmlNode> anyField;
+        private List<XmlNode> anyField;
 
         private string idField;
 
@@ -17985,12 +18206,14 @@ namespace PCF.OdmXml
 
         public ObjectType()
         {
-            this.anyField = new List<System.Xml.XmlNode>();
+            this.anyField = new List<XmlNode>();
         }
 
-        [System.Xml.Serialization.XmlTextAttribute()]
-        [System.Xml.Serialization.XmlAnyElementAttribute()]
-        public List<System.Xml.XmlNode> Any
+        [XmlArray("Any")]
+        [XmlArrayItem(typeof(XmlNode))]
+        //[XmlText]
+        //[XmlAnyElement]
+        public List<XmlNode> Any
         {
             get
             {
@@ -18014,7 +18237,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "ID")]
+        [XmlAttribute(DataType = "ID")]
         public string Id
         {
             get
@@ -18039,7 +18262,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute]
         public string MimeType
         {
             get
@@ -18064,7 +18287,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        [XmlAttribute(DataType = "anyURI")]
         public string Encoding
         {
             get
@@ -18090,9 +18313,9 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum FileType
     {
 
@@ -18103,9 +18326,9 @@ namespace PCF.OdmXml
         Transactional,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum Granularity
     {
 
@@ -18131,38 +18354,38 @@ namespace PCF.OdmXml
         SingleSubject,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [XmlType(Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
     public enum ODMVersion
     {
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("1.2")]
+        [XmlEnum("1.2")]
         Item12,
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("1.2.1")]
+        [XmlEnum("1.2.1")]
         Item121,
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("1.3")]
+        [XmlEnum("1.3")]
         Item13,
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("1.3.1")]
+        [XmlEnum("1.3.1")]
         Item131,
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("1.3.2")]
+        [XmlEnum("1.3.2")]
         Item132,
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-AuditRecords", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("AuditRecords", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-AuditRecords", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("AuditRecords", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionAuditRecords : EntityBase<ODMcomplexTypeDefinitionAuditRecords>
     {
 
@@ -18173,7 +18396,9 @@ namespace PCF.OdmXml
             this.auditRecordField = new List<ODMcomplexTypeDefinitionAuditRecord>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("AuditRecord")]
+        [XmlArray("AuditRecord")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAuditRecord))]
+        //[XmlElement("AuditRecord")]
         public List<ODMcomplexTypeDefinitionAuditRecord> AuditRecord
         {
             get
@@ -18199,11 +18424,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Signatures", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Signatures", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Signatures", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Signatures", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionSignatures : EntityBase<ODMcomplexTypeDefinitionSignatures>
     {
 
@@ -18214,7 +18439,9 @@ namespace PCF.OdmXml
             this.signatureField = new List<ODMcomplexTypeDefinitionSignature>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Signature")]
+        [XmlArray("Signature")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionSignature))]
+        //[XmlElement("Signature")]
         public List<ODMcomplexTypeDefinitionSignature> Signature
         {
             get
@@ -18240,11 +18467,11 @@ namespace PCF.OdmXml
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Xsd2Code", "3.4.0.32990")]
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "ODMcomplexTypeDefinition-Annotations", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
-    [System.Xml.Serialization.XmlRootAttribute("Annotations", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
+    [GeneratedCode("Xsd2Code", "3.4.0.32990")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(TypeName = "ODMcomplexTypeDefinition-Annotations", Namespace = "http://www.cdisc.org/ns/odm/v1.3")]
+    [XmlRoot("Annotations", Namespace = "http://www.cdisc.org/ns/odm/v1.3", IsNullable = false)]
     public partial class ODMcomplexTypeDefinitionAnnotations : EntityBase<ODMcomplexTypeDefinitionAnnotations>
     {
 
@@ -18255,7 +18482,9 @@ namespace PCF.OdmXml
             this.annotationField = new List<ODMcomplexTypeDefinitionAnnotation>();
         }
 
-        [System.Xml.Serialization.XmlElementAttribute("Annotation")]
+        [XmlArray("Annotation")]
+        [XmlArrayItem(typeof(ODMcomplexTypeDefinitionAnnotation))]
+        //[XmlElement("Annotation")]
         public List<ODMcomplexTypeDefinitionAnnotation> Annotation
         {
             get

@@ -10650,7 +10650,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [Xml(DataType = "base64Binary")]
+        [XmlAttribute(DataType = "base64Binary")]
         public byte[] Value
         {
             get
@@ -10859,7 +10859,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [Xml(DataType = "base64Binary")]
+        [XmlAttribute(DataType = "base64Binary")]
         public byte[] Value
         {
             get
@@ -11269,7 +11269,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [Xml(DataType = "date")]
+        [XmlAttribute(DataType = "date")]
         public System.DateTime Value
         {
             get
@@ -12298,7 +12298,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [Xml(DataType = "hexBinary")]
+        [XmlAttribute(DataType = "hexBinary")]
         public byte[] Value
         {
             get
@@ -12507,7 +12507,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [Xml(DataType = "hexBinary")]
+        [XmlAttribute(DataType = "hexBinary")]
         public byte[] Value
         {
             get
@@ -14597,7 +14597,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [Xml(DataType = "time")]
+        [XmlAttribute(DataType = "time")]
         public System.DateTime Value
         {
             get
@@ -17047,7 +17047,7 @@ namespace PCF.OdmXml
             }
         }
 
-        [Xml(DataType = "base64Binary")]
+        [XmlAttribute(DataType = "base64Binary")]
         public byte[] Value
         {
             get

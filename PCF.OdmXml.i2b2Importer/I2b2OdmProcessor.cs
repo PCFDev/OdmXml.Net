@@ -254,7 +254,7 @@ namespace PCF.OdmXml.i2b2Importer
 
             //I don't think we want quite use StringBuilder here becuase the pipes are byte cast chars, not Unicode literals. md5("\x00\x7C") vs md5("\x7C")
             var message = new ByteArrayBulder()
-                .Append(Encoding.UTF8.GetBytes(ODM.SourceSystem))
+                .Append(Encoding.UTF8.GetBytes(ODM.SourceSystem ?? String.Empty))
                 .Append((byte)'|')
                 .Append(Encoding.UTF8.GetBytes(studyEventOID))
                 .Append((byte)'|')

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PCF.OdmXml.i2b2Importer.Helpers
@@ -11,45 +12,30 @@ namespace PCF.OdmXml.i2b2Importer.Helpers
         /// </summary>
         /// <param name="study"></param>
         /// <param name="codeListOID"></param>
-        /// <exception cref="System.InvalidOperationException"></exception>
         /// <returns></returns>
         public static ODMcomplexTypeDefinitionCodeList GetCodeList(ODMcomplexTypeDefinitionStudy study, string codeListOID)
         {
-            var version = study.MetaDataVersion.First();//FirstOrDefault()?
-            if (version.CodeList == null)
+            var version = study.MetaDataVersion.FirstOrDefault();
+            if (version == null || version.CodeList == null)
                 return null;
-
-            foreach (var codeListDef in version.CodeList)
-            {
-                if (codeListDef.OID.Equals(codeListOID))
-                    return codeListDef;
-            }
-            return null;
+            return version.CodeList.FirstOrDefault(_ => _.OID == codeListOID);
         }
 
         public static ODMcomplexTypeDefinitionCodeListItem GetCodeListItem(ODMcomplexTypeDefinitionCodeList codeList, string codedValue)
         {
-            foreach (var codeListItem in codeList.Items.Where(_ => _ is ODMcomplexTypeDefinitionCodeListItem).Select(_ => _ as ODMcomplexTypeDefinitionCodeListItem).ToList())//.getCodeListItem()
-            {
-                if (codeListItem.CodedValue.Equals(codedValue))
-                    return codeListItem;
-            }
-            return null;
+            return codeList.Items
+                .Where(_ => _ is ODMcomplexTypeDefinitionCodeListItem)
+                .Select(_ => _ as ODMcomplexTypeDefinitionCodeListItem)
+                .FirstOrDefault(_ => _.CodedValue == codedValue);
         }
 
-        public static string[] GetCodeListValues(ODMcomplexTypeDefinitionCodeList codeList, string lang)
+        public static IEnumerable<string> GetCodeListValues(ODMcomplexTypeDefinitionCodeList codeList, string lang)
         {
-            var codeListItems = codeList.Items.Where(_ => _ is ODMcomplexTypeDefinitionCodeListItem).Select(_ => _ as ODMcomplexTypeDefinitionCodeListItem).ToList();//.getCodeListItem();
-            string[] codeListValues = new string[codeListItems.Count];
-
-            for (int i = 0; i < codeListValues.Length; i++)
-            {
-                var codeListItem = codeListItems[i];
-
-                codeListValues[i] = GetTranslatedValue(codeListItem, lang);
-            }
-
-            return codeListValues;
+            return codeList.Items
+                .Where(_ => _ is ODMcomplexTypeDefinitionCodeListItem)
+                .Select(_ => _ as ODMcomplexTypeDefinitionCodeListItem)
+                .Select(_ => GetTranslatedValue(_, lang))
+                .ToList();//TODO: Do we want to just return the enumerable? is the data immutable?
         }
 
         /// <summary>
@@ -57,20 +43,13 @@ namespace PCF.OdmXml.i2b2Importer.Helpers
         /// </summary>
         /// <param name="study"></param>
         /// <param name="formOID"></param>
-        /// <exception cref="System.InvalidOperationException"></exception>
         /// <returns></returns>
         public static ODMcomplexTypeDefinitionFormDef GetForm(ODMcomplexTypeDefinitionStudy study, string formOID)
         {
-            var version = study.MetaDataVersion.First();//FirstOrDefault()?
-            if (version.FormDef == null)
+            var version = study.MetaDataVersion.FirstOrDefault();
+            if (version == null || version.FormDef == null)
                 return null;
-
-            foreach (var formDef in version.FormDef)
-            {
-                if (formDef.OID.Equals(formOID))
-                    return formDef;
-            }
-            return null;
+            return version.FormDef.FirstOrDefault(_ => _.OID == formOID);
         }
 
         /// <summary>
@@ -78,20 +57,13 @@ namespace PCF.OdmXml.i2b2Importer.Helpers
         /// </summary>
         /// <param name="study"></param>
         /// <param name="itemOID"></param>
-        /// <exception cref="System.InvalidOperationException"></exception>
         /// <returns></returns>
         public static ODMcomplexTypeDefinitionItemDef GetItem(ODMcomplexTypeDefinitionStudy study, string itemOID)
         {
-            var version = study.MetaDataVersion.First();//FirstOrDefault()?
-            if (version.ItemDef == null)
+            var version = study.MetaDataVersion.FirstOrDefault();
+            if (version == null || version.ItemDef == null)
                 return null;
-
-            foreach (var itemDef in version.ItemDef)
-            {
-                if (itemDef.OID.Equals(itemOID))
-                    return itemDef;
-            }
-            return null;
+            return version.ItemDef.FirstOrDefault(_ => _.OID == itemOID);
         }
 
         /// <summary>
@@ -99,30 +71,18 @@ namespace PCF.OdmXml.i2b2Importer.Helpers
         /// </summary>
         /// <param name="study"></param>
         /// <param name="itemGroupOID"></param>
-        /// <exception cref="System.InvalidOperationException"></exception>
         /// <returns></returns>
         public static ODMcomplexTypeDefinitionItemGroupDef GetItemGroup(ODMcomplexTypeDefinitionStudy study, string itemGroupOID)
         {
-            var version = study.MetaDataVersion.First();//FirstOrDefault()?
-            if (version.ItemGroupDef == null)
+            var version = study.MetaDataVersion.FirstOrDefault();
+            if (version == null || version.ItemGroupDef == null)
                 return null;
-
-            foreach (var itemGroupDef in version.ItemGroupDef)
-            {
-                if (itemGroupDef.OID.Equals(itemGroupOID))
-                    return itemGroupDef;
-            }
-            return null;
+            return version.ItemGroupDef.FirstOrDefault(_ => _.OID == itemGroupOID);
         }
 
         public static ODMcomplexTypeDefinitionStudy GetStudy(ODM odm, string studyOID)
         {
-            foreach (var study in odm.Study)
-            {
-                if (study.OID.Equals(studyOID))
-                    return study;
-            }
-            return null;
+            return odm.Study.FirstOrDefault(_ => _.OID == studyOID);
         }
 
         /// <summary>
@@ -130,20 +90,13 @@ namespace PCF.OdmXml.i2b2Importer.Helpers
         /// </summary>
         /// <param name="study"></param>
         /// <param name="studyEventOID"></param>
-        /// <exception cref="System.InvalidOperationException"></exception>
         /// <returns></returns>
         public static ODMcomplexTypeDefinitionStudyEventDef GetStudyEvent(ODMcomplexTypeDefinitionStudy study, string studyEventOID)
         {
-            var version = study.MetaDataVersion.First();//FirstOrDefault()?
-            if (version.StudyEventDef == null)
+            var version = study.MetaDataVersion.FirstOrDefault();
+            if (version == null || version.StudyEventDef == null)
                 return null;
-
-            foreach (var studyEventDef in version.StudyEventDef)
-            {
-                if (studyEventDef.OID.Equals(studyEventOID))
-                    return studyEventDef;
-            }
-            return null;
+            return version.StudyEventDef.FirstOrDefault(_ => _.OID == studyEventOID);
         }
 
         /// <summary>
@@ -152,27 +105,14 @@ namespace PCF.OdmXml.i2b2Importer.Helpers
         /// <param name="codeListItem"></param>
         /// <param name="lang"></param>
         /// <returns></returns>
-        public static string GetTranslatedValue(ODMcomplexTypeDefinitionCodeListItem codeListItem, string lang)
+        public static string GetTranslatedValue(ODMcomplexTypeDefinitionCodeListItem codeListItem, string lang = "en")
         {
-            var translatedValue = default(string);
-
-            foreach (var translatedText in codeListItem.Decode.TranslatedText)
-            {
-                // TODO: the language attribute is not always available for OpenClinica data.
-                if (translatedText.lang != null && translatedText.lang.Equals("en"))
-                {
-                    translatedValue = translatedText.Value;
-                    break;
-                }
-            }
-
-            if (translatedValue == null)
-            {
-                // take first value if we can't find an english translation
-                translatedValue = codeListItem.Decode.TranslatedText.First().Value;//FirstOrDefault()?
-            }
-
-            return translatedValue;
+            if (codeListItem.Decode == null)
+                return default(string);
+            var translatedText = codeListItem.Decode.TranslatedText;
+            // TODO: the language attribute is not always available for OpenClinica data.
+            return translatedText.Where(_ => _.lang == lang).Select(_ => _.Value).FirstOrDefault()
+                ?? translatedText.First().Value;//FirstOrDefault? //Take first value if we can't find an english translation.
         }
 
         public static bool IsNumeric(DataType type)

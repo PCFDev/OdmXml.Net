@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace PCF.OdmXml.i2b2Importer
@@ -23,14 +25,10 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="itemName">The name of the item.</param>
         /// <param name="enumValues">The enumeration values to add.</param>
         /// <returns>The metadata xml as a <see cref="System.String" />.</returns>
-        public static string GetEnumMetadataXML(string itemOID, string itemName, string[] enumValues)
+        public static string GetEnumMetadataXML(string itemOID, string itemName, IEnumerable<string> enumValues)
         {
             var root = CreateBaseMetadata(itemOID, itemName, "Enum");
-            var enumValuesElement = root.Element(ENUM_VALUES_ELEMENT_NAME);
-            foreach (string enumValue in enumValues)
-            {
-                enumValuesElement.Add(new XElement("Val", enumValue));
-            }
+            root.Element(ENUM_VALUES_ELEMENT_NAME).Add(enumValues.Select(_ => new XElement("Val", _)).ToArray());
             return ToDocumentString(root);
         }
 

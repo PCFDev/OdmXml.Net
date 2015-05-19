@@ -19,7 +19,7 @@ namespace PCF.OdmXml.i2b2Importer.Tests
             Assert.IsNotNull(odm);
             Assert.IsNull(exception);
 
-            new I2b2OdmProcessor(odm, null).ProcessODM();
+            new I2b2OdmProcessor(odm, null).ProcessODM();//This just calls the other two, should we even bother?
         }
 
         [TestMethod]

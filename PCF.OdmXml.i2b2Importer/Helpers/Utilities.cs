@@ -99,6 +99,13 @@ namespace PCF.OdmXml.i2b2Importer.Helpers
             return version.StudyEventDef.FirstOrDefault(_ => _.OID == studyEventOID);
         }
 
+        public static string GetTranslatedDescription(ODMcomplexTypeDefinitionDescription description, string lang = "en", string defaultValue = default(string))
+        {
+            if (description == null)
+                return defaultValue;
+            return description.TranslatedText.Where(_ => _.lang == lang).Select(_ => _.Value).FirstOrDefault();
+        }
+
         /// <summary>
         /// Look for a translated value for the given item. Returns the language specific value, or the first value if the translated value could not be found.
         /// </summary>

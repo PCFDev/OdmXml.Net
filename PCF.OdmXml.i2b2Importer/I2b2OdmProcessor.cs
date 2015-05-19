@@ -22,10 +22,9 @@ namespace PCF.OdmXml.i2b2Importer
         //Assuming we want UTC date for now.
         private DateTime CurrentDate = DateTime.UtcNow;
 
-        private ODM ODM { get; set; }
-
         private IClinicalDataDao ClinicalDataDao { get; set; }
         private I2B2ClinicalDataInfo ClinicalDataInfo { get; set; }
+        private ODM ODM { get; set; }
         private IStudyDao StudyDao { get; set; }
         private I2B2StudyInfo StudyInfo { get; set; }
 
@@ -199,44 +198,6 @@ namespace PCF.OdmXml.i2b2Importer
 
         #region Private Methods
 
-        private string CreateMetadataXml(ODMcomplexTypeDefinitionStudy study, ODMcomplexTypeDefinitionItemDef itemDef)
-        {
-            var metadataXml = default(string);
-
-            switch (itemDef.DataType)
-            {
-                case DataType.integer:
-                    metadataXml = MetaDataXML.GetIntegerMetadataXML(itemDef.OID, itemDef.Name);
-                    break;
-                case DataType.@float:
-                case DataType.@double:
-                    metadataXml = MetaDataXML.GetFloatMetadataXML(itemDef.OID, itemDef.Name);
-                    break;
-                case DataType.text:
-                case DataType.@string:
-                    if (itemDef.CodeListRef == null)
-                        metadataXml = MetaDataXML.GetStringMetadataXML(itemDef.OID, itemDef.Name);
-                    else
-                    {
-                        var codeList = Utilities.GetCodeList(study, itemDef.CodeListRef.CodeListOID);
-                        var codeListValues = Utilities.GetCodeListValues(codeList, "en");
-                        metadataXml = MetaDataXML.GetEnumMetadataXML(itemDef.OID, itemDef.Name, codeListValues);
-                    }
-                    break;
-                case DataType.boolean:
-                    break;
-                case DataType.date:
-                case DataType.time:
-                case DataType.datetime:
-                    metadataXml = MetaDataXML.GetStringMetadataXML(itemDef.OID, itemDef.Name);
-                    break;
-                default:
-                    break;
-            }
-
-            return metadataXml;
-        }
-
         /// <summary>
         /// Create concept code with all OIDs and make the total length less than 50 and unique.
         /// </summary>
@@ -248,6 +209,8 @@ namespace PCF.OdmXml.i2b2Importer
         /// <returns>The unique concept code.</returns>
         private string GenerateConceptCode(string studyOID, string studyEventOID, string formOID, string itemOID, string value)
         {
+            //TODO: Move to utilities? what about logging?
+            //What is this actually used for?
             var concept = new StringBuilder("STUDY|")
                 .Append(studyOID)
                 .Append("|");
@@ -292,20 +255,6 @@ namespace PCF.OdmXml.i2b2Importer
             return conceptCode;
         }
 
-        private string GetTranslatedDescription(ODMcomplexTypeDefinitionDescription description, string lang, string defaultValue)
-        {
-            if (description != null)
-            {
-                foreach (var translatedText in description.TranslatedText)
-                {
-                    if (translatedText.lang.Equals(lang))
-                        return translatedText.Value;
-                }
-            }
-
-            return defaultValue;
-        }
-
         private void LogStudyInfo()
         {
             //if (log.isDebugEnabled()) {
@@ -340,7 +289,7 @@ namespace PCF.OdmXml.i2b2Importer
             // set c_hlevel 5 data (TranslatedText)
             StudyInfo.Chlevel = Constants.C_HLEVEL_5;
             StudyInfo.Cfullname = codeListItemPath;
-            StudyInfo.Cname = GetTranslatedDescription(itemDef.Description, "en", itemDef.Name) + ": " + value;
+            StudyInfo.Cname = Utilities.GetTranslatedDescription(itemDef.Description, "en", itemDef.Name) + ": " + value;
             StudyInfo.Cbasecode = GenerateConceptCode(study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, codedValue);
             StudyInfo.Cdimcode = codeListItemPath;
             StudyInfo.Ctooltip = codeListItemToolTip;
@@ -408,7 +357,7 @@ namespace PCF.OdmXml.i2b2Importer
             // set c_hlevel 3 data (Form)
             StudyInfo.Chlevel = Constants.C_HLEVEL_3;
             StudyInfo.Cfullname = formPath;
-            StudyInfo.Cname = GetTranslatedDescription(formDef.Description, "en", formDef.Name);
+            StudyInfo.Cname = Utilities.GetTranslatedDescription(formDef.Description, "en", formDef.Name);
             StudyInfo.Cdimcode = formPath;
             StudyInfo.Ctooltip = formToolTip;
             StudyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_FOLDER;
@@ -455,11 +404,11 @@ namespace PCF.OdmXml.i2b2Importer
             // set c_hlevel 4 data (Items)
             StudyInfo.Chlevel = Constants.C_HLEVEL_4;
             StudyInfo.Cfullname = itemPath;
-            StudyInfo.Cname = GetTranslatedDescription(itemDef.Description, "en", itemDef.Name);
+            StudyInfo.Cname = Utilities.GetTranslatedDescription(itemDef.Description, "en", itemDef.Name);
             StudyInfo.Cbasecode = GenerateConceptCode(study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, null);
             StudyInfo.Cdimcode = itemPath;
             StudyInfo.Ctooltip = itemToolTip;
-            StudyInfo.Cmetadataxml = CreateMetadataXml(study, itemDef);
+            StudyInfo.Cmetadataxml = MetaDataXML.CreateMetadataXml(study, itemDef);
 
             // It is a leaf node
             StudyInfo.CvisualAttributes = itemDef.CodeListRef == null

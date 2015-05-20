@@ -5,6 +5,10 @@
 //  </auto-generated>
 // ------------------------------------------------------------------------------
 // This file has been modified from it's generated state.
+
+//There are a few warnings in this fill about checking decimal against null. Supressing the warnings
+#pragma warning disable CS0472
+
 namespace PCF.OdmXml
 {
     using System;
@@ -21,7 +25,7 @@ namespace PCF.OdmXml
     using System.Xml;
     using System.Xml.Serialization;
 
-
+    
     #region Base entity class
     public partial class EntityBase<T> : INotifyPropertyChanged
     {

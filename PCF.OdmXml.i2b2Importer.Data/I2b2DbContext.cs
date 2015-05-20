@@ -2,12 +2,10 @@ namespace PCF.OdmXml.i2b2Importer.Data
 {
     using System;
     using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
 
-    public partial class I2b2Data : DbContext
+    public partial class I2b2DbContext : DbContext
     {
-        public I2b2Data()
+        public I2b2DbContext()
             : base("name=I2b2Data")
         {
         }
@@ -17,14 +15,13 @@ namespace PCF.OdmXml.i2b2Importer.Data
         public virtual DbSet<ONTOLOGY> I2B2 { get; set; }
         public virtual DbSet<TABLE_ACCESS> TABLE_ACCESS { get; set; }
 
+        //TODO: Move attribute to fluent in maps?
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
             modelBuilder.Configurations.Add(new OntologyMap());
             modelBuilder.Configurations.Add(new ConceptDimensionMap());
             modelBuilder.Configurations.Add(new ObservationFactMap());
             modelBuilder.Configurations.Add(new TableAccessMap());
-
         }
     }
 }

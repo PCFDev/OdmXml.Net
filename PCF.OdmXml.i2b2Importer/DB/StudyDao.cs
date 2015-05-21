@@ -22,9 +22,9 @@ namespace PCF.OdmXml.i2b2Importer.DB
             using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
             using (var context = new I2b2DbContext())
             {
-                var i2b2 = context.I2B2;
+                var studies = context.I2B2;
                 var currentDate = DateTime.UtcNow;
-                var study = i2b2.Create();
+                var study = studies.Create();
 
                 study.C_BASECODE = studyInfo.Cbasecode;
                 study.C_COLUMNDATATYPE = studyInfo.CcolumnDatatype;
@@ -49,7 +49,7 @@ namespace PCF.OdmXml.i2b2Importer.DB
                 study.UPDATE_DATE = studyInfo.UpdateDate ?? currentDate;//???
                 study.VALUETYPE_CD = studyInfo.Valuetype;
 
-                i2b2.Add(study);
+                studies.Add(study);
                 context.SaveChanges();
                 scope.Complete();
             }
@@ -67,26 +67,22 @@ namespace PCF.OdmXml.i2b2Importer.DB
             //        executeBatch();
             //    }
             //}
-
-            //throw new NotImplementedException();
         }
 
         public void PreSetupI2B2Study(string projectId, string sourceSystem)
         {
-            //throw new NotImplementedException();
-
             var cPath = "\\STUDY\\" + sourceSystem + ":" + projectId + "\\";//%
             using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
             using (var context = new I2b2DbContext())
             {
-                var i2b2 = context.I2B2;
+                var studies = context.I2B2;
                 var currentDate = DateTime.UtcNow;
 
-                i2b2.Delete(_ => _.C_FULLNAME.StartsWith(cPath));
+                studies.Where(_ => _.C_FULLNAME.StartsWith(cPath)).Delete();
 
-                if (!i2b2.Any(_ => _.C_HLEVEL == 0 && _.C_FULLNAME == "\\STUDY\\"))
+                if (!studies.Any(_ => _.C_HLEVEL == 0 && _.C_FULLNAME == "\\STUDY\\"))
                 {
-                    var study = i2b2.Create();
+                    var study = studies.Create();
                     study.C_BASECODE = null;
                     study.C_COLUMNDATATYPE = "T";
                     study.C_COLUMNNAME = "concept_path";
@@ -109,7 +105,7 @@ namespace PCF.OdmXml.i2b2Importer.DB
                     study.SOURCESYSTEM_CD = null;
                     study.UPDATE_DATE = currentDate;
                     study.VALUETYPE_CD = null;
-                    i2b2.Add(study);
+                    studies.Add(study);
                 }
 
                 context.SaveChanges();

@@ -34,6 +34,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.133\lib\net45\EntityFramework.Extended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
@@ -41,6 +45,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,8 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DB\ClinicalDataDao.cs" />
-    <Compile Include="DB\ObservationFact.cs" />
-    <Compile Include="DB\Study.cs" />
     <Compile Include="DB\StudyDao.cs" />
     <Compile Include="Helpers\ByteArrayBuilder.cs" />
     <Compile Include="Constants.cs" />
@@ -68,6 +71,10 @@
     <Compile Include="Helpers\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PCF.OdmXml.i2b2Importer.Data\PCF.OdmXml.i2b2Importer.Data.csproj">
+      <Project>{f402a878-8ece-4695-a4e5-b6e2d8468bb8}</Project>
+      <Name>PCF.OdmXml.i2b2Importer.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PCF.OdmXml\PCF.OdmXml.csproj">
       <Project>{58921975-3409-45ce-ac73-f09ca961b74d}</Project>
       <Name>PCF.OdmXml</Name>

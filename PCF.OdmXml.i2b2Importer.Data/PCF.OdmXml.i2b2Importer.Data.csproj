@@ -51,18 +51,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConceptDimensionMap.cs" />
+    <Compile Include="DBMaps\ConceptDimensionMap.cs" />
     <Compile Include="DB\CONCEPT_DIMENSION.cs" />
-    <Compile Include="ObservationFactMap.cs" />
+    <Compile Include="DBMaps\ObservationFactMap.cs" />
     <Compile Include="DB\ONTOLOGY.cs" />
-    <Compile Include="I2b2Data.cs" />
+    <Compile Include="I2b2DbContext.cs" />
     <Compile Include="DB\OBSERVATION_FACT.cs" />
-    <Compile Include="OntologyMap.cs" />
+    <Compile Include="DBMaps\OntologyMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TableAccessMap.cs" />
+    <Compile Include="DBMaps\TableAccessMap.cs" />
     <Compile Include="DB\TABLE_ACCESS.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SecureConnections.config" />
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>

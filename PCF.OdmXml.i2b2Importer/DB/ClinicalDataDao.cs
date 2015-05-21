@@ -11,7 +11,7 @@ namespace PCF.OdmXml.i2b2Importer.DB
 {
     public class ClinicalDataDao : IClinicalDataDao
     {
-        public void CleanupClinicalData(IEnumerable<ODMcomplexTypeDefinitionStudy> odmStudies, string sourceSystem)
+        public void CleanObservations(IEnumerable<ODMcomplexTypeDefinitionStudy> odmStudies, string sourceSystem)
         {
             using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
             using (var context = new I2b2DbContext())

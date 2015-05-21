@@ -70,7 +70,7 @@ namespace PCF.OdmXml.i2b2Importer
             }
 
             var clinicalDataDao = new ClinicalDataDao();
-            clinicalDataDao.CleanupClinicalData(ODM.Study, ODM.SourceSystem);
+            clinicalDataDao.CleanObservations(ODM.Study, ODM.SourceSystem);
 
             foreach (var clinicalData in ODM.ClinicalData)
             {
@@ -95,7 +95,7 @@ namespace PCF.OdmXml.i2b2Importer
                 var encounterNum = 0;
                 var clinicalDatas = new List<I2B2ClinicalDataInfo>();
 
-                //5 nested loops, gross.
+                //5 nested loops, gross. Split into yielded enumerables?
                 foreach (var subjectData in clinicalData.SubjectData)
                 {
                     if (subjectData.StudyEventData == null)
@@ -202,6 +202,7 @@ namespace PCF.OdmXml.i2b2Importer
         public void ProcessODMStudy()
         {
             var studyDao = new StudyDao();
+            studyDao.SetupStudies();
 
             /*
              * Need to traverse through the study definition to: 1) Lookup all
@@ -213,13 +214,13 @@ namespace PCF.OdmXml.i2b2Importer
                 Debug.WriteLine("Processing study metadata for study " + study.GlobalVariables.StudyName.Value + "(OID " + study.OID + ")");
                 Debug.WriteLine("Deleting old study metadata and data");
 
-                studyDao.PreSetupI2B2Study(study.OID, ODM.SourceSystem);//Batch? We would need to step through twice.
+                studyDao.CleanStudies(study.OID, ODM.SourceSystem);//Batch? We would need to step through twice.
 
                 Debug.WriteLine("Inserting study metadata into i2b2");
                 var timer = Stopwatch.StartNew();
 
                 var studyInfos = GetStudies(study);
-                studyDao.InsertMetadata(studyInfos);
+                studyDao.InsertStudies(studyInfos);
 
                 timer.Stop();
                 Debug.WriteLine("Completed loading study metadata into i2b2 in " + timer.ElapsedMilliseconds + " ms");

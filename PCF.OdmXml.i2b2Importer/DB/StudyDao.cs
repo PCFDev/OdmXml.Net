@@ -12,8 +12,24 @@ namespace PCF.OdmXml.i2b2Importer.DB
     //TODO: Entity framework
     public class StudyDao : IStudyDao
     {
+        public void CleanStudies(string projectId, string sourceSystem)
+        {
+            var cPath = "\\STUDY\\" + sourceSystem + ":" + projectId + "\\";//%
+            using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
+            using (var context = new I2b2DbContext())
+            {
+                var studies = context.Studies;
+                var currentDate = DateTime.UtcNow;
+
+                studies.Where(_ => _.C_FULLNAME.StartsWith(cPath)).Delete();
+
+                context.SaveChanges();
+                scope.Complete();
+            }
+        }
+
         //TODO: Batch processing
-        public void InsertMetadata(IEnumerable<I2B2StudyInfo> studyInfos)
+        public void InsertStudies(IEnumerable<I2B2StudyInfo> studyInfos)
         {
             using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
             using (var context = new I2b2DbContext())
@@ -54,33 +70,17 @@ namespace PCF.OdmXml.i2b2Importer.DB
                 context.SaveChanges();
                 scope.Complete();
             }
-
-            //if (Boolean.getBoolean("batch.disabled"))
-            //{
-            //    insertMetadataStatement.execute();
-            //}
-            //else
-            //{
-            //    insertMetadataStatement.addBatch();
-
-            //    if (++metadataBatchCount >= BATCH_SIZE)
-            //    {
-            //        executeBatch();
-            //    }
-            //}
         }
 
-        public void PreSetupI2B2Study(string projectId, string sourceSystem)
+        public void SetupStudies()
         {
-            var cPath = "\\STUDY\\" + sourceSystem + ":" + projectId + "\\";//%
             using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
             using (var context = new I2b2DbContext())
             {
                 var studies = context.Studies;
                 var currentDate = DateTime.UtcNow;
 
-                studies.Where(_ => _.C_FULLNAME.StartsWith(cPath)).Delete();
-
+                //FirstOrDefault?
                 if (!studies.Any(_ => _.C_HLEVEL == 0 && _.C_FULLNAME == "\\STUDY\\"))
                 {
                     var study = studies.Create();

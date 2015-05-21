@@ -6,8 +6,10 @@ namespace PCF.OdmXml.i2b2Importer.Interfaces
 {
     public interface IStudyDao
     {
-        void InsertMetadata(IEnumerable<I2B2StudyInfo> studyInfo);
+        void CleanStudies(string projectId, string sourceSystem);
 
-        void PreSetupI2B2Study(string projectId, string sourceSystem);
+        void InsertStudies(IEnumerable<I2B2StudyInfo> studyInfo);
+
+        void SetupStudies();
     }
 }

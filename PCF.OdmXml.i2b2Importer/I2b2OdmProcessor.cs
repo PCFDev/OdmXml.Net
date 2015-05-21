@@ -22,7 +22,6 @@ namespace PCF.OdmXml.i2b2Importer
         private DateTime CurrentDate = DateTime.UtcNow;
 
         private ODM ODM { get; set; }
-        private IStudyDao StudyDao { get; set; }
         private I2B2StudyInfo StudyInfo { get; set; }
 
         #endregion Properties
@@ -37,7 +36,6 @@ namespace PCF.OdmXml.i2b2Importer
         {
             ODM = odm;
 
-            StudyDao = new StudyDao();//TODO: Entity framework
             StudyInfo = new I2B2StudyInfo { SourceSystemCd = odm.SourceSystem };
         }
 
@@ -154,6 +152,8 @@ namespace PCF.OdmXml.i2b2Importer
         /// </summary>
         public void ProcessODMStudy()
         {
+            var studyDao = new StudyDao();
+
             /*
              * Need to traverse through the study definition to: 1) Lookup all
              * definition values in tree nodes. 2) Set node values into i2b2 bean
@@ -164,12 +164,12 @@ namespace PCF.OdmXml.i2b2Importer
                 Debug.WriteLine("Processing study metadata for study " + study.GlobalVariables.StudyName.Value + "(OID " + study.OID + ")");
                 Debug.WriteLine("Deleting old study metadata and data");
 
-                StudyDao.PreSetupI2B2Study(study.OID, ODM.SourceSystem);
+                studyDao.PreSetupI2B2Study(study.OID, ODM.SourceSystem);
 
                 Debug.WriteLine("Inserting study metadata into i2b2");
                 var timer = Stopwatch.StartNew();
 
-                SaveStudy(study);
+                SaveStudy(ref studyDao, study);
 
                 timer.Stop();
                 Debug.WriteLine("Completed loading study metadata into i2b2 in " + timer.ElapsedMilliseconds + " ms");
@@ -178,7 +178,7 @@ namespace PCF.OdmXml.i2b2Importer
             /*
              * Flush any remaining batched up records.
              */
-            StudyDao.ExecuteBatch();
+            studyDao.ExecuteBatch();
         }
 
         #endregion Public Methods
@@ -195,7 +195,8 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="codeListItem"></param>
         /// <param name="itemPath"></param>
         /// <param name="itemToolTip"></param>
-        private void SaveCodeListItem(ODMcomplexTypeDefinitionStudy study,
+        private void SaveCodeListItem(ref StudyDao studyDao, 
+                                      ODMcomplexTypeDefinitionStudy study,
                                       ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
                                       ODMcomplexTypeDefinitionFormDef formDef,
                                       ODMcomplexTypeDefinitionItemDef itemDef,
@@ -220,7 +221,7 @@ namespace PCF.OdmXml.i2b2Importer
 
             Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
 
-            StudyDao.InsertMetadata(StudyInfo);
+            studyDao.InsertMetadata(StudyInfo);
         }
 
         /// <summary>
@@ -230,7 +231,8 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="studyEventDef"></param>
         /// <param name="studyPath"></param>
         /// <param name="studyToolTip"></param>
-        private void SaveEvent(ODMcomplexTypeDefinitionStudy study,
+        private void SaveEvent(ref StudyDao studyDao,
+                               ODMcomplexTypeDefinitionStudy study,
                                ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
                                string studyPath,
                                string studyToolTip)
@@ -249,13 +251,13 @@ namespace PCF.OdmXml.i2b2Importer
             Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
 
             // insert level 2 data
-            StudyDao.InsertMetadata(StudyInfo);
+            studyDao.InsertMetadata(StudyInfo);
 
             foreach (var formRef in studyEventDef.FormRef)
             {
                 var formDef = Utilities.GetForm(study, formRef.FormOID);
 
-                SaveForm(study, studyEventDef, formDef, eventPath, eventToolTip);
+                SaveForm(ref studyDao, study, studyEventDef, formDef, eventPath, eventToolTip);
             }
         }
 
@@ -267,7 +269,8 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="formDef"></param>
         /// <param name="eventPath"></param>
         /// <param name="eventToolTip"></param>
-        private void SaveForm(ODMcomplexTypeDefinitionStudy study,
+        private void SaveForm(ref StudyDao studyDao,
+                              ODMcomplexTypeDefinitionStudy study,
                               ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
                               ODMcomplexTypeDefinitionFormDef formDef,
                               string eventPath,
@@ -287,7 +290,7 @@ namespace PCF.OdmXml.i2b2Importer
             Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
 
             // insert level 3 data
-            StudyDao.InsertMetadata(StudyInfo);
+            studyDao.InsertMetadata(StudyInfo);
 
             foreach (var itemGroupRef in formDef.ItemGroupRef)
             {
@@ -298,7 +301,7 @@ namespace PCF.OdmXml.i2b2Importer
                     {
                         var itemDef = Utilities.GetItem(study, itemRef.ItemOID);
 
-                        SaveItem(study, studyEventDef, formDef, itemDef, formPath, formToolTip);
+                        SaveItem(ref studyDao, study, studyEventDef, formDef, itemDef, formPath, formToolTip);
                     }
                 }
             }
@@ -313,7 +316,8 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="itemDef"></param>
         /// <param name="formPath"></param>
         /// <param name="formToolTip"></param>
-        private void SaveItem(ODMcomplexTypeDefinitionStudy study,
+        private void SaveItem(ref StudyDao studyDao,
+                              ODMcomplexTypeDefinitionStudy study,
                               ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
                               ODMcomplexTypeDefinitionFormDef formDef,
                               ODMcomplexTypeDefinitionItemDef itemDef,
@@ -339,7 +343,7 @@ namespace PCF.OdmXml.i2b2Importer
             Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
 
             // insert level 4 data
-            StudyDao.InsertMetadata(StudyInfo);
+            studyDao.InsertMetadata(StudyInfo);
 
             if (itemDef.CodeListRef != null)
             {
@@ -350,7 +354,7 @@ namespace PCF.OdmXml.i2b2Importer
                     {
                         // save
                         // level 5
-                        SaveCodeListItem(study, studyEventDef, formDef, itemDef, codeListItem, itemPath, itemToolTip);
+                        SaveCodeListItem(ref studyDao, study, studyEventDef, formDef, itemDef, codeListItem, itemPath, itemToolTip);
                     }
                 }
             }
@@ -442,7 +446,7 @@ namespace PCF.OdmXml.i2b2Importer
         /// Set up i2b2 metadata level 1 (Study) info into STUDY
         /// </summary>
         /// <param name="study"></param>
-        private void SaveStudy(ODMcomplexTypeDefinitionStudy study)
+        private void SaveStudy(ref StudyDao studyDao, ODMcomplexTypeDefinitionStudy study)
         {
             // Need to include source system in path to avoid conflicts between servers
             var studyKey = ODM.SourceSystem + ":" + study.OID;
@@ -470,7 +474,7 @@ namespace PCF.OdmXml.i2b2Importer
             Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
 
             // insert level 1 data
-            StudyDao.InsertMetadata(StudyInfo);
+            studyDao.InsertMetadata(StudyInfo);
 
             // save child events
             var version = study.MetaDataVersion.First();//FirstOrDefault()?
@@ -480,7 +484,7 @@ namespace PCF.OdmXml.i2b2Importer
                 {
                     var studyEventDef = Utilities.GetStudyEvent(study, studyEventRef.StudyEventOID);
 
-                    SaveEvent(study, studyEventDef, studyPath, studyToolTip);
+                    SaveEvent(ref studyDao, study, studyEventDef, studyPath, studyToolTip);
                 }
             }
         }

@@ -9,7 +9,6 @@ using PCF.OdmXml.i2b2Importer.DTO;
 using PCF.OdmXml.i2b2Importer.Helpers;
 using PCF.OdmXml.i2b2Importer.Interfaces;
 
-//private static Logger log = LoggerFactory.getLogger(I2B2ODMStudyHandler.class);
 namespace PCF.OdmXml.i2b2Importer
 {
     /// <summary>
@@ -55,7 +54,6 @@ namespace PCF.OdmXml.i2b2Importer
         /// </summary>
         public void ProcessODM()
         {
-            //log.info("Start to parse ODM xml and save to i2b2");
             Debug.WriteLine("Start to parse ODM xml and save to i2b2");
 
             // build the call
@@ -71,7 +69,6 @@ namespace PCF.OdmXml.i2b2Importer
         /// </summary>
         public void ProcessODMClinicalData()
         {
-            //log.info("Parse and save ODM clinical data into i2b2...");
             Debug.WriteLine("Parse and save ODM clinical data into i2b2...");
 
             // traverse through the clinical data to:
@@ -79,7 +76,6 @@ namespace PCF.OdmXml.i2b2Importer
             // 2) Set patient and clinical information into observation fact.
             if (ODM.ClinicalData == null || ODM.ClinicalData.Count == 0)
             {
-                //log.info("ODM does not contain clinical data");
                 Debug.WriteLine("ODM does not contain clinical data");
                 return;
             }
@@ -94,14 +90,12 @@ namespace PCF.OdmXml.i2b2Importer
                 if (clinicalData.SubjectData == null)
                     continue;
 
-                //log.info("Save Clinical data for study OID " + clinicalData.getStudyOID() + " into i2b2...");
                 Debug.WriteLine("Save Clinical data for study OID " + clinicalData.StudyOID + " into i2b2...");
                 var timer = Stopwatch.StartNew();
 
                 var study = Utilities.GetStudy(ODM, clinicalData.StudyOID);
                 if (study == null)
                 {
-                    //log.error("ODM does not contain study metadata for study OID " + clinicalData.getStudyOID());
                     Debug.WriteLine("ODM does not contain study metadata for study OID " + clinicalData.StudyOID);
 
                     continue;
@@ -151,7 +145,6 @@ namespace PCF.OdmXml.i2b2Importer
                 ClinicalDataDao.ExecuteBatch();
 
                 timer.Stop();
-                //log.info("Completed Clinical data to i2b2 for study OID " + clinicalData.getStudyOID() + " in " + (endTime - startTime) + " ms");
                 Debug.WriteLine("Completed Clinical data to i2b2 for study OID " + clinicalData.StudyOID + " in " + timer.ElapsedMilliseconds + " ms");
             }
         }
@@ -170,21 +163,17 @@ namespace PCF.OdmXml.i2b2Importer
              */
             foreach (var study in ODM.Study)
             {
-                //log.info("Processing study metadata for study " + study.getGlobalVariables().getStudyName().getValue() + "(OID " + study.OID + ")");
                 Debug.WriteLine("Processing study metadata for study " + study.GlobalVariables.StudyName.Value + "(OID " + study.OID + ")");
-                //log.info("Deleting old study metadata and data");
                 Debug.WriteLine("Deleting old study metadata and data");
 
                 StudyDao.PreSetupI2B2Study(study.OID, ODM.SourceSystem);
 
-                //log.info("Inserting study metadata into i2b2");
                 Debug.WriteLine("Inserting study metadata into i2b2");
                 var timer = Stopwatch.StartNew();
 
                 SaveStudy(study);
 
                 timer.Stop();
-                //log.info("Completed loading study metadata into i2b2 in " + (endTime - startTime) + " ms");
                 Debug.WriteLine("Completed loading study metadata into i2b2 in " + timer.ElapsedMilliseconds + " ms");
             }
 
@@ -236,14 +225,6 @@ namespace PCF.OdmXml.i2b2Importer
             }
 
             var conceptCode = concept.ToString();
-            //if (log.isDebugEnabled()) {
-            //    log.debug(new StringBuffer("Concept code ").append(conceptCode)
-            //            .append(" generated for studyOID=").append(studyOID)
-            //            .append(", studyEventOID=").append(studyEventOID)
-            //            .append(", formOID=").append(formOID)
-            //            .append(", itemOID=").append(itemOID)
-            //            .append(", value=").append(value).toString());
-            //}
             Debug.WriteLine(new StringBuilder("Concept code ")
                 .Append(conceptCode)
                 .Append(" generated for studyOID=").Append(studyOID)
@@ -253,14 +234,6 @@ namespace PCF.OdmXml.i2b2Importer
                 .Append(", value=").Append(value).ToString());
 
             return conceptCode;
-        }
-
-        private void LogStudyInfo()
-        {
-            //if (log.isDebugEnabled()) {
-            //    log.debug("Inserting study metadata record: " + studyInfo);
-            //}
-            Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
         }
 
         /// <summary>
@@ -296,7 +269,7 @@ namespace PCF.OdmXml.i2b2Importer
             StudyInfo.Cmetadataxml = null;
             StudyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_LEAF;
 
-            LogStudyInfo();
+            Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
 
             StudyDao.InsertMetadata(StudyInfo);
         }
@@ -324,7 +297,7 @@ namespace PCF.OdmXml.i2b2Importer
             StudyInfo.Ctooltip = eventToolTip;
             StudyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_FOLDER;
 
-            LogStudyInfo();
+            Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
 
             // insert level 2 data
             StudyDao.InsertMetadata(StudyInfo);
@@ -362,7 +335,7 @@ namespace PCF.OdmXml.i2b2Importer
             StudyInfo.Ctooltip = formToolTip;
             StudyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_FOLDER;
 
-            LogStudyInfo();
+            Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
 
             // insert level 3 data
             StudyDao.InsertMetadata(StudyInfo);
@@ -414,7 +387,7 @@ namespace PCF.OdmXml.i2b2Importer
             StudyInfo.CvisualAttributes = itemDef.CodeListRef == null
                                         ? Constants.C_VISUALATTRIBUTES_LEAF
                                         : Constants.C_VISUALATTRIBUTES_FOLDER;
-            LogStudyInfo();
+            Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
 
             // insert level 4 data
             StudyDao.InsertMetadata(StudyInfo);
@@ -455,7 +428,6 @@ namespace PCF.OdmXml.i2b2Importer
 
                 if (codeListItem == null)
                 {
-                    //log.error("Code list item for coded value: " + itemValue + " not found in code list: " + codeList.getOID());
                     Debug.WriteLine("Code list item for coded value: " + itemValue + " not found in code list: " + codeList.OID);
                     return;
                 }
@@ -495,7 +467,6 @@ namespace PCF.OdmXml.i2b2Importer
             ClinicalDataInfo.StartDate = CurrentDate;
             ClinicalDataInfo.EndDate = CurrentDate;
 
-            //log.debug("Inserting clinical data: " + clinicalDataInfo);
             Debug.WriteLine("Inserting clinical data: " + ClinicalDataInfo);
 
             // save observation
@@ -503,7 +474,6 @@ namespace PCF.OdmXml.i2b2Importer
 
             try
             {
-                //log.info("clinicalDataInfo: " + clinicalDataInfo);
                 Debug.WriteLine("clinicalDataInfo: " + ClinicalDataInfo);
                 ClinicalDataDao.InsertObservation(ClinicalDataInfo);
             }
@@ -512,7 +482,6 @@ namespace PCF.OdmXml.i2b2Importer
                 var exError = "Error inserting observation_fact record."
                             + " study: " + study.OID
                             + " item: " + itemData.ItemOID;
-                //log.error(exError, ex);
                 Debug.WriteLine(exError);
             }
         }
@@ -546,7 +515,7 @@ namespace PCF.OdmXml.i2b2Importer
             StudyInfo.Cdimcode = studyPath;
             StudyInfo.Ctooltip = studyToolTip;
 
-            LogStudyInfo();
+            Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
 
             // insert level 1 data
             StudyDao.InsertMetadata(StudyInfo);

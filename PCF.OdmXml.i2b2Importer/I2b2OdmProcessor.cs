@@ -22,7 +22,6 @@ namespace PCF.OdmXml.i2b2Importer
         private DateTime CurrentDate = DateTime.UtcNow;
 
         private ODM ODM { get; set; }
-        private I2B2StudyInfo StudyInfo { get; set; }
 
         #endregion Properties
 
@@ -35,8 +34,7 @@ namespace PCF.OdmXml.i2b2Importer
         public I2b2OdmProcessor(ODM odm, IDictionary<string, string> settings)//settings?
         {
             ODM = odm;
-
-            StudyInfo = new I2B2StudyInfo { SourceSystemCd = odm.SourceSystem };
+           
         }
 
         #endregion Constructors
@@ -195,7 +193,8 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="codeListItem"></param>
         /// <param name="itemPath"></param>
         /// <param name="itemToolTip"></param>
-        private void SaveCodeListItem(ref StudyDao studyDao, 
+        private void SaveCodeListItem(ref StudyDao studyDao,
+                                      ref I2B2StudyInfo studyInfo,
                                       ODMcomplexTypeDefinitionStudy study,
                                       ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
                                       ODMcomplexTypeDefinitionFormDef formDef,
@@ -210,18 +209,18 @@ namespace PCF.OdmXml.i2b2Importer
             var codeListItemToolTip = itemToolTip + "\\" + value;
 
             // set c_hlevel 5 data (TranslatedText)
-            StudyInfo.Chlevel = Constants.C_HLEVEL_5;
-            StudyInfo.Cfullname = codeListItemPath;
-            StudyInfo.Cname = Utilities.GetTranslatedDescription(itemDef.Description, "en", itemDef.Name) + ": " + value;
-            StudyInfo.Cbasecode = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, codedValue);
-            StudyInfo.Cdimcode = codeListItemPath;
-            StudyInfo.Ctooltip = codeListItemToolTip;
-            StudyInfo.Cmetadataxml = null;
-            StudyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_LEAF;
+            studyInfo.Chlevel = Constants.C_HLEVEL_5;
+            studyInfo.Cfullname = codeListItemPath;
+            studyInfo.Cname = Utilities.GetTranslatedDescription(itemDef.Description, "en", itemDef.Name) + ": " + value;
+            studyInfo.Cbasecode = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, codedValue);
+            studyInfo.Cdimcode = codeListItemPath;
+            studyInfo.Ctooltip = codeListItemToolTip;
+            studyInfo.Cmetadataxml = null;
+            studyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_LEAF;
 
-            Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
+            Debug.WriteLine("Inserting study metadata record: " + studyInfo);
 
-            studyDao.InsertMetadata(StudyInfo);
+            studyDao.InsertMetadata(studyInfo);
         }
 
         /// <summary>
@@ -232,6 +231,7 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="studyPath"></param>
         /// <param name="studyToolTip"></param>
         private void SaveEvent(ref StudyDao studyDao,
+                               ref I2B2StudyInfo studyInfo,
                                ODMcomplexTypeDefinitionStudy study,
                                ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
                                string studyPath,
@@ -241,23 +241,23 @@ namespace PCF.OdmXml.i2b2Importer
             var eventToolTip = studyToolTip + "\\" + studyEventDef.OID;
 
             // set c_hlevel 2 data (StudyEvent)
-            StudyInfo.Chlevel = Constants.C_HLEVEL_2;
-            StudyInfo.Cfullname = eventPath;
-            StudyInfo.Cname = studyEventDef.Name;
-            StudyInfo.Cdimcode = eventPath;
-            StudyInfo.Ctooltip = eventToolTip;
-            StudyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_FOLDER;
+            studyInfo.Chlevel = Constants.C_HLEVEL_2;
+            studyInfo.Cfullname = eventPath;
+            studyInfo.Cname = studyEventDef.Name;
+            studyInfo.Cdimcode = eventPath;
+            studyInfo.Ctooltip = eventToolTip;
+            studyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_FOLDER;
 
-            Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
+            Debug.WriteLine("Inserting study metadata record: " + studyInfo);
 
             // insert level 2 data
-            studyDao.InsertMetadata(StudyInfo);
+            studyDao.InsertMetadata(studyInfo);
 
             foreach (var formRef in studyEventDef.FormRef)
             {
                 var formDef = Utilities.GetForm(study, formRef.FormOID);
 
-                SaveForm(ref studyDao, study, studyEventDef, formDef, eventPath, eventToolTip);
+                SaveForm(ref studyDao, ref studyInfo, study, studyEventDef, formDef, eventPath, eventToolTip);
             }
         }
 
@@ -270,6 +270,7 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="eventPath"></param>
         /// <param name="eventToolTip"></param>
         private void SaveForm(ref StudyDao studyDao,
+                              ref I2B2StudyInfo studyInfo,
                               ODMcomplexTypeDefinitionStudy study,
                               ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
                               ODMcomplexTypeDefinitionFormDef formDef,
@@ -280,17 +281,17 @@ namespace PCF.OdmXml.i2b2Importer
             var formToolTip = eventToolTip + "\\" + formDef.OID;
 
             // set c_hlevel 3 data (Form)
-            StudyInfo.Chlevel = Constants.C_HLEVEL_3;
-            StudyInfo.Cfullname = formPath;
-            StudyInfo.Cname = Utilities.GetTranslatedDescription(formDef.Description, "en", formDef.Name);
-            StudyInfo.Cdimcode = formPath;
-            StudyInfo.Ctooltip = formToolTip;
-            StudyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_FOLDER;
+            studyInfo.Chlevel = Constants.C_HLEVEL_3;
+            studyInfo.Cfullname = formPath;
+            studyInfo.Cname = Utilities.GetTranslatedDescription(formDef.Description, "en", formDef.Name);
+            studyInfo.Cdimcode = formPath;
+            studyInfo.Ctooltip = formToolTip;
+            studyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_FOLDER;
 
-            Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
+            Debug.WriteLine("Inserting study metadata record: " + studyInfo);
 
             // insert level 3 data
-            studyDao.InsertMetadata(StudyInfo);
+            studyDao.InsertMetadata(studyInfo);
 
             foreach (var itemGroupRef in formDef.ItemGroupRef)
             {
@@ -301,7 +302,7 @@ namespace PCF.OdmXml.i2b2Importer
                     {
                         var itemDef = Utilities.GetItem(study, itemRef.ItemOID);
 
-                        SaveItem(ref studyDao, study, studyEventDef, formDef, itemDef, formPath, formToolTip);
+                        SaveItem(ref studyDao, ref studyInfo, study, studyEventDef, formDef, itemDef, formPath, formToolTip);
                     }
                 }
             }
@@ -317,6 +318,7 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="formPath"></param>
         /// <param name="formToolTip"></param>
         private void SaveItem(ref StudyDao studyDao,
+                              ref I2B2StudyInfo studyInfo,
                               ODMcomplexTypeDefinitionStudy study,
                               ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
                               ODMcomplexTypeDefinitionFormDef formDef,
@@ -328,22 +330,22 @@ namespace PCF.OdmXml.i2b2Importer
             var itemToolTip = formToolTip + "\\" + itemDef.OID;
 
             // set c_hlevel 4 data (Items)
-            StudyInfo.Chlevel = Constants.C_HLEVEL_4;
-            StudyInfo.Cfullname = itemPath;
-            StudyInfo.Cname = Utilities.GetTranslatedDescription(itemDef.Description, "en", itemDef.Name);
-            StudyInfo.Cbasecode = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, null);
-            StudyInfo.Cdimcode = itemPath;
-            StudyInfo.Ctooltip = itemToolTip;
-            StudyInfo.Cmetadataxml = MetaDataXML.CreateMetadataXml(study, itemDef);
+            studyInfo.Chlevel = Constants.C_HLEVEL_4;
+            studyInfo.Cfullname = itemPath;
+            studyInfo.Cname = Utilities.GetTranslatedDescription(itemDef.Description, "en", itemDef.Name);
+            studyInfo.Cbasecode = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, null);
+            studyInfo.Cdimcode = itemPath;
+            studyInfo.Ctooltip = itemToolTip;
+            studyInfo.Cmetadataxml = MetaDataXML.CreateMetadataXml(study, itemDef);
 
             // It is a leaf node
-            StudyInfo.CvisualAttributes = itemDef.CodeListRef == null
+            studyInfo.CvisualAttributes = itemDef.CodeListRef == null
                                         ? Constants.C_VISUALATTRIBUTES_LEAF
                                         : Constants.C_VISUALATTRIBUTES_FOLDER;
-            Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
+            Debug.WriteLine("Inserting study metadata record: " + studyInfo);
 
             // insert level 4 data
-            studyDao.InsertMetadata(StudyInfo);
+            studyDao.InsertMetadata(studyInfo);
 
             if (itemDef.CodeListRef != null)
             {
@@ -354,7 +356,7 @@ namespace PCF.OdmXml.i2b2Importer
                     {
                         // save
                         // level 5
-                        SaveCodeListItem(ref studyDao, study, studyEventDef, formDef, itemDef, codeListItem, itemPath, itemToolTip);
+                        SaveCodeListItem(ref studyDao, ref studyInfo, study, studyEventDef, formDef, itemDef, codeListItem, itemPath, itemToolTip);
                     }
                 }
             }
@@ -448,33 +450,35 @@ namespace PCF.OdmXml.i2b2Importer
         /// <param name="study"></param>
         private void SaveStudy(ref StudyDao studyDao, ODMcomplexTypeDefinitionStudy study)
         {
+            var studyInfo = new I2B2StudyInfo { SourceSystemCd = ODM.SourceSystem };
+
             // Need to include source system in path to avoid conflicts between servers
             var studyKey = ODM.SourceSystem + ":" + study.OID;
             var studyPath = "\\STUDY\\" + studyKey + "\\";
             var studyToolTip = "STUDY\\" + studyKey;
 
             // set c_hlevel 1 data (Study)
-            StudyInfo.Chlevel = Constants.C_HLEVEL_1;
-            StudyInfo.Cfullname = studyPath;
-            StudyInfo.Cname = study.GlobalVariables.StudyName.Value;
-            StudyInfo.CsynonmCd = Constants.C_SYNONYM_CD;
-            StudyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_FOLDER;
-            StudyInfo.CfactTableColumn = Constants.C_FACTTABLECOLUMN;
-            StudyInfo.Ctablename = Constants.C_TABLENAME;
-            StudyInfo.Ccolumnname = Constants.C_COLUMNNAME;
-            StudyInfo.CcolumnDatatype = Constants.C_COLUMNDATATYPE;
-            StudyInfo.Coperator = Constants.C_OPERATOR;
-            StudyInfo.SourceSystemCd = ODM.SourceSystem;
-            StudyInfo.UpdateDate = CurrentDate;
-            StudyInfo.DownloadDate = CurrentDate;
-            StudyInfo.ImportDate = CurrentDate;
-            StudyInfo.Cdimcode = studyPath;
-            StudyInfo.Ctooltip = studyToolTip;
+            studyInfo.Chlevel = Constants.C_HLEVEL_1;
+            studyInfo.Cfullname = studyPath;
+            studyInfo.Cname = study.GlobalVariables.StudyName.Value;
+            studyInfo.CsynonmCd = Constants.C_SYNONYM_CD;
+            studyInfo.CvisualAttributes = Constants.C_VISUALATTRIBUTES_FOLDER;
+            studyInfo.CfactTableColumn = Constants.C_FACTTABLECOLUMN;
+            studyInfo.Ctablename = Constants.C_TABLENAME;
+            studyInfo.Ccolumnname = Constants.C_COLUMNNAME;
+            studyInfo.CcolumnDatatype = Constants.C_COLUMNDATATYPE;
+            studyInfo.Coperator = Constants.C_OPERATOR;
+            studyInfo.SourceSystemCd = ODM.SourceSystem;
+            studyInfo.UpdateDate = CurrentDate;
+            studyInfo.DownloadDate = CurrentDate;
+            studyInfo.ImportDate = CurrentDate;
+            studyInfo.Cdimcode = studyPath;
+            studyInfo.Ctooltip = studyToolTip;
 
-            Debug.WriteLine("Inserting study metadata record: " + StudyInfo);
+            Debug.WriteLine("Inserting study metadata record: " + studyInfo);
 
             // insert level 1 data
-            studyDao.InsertMetadata(StudyInfo);
+            studyDao.InsertMetadata(studyInfo);
 
             // save child events
             var version = study.MetaDataVersion.First();//FirstOrDefault()?
@@ -484,7 +488,7 @@ namespace PCF.OdmXml.i2b2Importer
                 {
                     var studyEventDef = Utilities.GetStudyEvent(study, studyEventRef.StudyEventOID);
 
-                    SaveEvent(ref studyDao, study, studyEventDef, studyPath, studyToolTip);
+                    SaveEvent(ref studyDao, ref studyInfo, study, studyEventDef, studyPath, studyToolTip);
                 }
             }
         }

@@ -4,9 +4,33 @@ namespace PCF.OdmXml.i2b2Importer.DTO
 {
     public class I2B2StudyInfo
     {
-        public I2B2StudyInfo()
+        private I2B2StudyInfo()
         {
+            var currentDate = DateTime.UtcNow;
+
             MappliedPath = "@";
+            UpdateDate = currentDate;
+            DownloadDate = currentDate;
+            ImportDate = currentDate;
+        }
+
+        public I2B2StudyInfo(int hlevel, string fullname, string name, string dimcode, string tooltip, string visualAttributes)
+            : this()
+        {
+            Cdimcode = dimcode;
+            Cfullname = fullname;
+            Chlevel = hlevel;
+            Cname = name;
+            Ctooltip = tooltip;
+            CvisualAttributes = visualAttributes;
+
+            //private setters?
+            CcolumnDatatype = Constants.C_COLUMNDATATYPE;
+            Ccolumnname = Constants.C_COLUMNNAME;
+            CfactTableColumn = Constants.C_FACTTABLECOLUMN;
+            Coperator = Constants.C_OPERATOR;
+            CsynonmCd = Constants.C_SYNONYM_CD;
+            Ctablename = Constants.C_TABLENAME;
         }
 
         //TODO: Better names

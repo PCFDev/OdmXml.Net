@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
 using EntityFramework.Extensions;
@@ -11,45 +12,45 @@ namespace PCF.OdmXml.i2b2Importer.DB
     //TODO: Entity framework
     public class StudyDao : IStudyDao
     {
-        public void ExecuteBatch()
-        {
-            //throw new NotImplementedException();
-        }
-
         //TODO: Batch processing
-        public void InsertMetadata(I2B2StudyInfo studyInfo)
+        public void InsertMetadata(IEnumerable<I2B2StudyInfo> studyInfos)
         {
             using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
             using (var context = new I2b2DbContext())
             {
                 var studies = context.Studies;
                 var currentDate = DateTime.UtcNow;
-                var study = studies.Create();
 
-                study.C_BASECODE = studyInfo.Cbasecode;
-                study.C_COLUMNDATATYPE = studyInfo.CcolumnDatatype;
-                study.C_COLUMNNAME = studyInfo.Ccolumnname;
-                study.C_COMMENT = studyInfo.Ccomment;
-                study.C_DIMCODE = studyInfo.Cdimcode;
-                study.C_FACTTABLECOLUMN = studyInfo.CfactTableColumn;
-                study.C_FULLNAME = studyInfo.Cfullname;
-                study.C_HLEVEL = studyInfo.Chlevel;
-                study.C_METADATAXML = studyInfo.Cmetadataxml;
-                study.C_NAME = studyInfo.Cname;
-                study.C_OPERATOR = studyInfo.Coperator;
-                study.C_SYNONYM_CD = studyInfo.CsynonmCd;
-                study.C_TABLENAME = studyInfo.Ctablename;
-                study.C_TOOLTIP = studyInfo.Ctooltip;
-                study.C_TOTALNUM = studyInfo.CtotalNum;
-                study.C_VISUALATTRIBUTES = studyInfo.CvisualAttributes;
-                study.DOWNLOAD_DATE = studyInfo.DownloadDate;
-                study.IMPORT_DATE = studyInfo.ImportDate;
-                study.M_APPLIED_PATH = studyInfo.MappliedPath;
-                study.SOURCESYSTEM_CD = studyInfo.SourceSystemCd;
-                study.UPDATE_DATE = studyInfo.UpdateDate ?? currentDate;//???
-                study.VALUETYPE_CD = studyInfo.Valuetype;
+                foreach (var studyInfo in studyInfos)
+                {
+                    var study = studies.Create();
 
-                studies.Add(study);
+                    study.C_BASECODE = studyInfo.Cbasecode;
+                    study.C_COLUMNDATATYPE = studyInfo.CcolumnDatatype;
+                    study.C_COLUMNNAME = studyInfo.Ccolumnname;
+                    study.C_COMMENT = studyInfo.Ccomment;
+                    study.C_DIMCODE = studyInfo.Cdimcode;
+                    study.C_FACTTABLECOLUMN = studyInfo.CfactTableColumn;
+                    study.C_FULLNAME = studyInfo.Cfullname;
+                    study.C_HLEVEL = studyInfo.Chlevel;
+                    study.C_METADATAXML = studyInfo.Cmetadataxml;
+                    study.C_NAME = studyInfo.Cname;
+                    study.C_OPERATOR = studyInfo.Coperator;
+                    study.C_SYNONYM_CD = studyInfo.CsynonmCd;
+                    study.C_TABLENAME = studyInfo.Ctablename;
+                    study.C_TOOLTIP = studyInfo.Ctooltip;
+                    study.C_TOTALNUM = studyInfo.CtotalNum;
+                    study.C_VISUALATTRIBUTES = studyInfo.CvisualAttributes;
+                    study.DOWNLOAD_DATE = studyInfo.DownloadDate;
+                    study.IMPORT_DATE = studyInfo.ImportDate;
+                    study.M_APPLIED_PATH = studyInfo.MappliedPath;
+                    study.SOURCESYSTEM_CD = studyInfo.SourceSystemCd;
+                    study.UPDATE_DATE = studyInfo.UpdateDate ?? currentDate;//???
+                    study.VALUETYPE_CD = studyInfo.Valuetype;
+
+                    studies.Add(study);
+                }
+
                 context.SaveChanges();
                 scope.Complete();
             }

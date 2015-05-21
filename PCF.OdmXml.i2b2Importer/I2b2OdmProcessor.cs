@@ -188,55 +188,6 @@ namespace PCF.OdmXml.i2b2Importer
         #region Private Methods
 
         /// <summary>
-        /// Create concept code with all OIDs and make the total length less than 50 and unique.
-        /// </summary>
-        /// <param name="studyOID"></param>
-        /// <param name="studyEventOID"></param>
-        /// <param name="formOID"></param>
-        /// <param name="itemOID"></param>
-        /// <param name="value"></param>
-        /// <returns>The unique concept code.</returns>
-        private string GenerateConceptCode(string studyOID, string studyEventOID, string formOID, string itemOID, string value)
-        {
-            //TODO: Move to utilities? what about logging?
-            //What is this actually used for?
-            var concept = new StringBuilder("STUDY|")
-                .Append(studyOID)
-                .Append("|");
-
-            //I don't think we want quite use StringBuilder here becuase the pipes are byte cast chars, not Unicode literals. md5("\x00\x7C") vs md5("\x7C")
-            var message = new ByteArrayBulder()
-                .Append(Encoding.UTF8.GetBytes(ODM.SourceSystem ?? String.Empty))
-                .Append((byte)'|')
-                .Append(Encoding.UTF8.GetBytes(studyEventOID))
-                .Append((byte)'|')
-                .Append(Encoding.UTF8.GetBytes(formOID))
-                .Append((byte)'|')
-                .Append(Encoding.UTF8.GetBytes(itemOID));
-
-            if (value != null)
-                message.Append((byte)'|').Append(Encoding.UTF8.GetBytes(value));
-
-            using (var md5 = MD5.Create())
-            {
-                var digest = md5.ComputeHash(message.GetBytes());
-                var hex = BitConverter.ToString(digest).Replace("-", "").ToLowerInvariant();
-                concept.Append(hex);
-            }
-
-            var conceptCode = concept.ToString();
-            Debug.WriteLine(new StringBuilder("Concept code ")
-                .Append(conceptCode)
-                .Append(" generated for studyOID=").Append(studyOID)
-                .Append(", studyEventOID=").Append(studyEventOID)
-                .Append(", formOID=").Append(formOID)
-                .Append(", itemOID=").Append(itemOID)
-                .Append(", value=").Append(value).ToString());
-
-            return conceptCode;
-        }
-
-        /// <summary>
         /// Set up i2b2 metadata level 5 (TranslatedText) info into STUDY
         /// </summary>
         /// <param name="study"></param>
@@ -263,7 +214,7 @@ namespace PCF.OdmXml.i2b2Importer
             StudyInfo.Chlevel = Constants.C_HLEVEL_5;
             StudyInfo.Cfullname = codeListItemPath;
             StudyInfo.Cname = Utilities.GetTranslatedDescription(itemDef.Description, "en", itemDef.Name) + ": " + value;
-            StudyInfo.Cbasecode = GenerateConceptCode(study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, codedValue);
+            StudyInfo.Cbasecode = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, codedValue);
             StudyInfo.Cdimcode = codeListItemPath;
             StudyInfo.Ctooltip = codeListItemToolTip;
             StudyInfo.Cmetadataxml = null;
@@ -378,7 +329,7 @@ namespace PCF.OdmXml.i2b2Importer
             StudyInfo.Chlevel = Constants.C_HLEVEL_4;
             StudyInfo.Cfullname = itemPath;
             StudyInfo.Cname = Utilities.GetTranslatedDescription(itemDef.Description, "en", itemDef.Name);
-            StudyInfo.Cbasecode = GenerateConceptCode(study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, null);
+            StudyInfo.Cbasecode = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, null);
             StudyInfo.Cdimcode = itemPath;
             StudyInfo.Ctooltip = itemToolTip;
             StudyInfo.Cmetadataxml = MetaDataXML.CreateMetadataXml(study, itemDef);
@@ -436,14 +387,14 @@ namespace PCF.OdmXml.i2b2Importer
                     /*
                      * Need to include the item value in the concept code, since there is a different code for each code list item.
                      */
-                    conceptCd = GenerateConceptCode(study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, itemValue);
+                    conceptCd = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, itemValue);
 
                     ClinicalDataInfo.TvalChar = Utilities.GetTranslatedValue(codeListItem, "en");
                 }
             }
             else if (Utilities.IsNumeric(item.DataType))
             {
-                conceptCd = GenerateConceptCode(study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, null);
+                conceptCd = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, null);
 
                 ClinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_NUMBER;
                 ClinicalDataInfo.TvalChar = "E";//TODO: Magic
@@ -451,7 +402,7 @@ namespace PCF.OdmXml.i2b2Importer
             }
             else
             {
-                conceptCd = GenerateConceptCode(study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, null);
+                conceptCd = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, null);
 
                 ClinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_TEXT;
                 ClinicalDataInfo.TvalChar = itemValue;

@@ -1,12 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace PCF.OdmXml.i2b2Importer.Helpers
 {
     //https://github.com/CTMM-TraIT/trait_odm_to_i2b2/blob/452a1950b94d3a779eb66aaf1ad7ef34976c628c/src/main/java/com/recomdata/i2b2/util/ODMUtil.java
     public static class Utilities
     {
+        /// <summary>
+        /// Create concept code with all OIDs and make the total length less than 50 and unique.
+        /// </summary>
+        /// <param name="studyOID"></param>
+        /// <param name="studyEventOID"></param>
+        /// <param name="formOID"></param>
+        /// <param name="itemOID"></param>
+        /// <param name="value"></param>
+        /// <returns>The unique concept code.</returns>
+        public static string GenerateConceptCode(string sourceSystem, string studyOID, string studyEventOID, string formOID, string itemOID, string value)
+        {
+            //TODO: Move to utilities? what about logging?
+            //What is this actually used for?
+            var concept = new StringBuilder("STUDY|")
+                .Append(studyOID)
+                .Append("|");
+
+            //I don't think we want quite use StringBuilder here becuase the pipes are byte cast chars, not Unicode literals. md5("\x00\x7C") vs md5("\x7C")
+            var message = new ByteArrayBulder()
+                .Append(Encoding.UTF8.GetBytes(sourceSystem))
+                .Append((byte)'|')
+                .Append(Encoding.UTF8.GetBytes(studyEventOID))
+                .Append((byte)'|')
+                .Append(Encoding.UTF8.GetBytes(formOID))
+                .Append((byte)'|')
+                .Append(Encoding.UTF8.GetBytes(itemOID));
+
+            if (value != null)
+                message.Append((byte)'|').Append(Encoding.UTF8.GetBytes(value));
+
+            using (var md5 = MD5.Create())
+            {
+                var digest = md5.ComputeHash(message.GetBytes());
+                var hex = BitConverter.ToString(digest).Replace("-", "").ToLowerInvariant();
+                concept.Append(hex);
+            }
+
+            var conceptCode = concept.ToString();
+            Debug.WriteLine(new StringBuilder("Concept code ")
+                .Append(conceptCode)
+                .Append(" generated for studyOID=").Append(studyOID)
+                .Append(", studyEventOID=").Append(studyEventOID)
+                .Append(", formOID=").Append(formOID)
+                .Append(", itemOID=").Append(itemOID)
+                .Append(", value=").Append(value).ToString());
+
+            return conceptCode;
+        }
+
         /// <summary>
         /// Resolve CodListDef from CodeListRef
         /// </summary>

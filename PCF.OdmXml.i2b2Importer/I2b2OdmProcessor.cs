@@ -21,8 +21,6 @@ namespace PCF.OdmXml.i2b2Importer
         //Assuming we want UTC date for now.
         private DateTime CurrentDate = DateTime.UtcNow;
 
-        private IClinicalDataDao ClinicalDataDao { get; set; }
-        private I2B2ClinicalDataInfo ClinicalDataInfo { get; set; }
         private ODM ODM { get; set; }
         private IStudyDao StudyDao { get; set; }
         private I2B2StudyInfo StudyInfo { get; set; }
@@ -39,8 +37,6 @@ namespace PCF.OdmXml.i2b2Importer
         {
             ODM = odm;
 
-            ClinicalDataDao = new ClinicalDataDao();//TODO: Entity framework
-            ClinicalDataInfo = new I2B2ClinicalDataInfo { SourcesystemCd = odm.SourceSystem };
             StudyDao = new StudyDao();//TODO: Entity framework
             StudyInfo = new I2B2StudyInfo { SourceSystemCd = odm.SourceSystem };
         }
@@ -80,9 +76,11 @@ namespace PCF.OdmXml.i2b2Importer
                 return;
             }
 
+            var clinicalDataDao = new ClinicalDataDao();
+
             foreach (var study in ODM.Study)
             {
-                ClinicalDataDao.CleanupClinicalData(study.OID, ODM.SourceSystem);
+                clinicalDataDao.CleanupClinicalData(study.OID, ODM.SourceSystem);
             }
 
             foreach (var clinicalData in ODM.ClinicalData)
@@ -132,7 +130,7 @@ namespace PCF.OdmXml.i2b2Importer
                                 foreach (var itemData in itemGroupData.Items.Where(_ => _ is ODMcomplexTypeDefinitionItemData).Select(_ => _ as ODMcomplexTypeDefinitionItemData).ToList())//getItemDataGroup()
                                 {
                                     if (itemData.Value != null)
-                                        SaveItemData(study, subjectData, studyEventData, formData, itemData, encounterNum);
+                                        SaveItemData(ref clinicalDataDao, study, subjectData, studyEventData, formData, itemData, encounterNum);
                                 }
                             }
                         }
@@ -142,7 +140,7 @@ namespace PCF.OdmXml.i2b2Importer
                 /*
                  * Flush any remaining batched up observations;
                  */
-                ClinicalDataDao.ExecuteBatch();
+                clinicalDataDao.ExecuteBatch();
 
                 timer.Stop();
                 Debug.WriteLine("Completed Clinical data to i2b2 for study OID " + clinicalData.StudyOID + " in " + timer.ElapsedMilliseconds + " ms");
@@ -358,7 +356,8 @@ namespace PCF.OdmXml.i2b2Importer
             }
         }
 
-        private void SaveItemData(ODMcomplexTypeDefinitionStudy study,
+        private void SaveItemData(ref ClinicalDataDao clinicalDataDao,
+                                  ODMcomplexTypeDefinitionStudy study,
                                   ODMcomplexTypeDefinitionSubjectData subjectData,
                                   ODMcomplexTypeDefinitionStudyEventData studyEventData,
                                   ODMcomplexTypeDefinitionFormData formData,
@@ -369,10 +368,12 @@ namespace PCF.OdmXml.i2b2Importer
             var item = Utilities.GetItem(study, itemData.ItemOID);
             var conceptCd = default(string);
 
+            var clinicalDataInfo = new I2B2ClinicalDataInfo { SourcesystemCd = ODM.SourceSystem };
+
             if (item.CodeListRef != null)
             {
-                ClinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_TEXT;
-                ClinicalDataInfo.NvalNum = null;
+                clinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_TEXT;
+                clinicalDataInfo.NvalNum = null;
 
                 var codeList = Utilities.GetCodeList(study, item.CodeListRef.CodeListOID);
                 var codeListItem = Utilities.GetCodeListItem(codeList, itemValue);
@@ -389,44 +390,44 @@ namespace PCF.OdmXml.i2b2Importer
                      */
                     conceptCd = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, itemValue);
 
-                    ClinicalDataInfo.TvalChar = Utilities.GetTranslatedValue(codeListItem, "en");
+                    clinicalDataInfo.TvalChar = Utilities.GetTranslatedValue(codeListItem, "en");
                 }
             }
             else if (Utilities.IsNumeric(item.DataType))
             {
                 conceptCd = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, null);
 
-                ClinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_NUMBER;
-                ClinicalDataInfo.TvalChar = "E";//TODO: Magic
-                ClinicalDataInfo.NvalNum = String.IsNullOrWhiteSpace(itemValue) ? default(decimal?) : Decimal.Parse(itemValue);// TryParse? BigDecimal == Decimal? not sure these are equivolent, but it may be close enough for our purposes.
+                clinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_NUMBER;
+                clinicalDataInfo.TvalChar = "E";//TODO: Magic
+                clinicalDataInfo.NvalNum = String.IsNullOrWhiteSpace(itemValue) ? default(decimal?) : Decimal.Parse(itemValue);// TryParse? BigDecimal == Decimal? not sure these are equivolent, but it may be close enough for our purposes.
             }
             else
             {
                 conceptCd = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, null);
 
-                ClinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_TEXT;
-                ClinicalDataInfo.TvalChar = itemValue;
-                ClinicalDataInfo.NvalNum = null;
+                clinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_TEXT;
+                clinicalDataInfo.TvalChar = itemValue;
+                clinicalDataInfo.NvalNum = null;
             }
 
-            ClinicalDataInfo.ConceptCd = conceptCd;
-            ClinicalDataInfo.EncounterNum = encounterNum;
-            ClinicalDataInfo.PatientNum = subjectData.SubjectKey;
-            ClinicalDataInfo.UpdateDate = CurrentDate;
-            ClinicalDataInfo.DownloadDate = CurrentDate;
-            ClinicalDataInfo.ImportDate = CurrentDate;
-            ClinicalDataInfo.StartDate = CurrentDate;
-            ClinicalDataInfo.EndDate = CurrentDate;
+            clinicalDataInfo.ConceptCd = conceptCd;
+            clinicalDataInfo.EncounterNum = encounterNum;
+            clinicalDataInfo.PatientNum = subjectData.SubjectKey;
+            clinicalDataInfo.UpdateDate = CurrentDate;
+            clinicalDataInfo.DownloadDate = CurrentDate;
+            clinicalDataInfo.ImportDate = CurrentDate;
+            clinicalDataInfo.StartDate = CurrentDate;
+            clinicalDataInfo.EndDate = CurrentDate;
 
-            Debug.WriteLine("Inserting clinical data: " + ClinicalDataInfo);
+            Debug.WriteLine("Inserting clinical data: " + clinicalDataInfo);
 
             // save observation
             // into i2b2
 
             try
             {
-                Debug.WriteLine("clinicalDataInfo: " + ClinicalDataInfo);
-                ClinicalDataDao.InsertObservation(ClinicalDataInfo);
+                Debug.WriteLine("clinicalDataInfo: " + clinicalDataInfo);
+                clinicalDataDao.InsertObservation(clinicalDataInfo);
             }
             catch (Exception ex)//TODO: Entity framework exception (was SQLException)
             {

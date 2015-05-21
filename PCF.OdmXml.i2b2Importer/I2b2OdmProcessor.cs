@@ -31,7 +31,7 @@ namespace PCF.OdmXml.i2b2Importer
         public I2b2OdmProcessor(ODM odm, IDictionary<string, string> settings)//settings?
         {
             ODM = odm;
-            ODM.SourceSystem = ODM.SourceSystem ?? String.Empty;
+            ODM.SourceSystem = ODM.SourceSystem ?? "ODM-SYSTEM";
         }
 
         #endregion Constructors

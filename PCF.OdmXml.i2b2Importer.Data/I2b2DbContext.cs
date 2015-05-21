@@ -10,15 +10,15 @@ namespace PCF.OdmXml.i2b2Importer.Data
         {
         }
 
-        public virtual DbSet<CONCEPT_DIMENSION> CONCEPT_DIMENSION { get; set; }
-        public virtual DbSet<OBSERVATION_FACT> OBSERVATION_FACT { get; set; }
-        public virtual DbSet<ONTOLOGY> I2B2 { get; set; }
-        public virtual DbSet<TABLE_ACCESS> TABLE_ACCESS { get; set; }
+        public virtual DbSet<ConceptDimension> ConceptDimensions { get; set; }
+        public virtual DbSet<ObservationFact> ObservationFacts { get; set; }
+        public virtual DbSet<Study> Studies { get; set; }
+        public virtual DbSet<TableAccess> TableAccess { get; set; }//Not needed?
 
         //TODO: Move attribute to fluent in maps?
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new OntologyMap());
+            modelBuilder.Configurations.Add(new StudyMap());
             modelBuilder.Configurations.Add(new ConceptDimensionMap());
             modelBuilder.Configurations.Add(new ObservationFactMap());
             modelBuilder.Configurations.Add(new TableAccessMap());

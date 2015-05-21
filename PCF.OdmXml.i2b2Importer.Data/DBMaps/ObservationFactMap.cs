@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PCF.OdmXml.i2b2Importer.Data
 {
-    public class ObservationFactMap : EntityTypeConfiguration<OBSERVATION_FACT>
+    public class ObservationFactMap : EntityTypeConfiguration<ObservationFact>
     {
         public ObservationFactMap()
         {

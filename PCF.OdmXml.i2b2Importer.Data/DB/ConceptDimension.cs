@@ -6,7 +6,7 @@ namespace PCF.OdmXml.i2b2Importer.Data
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class CONCEPT_DIMENSION
+    public partial class ConceptDimension
     {
         [Key]
         [StringLength(700)]

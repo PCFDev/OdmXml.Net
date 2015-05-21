@@ -52,15 +52,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBMaps\ConceptDimensionMap.cs" />
-    <Compile Include="DB\CONCEPT_DIMENSION.cs" />
+    <Compile Include="DB\ConceptDimension.cs" />
     <Compile Include="DBMaps\ObservationFactMap.cs" />
-    <Compile Include="DB\ONTOLOGY.cs" />
+    <Compile Include="DB\Study.cs" />
     <Compile Include="I2b2DbContext.cs" />
-    <Compile Include="DB\OBSERVATION_FACT.cs" />
-    <Compile Include="DBMaps\OntologyMap.cs" />
+    <Compile Include="DB\ObservationFact.cs" />
+    <Compile Include="DBMaps\StudyMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DBMaps\TableAccessMap.cs" />
-    <Compile Include="DB\TABLE_ACCESS.cs" />
+    <Compile Include="DB\TableAccess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SecureConnections.config" />

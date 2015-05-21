@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PCF.OdmXml.i2b2Importer.Data
 {
-    public class ConceptDimensionMap : EntityTypeConfiguration<CONCEPT_DIMENSION>
+    public class ConceptDimensionMap : EntityTypeConfiguration<ConceptDimension>
     {
         public ConceptDimensionMap()
         {

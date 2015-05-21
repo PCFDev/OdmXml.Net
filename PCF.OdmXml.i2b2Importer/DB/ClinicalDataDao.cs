@@ -11,14 +11,14 @@ namespace PCF.OdmXml.i2b2Importer.DB
 {
     public class ClinicalDataDao : IClinicalDataDao
     {
-        public void CleanupClinicalData(IList<ODMcomplexTypeDefinitionStudy> odmStudies, string sourceSystem)
+        public void CleanupClinicalData(IEnumerable<ODMcomplexTypeDefinitionStudy> odmStudies, string sourceSystem)
         {
             using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
             using (var context = new I2b2DbContext())
             {
-                var studies = context.I2B2;
-                var observations = context.OBSERVATION_FACT;
-                var concepts = context.CONCEPT_DIMENSION;
+                var studies = context.Studies;
+                var observations = context.ObservationFacts;
+                var concepts = context.ConceptDimensions;
 
                 foreach (var study in odmStudies)
                 {
@@ -66,7 +66,7 @@ namespace PCF.OdmXml.i2b2Importer.DB
             using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
             using (var context = new I2b2DbContext())
             {
-                var observations = context.OBSERVATION_FACT;
+                var observations = context.ObservationFacts;
                 var currentDate = DateTime.UtcNow;
 
                 //Bulk insert performance, memory usage? http://stackoverflow.com/a/5942176

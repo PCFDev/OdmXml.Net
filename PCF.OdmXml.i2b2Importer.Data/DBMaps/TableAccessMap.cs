@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PCF.OdmXml.i2b2Importer.Data
 {
-    public class TableAccessMap : EntityTypeConfiguration<TABLE_ACCESS>
+    public class TableAccessMap : EntityTypeConfiguration<TableAccess>
     {
         public TableAccessMap()
         {

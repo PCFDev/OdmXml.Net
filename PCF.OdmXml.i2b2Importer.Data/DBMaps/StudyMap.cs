@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace PCF.OdmXml.i2b2Importer.Data
 {
-    public class OntologyMap : EntityTypeConfiguration<ONTOLOGY>
+    public class StudyMap : EntityTypeConfiguration<Study>
     {
-        public OntologyMap()
+        public StudyMap()
         {
             this.ToTable("STUDY");//backwards?
 

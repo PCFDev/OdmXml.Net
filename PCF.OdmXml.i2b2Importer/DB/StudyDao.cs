@@ -22,7 +22,7 @@ namespace PCF.OdmXml.i2b2Importer.DB
             using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
             using (var context = new I2b2DbContext())
             {
-                var studies = context.I2B2;
+                var studies = context.Studies;
                 var currentDate = DateTime.UtcNow;
                 var study = studies.Create();
 
@@ -75,7 +75,7 @@ namespace PCF.OdmXml.i2b2Importer.DB
             using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
             using (var context = new I2b2DbContext())
             {
-                var studies = context.I2B2;
+                var studies = context.Studies;
                 var currentDate = DateTime.UtcNow;
 
                 studies.Where(_ => _.C_FULLNAME.StartsWith(cPath)).Delete();

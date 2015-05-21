@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
 using EntityFramework.Extensions;
@@ -8,12 +9,10 @@ using PCF.OdmXml.i2b2Importer.Interfaces;
 
 namespace PCF.OdmXml.i2b2Importer.DB
 {
-    //TODO: Entity framework
     public class ClinicalDataDao : IClinicalDataDao
     {
-        public void CleanupClinicalData(string projectId, string sourceSystem)
+        public void CleanupClinicalData(IList<ODMcomplexTypeDefinitionStudy> odmStudies, string sourceSystem)
         {
-            var conceptPattern = "STUDY|" + projectId + "|";//%
             using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
             using (var context = new I2b2DbContext())
             {
@@ -21,34 +20,40 @@ namespace PCF.OdmXml.i2b2Importer.DB
                 var observations = context.OBSERVATION_FACT;
                 var concepts = context.CONCEPT_DIMENSION;
 
-                observations.Where(_ => _.CONCEPT_CD.StartsWith(conceptPattern) && _.SOURCESYSTEM_CD == sourceSystem).Delete();
-                concepts.Where(_ => _.CONCEPT_CD.StartsWith(conceptPattern) && _.SOURCESYSTEM_CD == sourceSystem).Delete();
-
-                //INSERT INTO
-                //    Concept_Dimension (concept_path, concept_cd, name_char, update_date, download_date, import_date, sourcesystem_cd)
-                //SELECT
-                //    C_DIMCODE, C_BASECODE, C_NAME, UPDATE_DATE, DOWNLOAD_DATE, IMPORT_DATE, SOURCESYSTEM_CD
-                //FROM
-                //    STUDY
-                //WHERE
-                //    C_BASECODE LIKE <conceptPattern>
-
-                var newConcepts = studies.Where(_ => _.C_BASECODE.StartsWith(conceptPattern));
-                //TODO: Bulk insert?
-                //Gross
-                foreach (var newConcept in newConcepts)
+                foreach (var study in odmStudies)
                 {
-                    var concept = concepts.Create();
+                    var projectId = study.OID;
+                    var conceptPattern = "STUDY|" + projectId + "|";//%
 
-                    concept.CONCEPT_PATH = newConcept.C_DIMCODE;
-                    concept.CONCEPT_CD = newConcept.C_BASECODE;
-                    concept.NAME_CHAR = newConcept.C_NAME;
-                    concept.UPDATE_DATE = newConcept.UPDATE_DATE;
-                    concept.DOWNLOAD_DATE = newConcept.DOWNLOAD_DATE;
-                    concept.IMPORT_DATE = newConcept.IMPORT_DATE;
-                    concept.SOURCESYSTEM_CD = newConcept.SOURCESYSTEM_CD;
+                    observations.Where(_ => _.CONCEPT_CD.StartsWith(conceptPattern) && _.SOURCESYSTEM_CD == sourceSystem).Delete();
+                    concepts.Where(_ => _.CONCEPT_CD.StartsWith(conceptPattern) && _.SOURCESYSTEM_CD == sourceSystem).Delete();
 
-                    concepts.Add(concept);
+                    //INSERT INTO
+                    //    Concept_Dimension (concept_path, concept_cd, name_char, update_date, download_date, import_date, sourcesystem_cd)
+                    //SELECT
+                    //    C_DIMCODE, C_BASECODE, C_NAME, UPDATE_DATE, DOWNLOAD_DATE, IMPORT_DATE, SOURCESYSTEM_CD
+                    //FROM
+                    //    STUDY
+                    //WHERE
+                    //    C_BASECODE LIKE <conceptPattern>
+
+                    var newConcepts = studies.Where(_ => _.C_BASECODE.StartsWith(conceptPattern));
+                    //TODO: Bulk insert?
+                    //Gross
+                    foreach (var newConcept in newConcepts)
+                    {
+                        var concept = concepts.Create();
+
+                        concept.CONCEPT_PATH = newConcept.C_DIMCODE;
+                        concept.CONCEPT_CD = newConcept.C_BASECODE;
+                        concept.NAME_CHAR = newConcept.C_NAME;
+                        concept.UPDATE_DATE = newConcept.UPDATE_DATE;
+                        concept.DOWNLOAD_DATE = newConcept.DOWNLOAD_DATE;
+                        concept.IMPORT_DATE = newConcept.IMPORT_DATE;
+                        concept.SOURCESYSTEM_CD = newConcept.SOURCESYSTEM_CD;
+
+                        concepts.Add(concept);
+                    }
                 }
 
                 context.SaveChanges();
@@ -56,61 +61,48 @@ namespace PCF.OdmXml.i2b2Importer.DB
             }
         }
 
-        public void ExecuteBatch()
-        {
-            //throw new NotImplementedException();
-        }
-
-        //TODO: Batch processing
-        public void InsertObservation(I2B2ClinicalDataInfo clinicalDataInfo)
+        public void InsertObservations(IEnumerable<I2B2ClinicalDataInfo> clinicalDatas)
         {
             using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
             using (var context = new I2b2DbContext())
             {
                 var observations = context.OBSERVATION_FACT;
                 var currentDate = DateTime.UtcNow;
-                var observation = observations.Create();
 
-                observation.CONCEPT_CD = clinicalDataInfo.ConceptCd;
-                observation.CONFIDENCE_NUM = clinicalDataInfo.ConfidenceNum;
-                observation.DOWNLOAD_DATE = clinicalDataInfo.DownloadDate;
-                observation.ENCOUNTER_NUM = clinicalDataInfo.EncounterNum;
-                observation.END_DATE = clinicalDataInfo.EndDate;
-                observation.IMPORT_DATE = clinicalDataInfo.ImportDate;
-                observation.INSTANCE_NUM = clinicalDataInfo.InstanceNum;
-                observation.LOCATION_CD = clinicalDataInfo.LocationCd;
-                observation.MODIFIER_CD = clinicalDataInfo.ModifierCd;
-                observation.NVAL_NUM = clinicalDataInfo.NvalNum;
-                observation.OBSERVATION_BLOB = clinicalDataInfo.ObservationBlob;
-                observation.PATIENT_NUM = int.Parse(clinicalDataInfo.PatientNum);
-                observation.QUANTITY_NUM = clinicalDataInfo.QuantityNum;
-                observation.SOURCESYSTEM_CD = clinicalDataInfo.SourcesystemCd;
-                observation.START_DATE = clinicalDataInfo.StartDate ?? currentDate;//???
-                observation.TVAL_CHAR = clinicalDataInfo.TvalChar;
-                observation.UNITS_CD = clinicalDataInfo.UnitsCd;
-                observation.UPDATE_DATE = clinicalDataInfo.UpdateDate;
-                observation.UPLOAD_ID = clinicalDataInfo.UploadId;
-                observation.VALTYPE_CD = clinicalDataInfo.ValTypeCd;
-                observation.VALUEFLAG_CD = clinicalDataInfo.ValueFlagCd;
+                //Bulk insert performance, memory usage? http://stackoverflow.com/a/5942176
+                //Batch sizing?
+                foreach (var clinicalData in clinicalDatas)
+                {
+                    var observation = observations.Create();
 
-                observations.Add(observation);
+                    observation.CONCEPT_CD = clinicalData.ConceptCd;
+                    observation.CONFIDENCE_NUM = clinicalData.ConfidenceNum;
+                    observation.DOWNLOAD_DATE = clinicalData.DownloadDate;
+                    observation.ENCOUNTER_NUM = clinicalData.EncounterNum;
+                    observation.END_DATE = clinicalData.EndDate;
+                    observation.IMPORT_DATE = clinicalData.ImportDate;
+                    observation.INSTANCE_NUM = clinicalData.InstanceNum;
+                    observation.LOCATION_CD = clinicalData.LocationCd;
+                    observation.MODIFIER_CD = clinicalData.ModifierCd;
+                    observation.NVAL_NUM = clinicalData.NvalNum;
+                    observation.OBSERVATION_BLOB = clinicalData.ObservationBlob;
+                    observation.PATIENT_NUM = int.Parse(clinicalData.PatientNum);
+                    observation.QUANTITY_NUM = clinicalData.QuantityNum;
+                    observation.SOURCESYSTEM_CD = clinicalData.SourcesystemCd;
+                    observation.START_DATE = clinicalData.StartDate ?? currentDate;//???
+                    observation.TVAL_CHAR = clinicalData.TvalChar;
+                    observation.UNITS_CD = clinicalData.UnitsCd;
+                    observation.UPDATE_DATE = clinicalData.UpdateDate;
+                    observation.UPLOAD_ID = clinicalData.UploadId;
+                    observation.VALTYPE_CD = clinicalData.ValTypeCd;
+                    observation.VALUEFLAG_CD = clinicalData.ValueFlagCd;
+
+                    observations.Add(observation);
+                }
+
                 context.SaveChanges();
                 scope.Complete();
             }
-
-            //if (Boolean.getBoolean("batch.disabled"))
-            //{
-            //    insertObservationStatement.execute();
-            //}
-            //else
-            //{
-            //    insertObservationStatement.addBatch();
-
-            //    if (++observationBatchCount > BATCH_SIZE)
-            //    {
-            //        executeBatch();
-            //    }
-            //}
         }
     }
 }

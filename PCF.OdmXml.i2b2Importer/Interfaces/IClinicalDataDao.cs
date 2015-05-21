@@ -6,9 +6,6 @@ namespace PCF.OdmXml.i2b2Importer.Interfaces
     public interface IClinicalDataDao
     {
         void CleanupClinicalData(string projectId, string sourceSystem);
-
-        void ExecuteBatch();
-
         void InsertObservation(I2B2ClinicalDataInfo clinicalDataInfo);
     }
 }

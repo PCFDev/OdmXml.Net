@@ -11,7 +11,7 @@ namespace PCF.OdmXml.i2b2Importer.Data
     {
         public OntologyMap()
         {
-            this.ToTable("STUDY");
+            this.ToTable("STUDY");//backwards?
 
             this.Property(e => e.C_FULLNAME)
                 .HasColumnName("C_FULLNAME")

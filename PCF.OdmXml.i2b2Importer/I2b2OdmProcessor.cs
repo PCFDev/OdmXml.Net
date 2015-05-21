@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using PCF.OdmXml.i2b2Importer.DB;
 using PCF.OdmXml.i2b2Importer.DTO;
 using PCF.OdmXml.i2b2Importer.Helpers;
-using PCF.OdmXml.i2b2Importer.Interfaces;
 
 namespace PCF.OdmXml.i2b2Importer
 {
@@ -34,7 +31,6 @@ namespace PCF.OdmXml.i2b2Importer
         public I2b2OdmProcessor(ODM odm, IDictionary<string, string> settings)//settings?
         {
             ODM = odm;
-           
         }
 
         #endregion Constructors
@@ -73,11 +69,7 @@ namespace PCF.OdmXml.i2b2Importer
             }
 
             var clinicalDataDao = new ClinicalDataDao();
-
-            foreach (var study in ODM.Study)
-            {
-                clinicalDataDao.CleanupClinicalData(study.OID, ODM.SourceSystem);
-            }
+            clinicalDataDao.CleanupClinicalData(ODM.Study, ODM.SourceSystem);
 
             foreach (var clinicalData in ODM.ClinicalData)
             {
@@ -100,6 +92,8 @@ namespace PCF.OdmXml.i2b2Importer
                  * observation fact primary key is not violated.
                  */
                 var encounterNum = 0;
+                var clinicalDatas = new List<I2B2ClinicalDataInfo>();
+
                 //5 nested loops, gross.
                 foreach (var subjectData in clinicalData.SubjectData)
                 {
@@ -125,18 +119,74 @@ namespace PCF.OdmXml.i2b2Importer
 
                                 foreach (var itemData in itemGroupData.Items.Where(_ => _ is ODMcomplexTypeDefinitionItemData).Select(_ => _ as ODMcomplexTypeDefinitionItemData).ToList())//getItemDataGroup()
                                 {
-                                    if (itemData.Value != null)
-                                        SaveItemData(ref clinicalDataDao, study, subjectData, studyEventData, formData, itemData, encounterNum);
+                                    if (itemData.Value == null)
+                                        continue;
+
+                                    var itemValue = itemData.Value;
+                                    var item = Utilities.GetItem(study, itemData.ItemOID);
+                                    var conceptCd = default(string);
+
+                                    var clinicalDataInfo = new I2B2ClinicalDataInfo { SourcesystemCd = ODM.SourceSystem };
+
+                                    if (item.CodeListRef != null)
+                                    {
+                                        clinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_TEXT;
+                                        clinicalDataInfo.NvalNum = null;
+
+                                        var codeList = Utilities.GetCodeList(study, item.CodeListRef.CodeListOID);
+                                        var codeListItem = Utilities.GetCodeListItem(codeList, itemValue);
+
+                                        if (codeListItem == null)
+                                        {
+                                            Debug.WriteLine("Code list item for coded value: " + itemValue + " not found in code list: " + codeList.OID);
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            /*
+                                             * Need to include the item value in the concept code, since there is a different code for each code list item.
+                                             */
+                                            conceptCd = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, itemValue);
+
+                                            clinicalDataInfo.TvalChar = Utilities.GetTranslatedValue(codeListItem, "en");
+                                        }
+                                    }
+                                    else if (Utilities.IsNumeric(item.DataType))
+                                    {
+                                        conceptCd = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, null);
+
+                                        clinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_NUMBER;
+                                        clinicalDataInfo.TvalChar = "E";//TODO: Magic
+                                        clinicalDataInfo.NvalNum = String.IsNullOrWhiteSpace(itemValue) ? default(decimal?) : Decimal.Parse(itemValue);// TryParse? BigDecimal == Decimal? not sure these are equivolent, but it may be close enough for our purposes.
+                                    }
+                                    else
+                                    {
+                                        conceptCd = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, null);
+
+                                        clinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_TEXT;
+                                        clinicalDataInfo.TvalChar = itemValue;
+                                        clinicalDataInfo.NvalNum = null;
+                                    }
+
+                                    clinicalDataInfo.ConceptCd = conceptCd;
+                                    clinicalDataInfo.EncounterNum = encounterNum;
+                                    clinicalDataInfo.PatientNum = subjectData.SubjectKey;
+                                    clinicalDataInfo.UpdateDate = CurrentDate;
+                                    clinicalDataInfo.DownloadDate = CurrentDate;
+                                    clinicalDataInfo.ImportDate = CurrentDate;
+                                    clinicalDataInfo.StartDate = CurrentDate;
+                                    clinicalDataInfo.EndDate = CurrentDate;
+
+                                    Debug.WriteLine("Inserting clinical data: " + clinicalDataInfo);
+
+                                    clinicalDatas.Add(clinicalDataInfo);
                                 }
                             }
                         }
                     }
                 }
 
-                /*
-                 * Flush any remaining batched up observations;
-                 */
-                clinicalDataDao.ExecuteBatch();
+                clinicalDataDao.InsertObservations(clinicalDatas);
 
                 timer.Stop();
                 Debug.WriteLine("Completed Clinical data to i2b2 for study OID " + clinicalData.StudyOID + " in " + timer.ElapsedMilliseconds + " ms");
@@ -359,88 +409,6 @@ namespace PCF.OdmXml.i2b2Importer
                         SaveCodeListItem(ref studyDao, ref studyInfo, study, studyEventDef, formDef, itemDef, codeListItem, itemPath, itemToolTip);
                     }
                 }
-            }
-        }
-
-        private void SaveItemData(ref ClinicalDataDao clinicalDataDao,
-                                  ODMcomplexTypeDefinitionStudy study,
-                                  ODMcomplexTypeDefinitionSubjectData subjectData,
-                                  ODMcomplexTypeDefinitionStudyEventData studyEventData,
-                                  ODMcomplexTypeDefinitionFormData formData,
-                                  ODMcomplexTypeDefinitionItemData itemData,
-                                  int encounterNum)
-        {
-            var itemValue = itemData.Value;
-            var item = Utilities.GetItem(study, itemData.ItemOID);
-            var conceptCd = default(string);
-
-            var clinicalDataInfo = new I2B2ClinicalDataInfo { SourcesystemCd = ODM.SourceSystem };
-
-            if (item.CodeListRef != null)
-            {
-                clinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_TEXT;
-                clinicalDataInfo.NvalNum = null;
-
-                var codeList = Utilities.GetCodeList(study, item.CodeListRef.CodeListOID);
-                var codeListItem = Utilities.GetCodeListItem(codeList, itemValue);
-
-                if (codeListItem == null)
-                {
-                    Debug.WriteLine("Code list item for coded value: " + itemValue + " not found in code list: " + codeList.OID);
-                    return;
-                }
-                else
-                {
-                    /*
-                     * Need to include the item value in the concept code, since there is a different code for each code list item.
-                     */
-                    conceptCd = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, itemValue);
-
-                    clinicalDataInfo.TvalChar = Utilities.GetTranslatedValue(codeListItem, "en");
-                }
-            }
-            else if (Utilities.IsNumeric(item.DataType))
-            {
-                conceptCd = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, null);
-
-                clinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_NUMBER;
-                clinicalDataInfo.TvalChar = "E";//TODO: Magic
-                clinicalDataInfo.NvalNum = String.IsNullOrWhiteSpace(itemValue) ? default(decimal?) : Decimal.Parse(itemValue);// TryParse? BigDecimal == Decimal? not sure these are equivolent, but it may be close enough for our purposes.
-            }
-            else
-            {
-                conceptCd = Utilities.GenerateConceptCode(ODM.SourceSystem ?? String.Empty, study.OID, studyEventData.StudyEventOID, formData.FormOID, itemData.ItemOID, null);
-
-                clinicalDataInfo.ValTypeCd = Constants.VALUE_TYPE_TEXT;
-                clinicalDataInfo.TvalChar = itemValue;
-                clinicalDataInfo.NvalNum = null;
-            }
-
-            clinicalDataInfo.ConceptCd = conceptCd;
-            clinicalDataInfo.EncounterNum = encounterNum;
-            clinicalDataInfo.PatientNum = subjectData.SubjectKey;
-            clinicalDataInfo.UpdateDate = CurrentDate;
-            clinicalDataInfo.DownloadDate = CurrentDate;
-            clinicalDataInfo.ImportDate = CurrentDate;
-            clinicalDataInfo.StartDate = CurrentDate;
-            clinicalDataInfo.EndDate = CurrentDate;
-
-            Debug.WriteLine("Inserting clinical data: " + clinicalDataInfo);
-
-            // save observation
-            // into i2b2
-
-            try
-            {
-                Debug.WriteLine("clinicalDataInfo: " + clinicalDataInfo);
-                clinicalDataDao.InsertObservation(clinicalDataInfo);
-            }
-            catch (Exception ex)//TODO: Entity framework exception (was SQLException)
-            {
-                var exError = "Error inserting observation_fact record."
-                            + " study: " + study.OID
-                            + " item: " + itemData.ItemOID;
-                Debug.WriteLine(exError);
             }
         }
 

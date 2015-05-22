@@ -118,7 +118,7 @@ namespace PCF.OdmXml.i2b2Importer
                                 if (itemGroupData.Items == null)
                                     continue;
 
-                                foreach (var itemData in itemGroupData.Items.Where(_ => _ is ODMcomplexTypeDefinitionItemData).Select(_ => _ as ODMcomplexTypeDefinitionItemData).ToList())//getItemDataGroup()
+                                foreach (var itemData in itemGroupData.Items.Where(_ => _ is ODMcomplexTypeDefinitionItemData).Select(_ => _ as ODMcomplexTypeDefinitionItemData).ToList())
                                 {
                                     if (itemData.Value == null)
                                         continue;
@@ -230,6 +230,8 @@ namespace PCF.OdmXml.i2b2Importer
         #endregion Public Methods
 
         #region Private Methods
+
+        #region Process Study
 
         /// <summary>
         /// Set up i2b2 metadata level 5 (TranslatedText) info into STUDY
@@ -462,6 +464,8 @@ namespace PCF.OdmXml.i2b2Importer
                 }
             }
         }
+
+        #endregion Process Study
 
         #endregion Private Methods
     }

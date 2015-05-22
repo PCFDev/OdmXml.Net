@@ -35,7 +35,6 @@ namespace PCF.OdmXml.i2b2Importer
         /// <returns></returns>
         public void Import(ODM odm, IDictionary<string, string> settings)
         {
-
             try
             {
                 var processor = new I2b2OdmProcessor(odm, settings);
@@ -47,6 +46,5 @@ namespace PCF.OdmXml.i2b2Importer
                 throw;
             }
         }
-
     }
 }

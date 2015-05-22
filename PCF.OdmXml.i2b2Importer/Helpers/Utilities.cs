@@ -43,7 +43,7 @@ namespace PCF.OdmXml.i2b2Importer.Helpers
             if (value != null)
                 message.Append((byte)'|').Append(Encoding.UTF8.GetBytes(value));
 
-            using (var md5 = MD5.Create())
+            using (var md5 = MD5.Create())//Is there a particular reason to use md5 here?
             {
                 var digest = md5.ComputeHash(message.GetBytes());
                 var hex = BitConverter.ToString(digest).Replace("-", "").ToLowerInvariant();

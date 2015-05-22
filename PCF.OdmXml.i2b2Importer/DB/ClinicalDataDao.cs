@@ -80,7 +80,7 @@ namespace PCF.OdmXml.i2b2Importer.DB
                     observation.DOWNLOAD_DATE = clinicalData.DownloadDate;
                     observation.ENCOUNTER_NUM = clinicalData.EncounterNum;
                     observation.END_DATE = clinicalData.EndDate;
-                    observation.IMPORT_DATE = clinicalData.ImportDate;
+                    observation.IMPORT_DATE = clinicalData.ImportDate ?? currentDate;
                     observation.INSTANCE_NUM = clinicalData.InstanceNum;
                     observation.LOCATION_CD = clinicalData.LocationCd;
                     observation.MODIFIER_CD = clinicalData.ModifierCd;

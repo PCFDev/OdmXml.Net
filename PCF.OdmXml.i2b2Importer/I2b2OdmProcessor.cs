@@ -232,43 +232,46 @@ namespace PCF.OdmXml.i2b2Importer
         #region Private Methods
 
         /// <summary>
-        /// Set up i2b2 metadata level 5 (TranslatedText) info into STUDY
+        /// Set up i2b2 metadata level 1 (Study) info into STUDY
         /// </summary>
         /// <param name="study"></param>
-        /// <param name="studyEventDef"></param>
-        /// <param name="formDef"></param>
-        /// <param name="itemDef"></param>
-        /// <param name="codeListItem"></param>
-        /// <param name="itemPath"></param>
-        /// <param name="itemToolTip"></param>
-        private IEnumerable<I2B2StudyInfo> GetCodeListItems(ODMcomplexTypeDefinitionStudy study,
-                                                            ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
-                                                            ODMcomplexTypeDefinitionFormDef formDef,
-                                                            ODMcomplexTypeDefinitionItemDef itemDef,
-                                                            ODMcomplexTypeDefinitionCodeListItem codeListItem,
-                                                            string itemPath,
-                                                            string itemToolTip)
+        private IEnumerable<I2B2StudyInfo> GetStudies(ODMcomplexTypeDefinitionStudy study)
         {
-            var value = Utilities.GetTranslatedValue(codeListItem, "en");
-            var codedValue = codeListItem.CodedValue;
-            var codeListItemPath = itemPath + codedValue + "\\";
-            var codeListItemToolTip = itemToolTip + "\\" + value;
+            // Need to include source system in path to avoid conflicts between servers
+            var studyKey = ODM.SourceSystem + ":" + study.OID;
+            var studyPath = "\\STUDY\\" + studyKey + "\\";
+            var studyToolTip = "STUDY\\" + studyKey;
 
-            // set c_hlevel 5 data (TranslatedText)
-            var studyInfo = new I2B2StudyInfo(Constants.C_HLEVEL_5,
-                                              codeListItemPath,
-                                              Utilities.GetTranslatedDescription(itemDef.Description, "en", itemDef.Name) + ": " + value,
-                                              codeListItemPath,
-                                              codeListItemToolTip,
-                                              Constants.C_VISUALATTRIBUTES_LEAF)
+            // set c_hlevel 1 data (Study)
+            var studyInfo = new I2B2StudyInfo(Constants.C_HLEVEL_1,
+                                              studyPath,
+                                              study.GlobalVariables.StudyName.Value,
+                                              studyPath,
+                                              studyToolTip,
+                                              Constants.C_VISUALATTRIBUTES_FOLDER)
                                               { SourceSystemCd = ODM.SourceSystem };
-
-            studyInfo.Cbasecode = Utilities.GenerateConceptCode(ODM.SourceSystem, study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, codedValue);
-            studyInfo.Cmetadataxml = null;
 
             Debug.WriteLine("Inserting study metadata record: " + studyInfo);
 
+            // insert level 1 data
             yield return studyInfo;
+            //yield return studyInfo);
+
+            // save child events
+            var version = study.MetaDataVersion.First();//FirstOrDefault()?
+            if (version.Protocol.StudyEventRef != null)
+            {
+                foreach (var studyEventRef in version.Protocol.StudyEventRef)
+                {
+                    var studyEventDef = Utilities.GetStudyEvent(study, studyEventRef.StudyEventOID);
+                    var events = GetEvents(study, studyEventDef, studyPath, studyToolTip);
+
+                    foreach (var @event in events)
+                    {
+                        yield return @event;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -362,6 +365,7 @@ namespace PCF.OdmXml.i2b2Importer
             }
         }
 
+
         /// <summary>
         /// Set up i2b2 metadata level 4 (Item) info into STUDY and CONCEPT_DIMENSION
         /// </summary>
@@ -419,49 +423,49 @@ namespace PCF.OdmXml.i2b2Importer
                 }
             }
         }
-
         /// <summary>
-        /// Set up i2b2 metadata level 1 (Study) info into STUDY
+        /// Set up i2b2 metadata level 5 (TranslatedText) info into STUDY
         /// </summary>
         /// <param name="study"></param>
-        private IEnumerable<I2B2StudyInfo> GetStudies(ODMcomplexTypeDefinitionStudy study)
+        /// <param name="studyEventDef"></param>
+        /// <param name="formDef"></param>
+        /// <param name="itemDef"></param>
+        /// <param name="codeListItem"></param>
+        /// <param name="itemPath"></param>
+        /// <param name="itemToolTip"></param>
+        private IEnumerable<I2B2StudyInfo> GetCodeListItems(ODMcomplexTypeDefinitionStudy study,
+                                                            ODMcomplexTypeDefinitionStudyEventDef studyEventDef,
+                                                            ODMcomplexTypeDefinitionFormDef formDef,
+                                                            ODMcomplexTypeDefinitionItemDef itemDef,
+                                                            ODMcomplexTypeDefinitionCodeListItem codeListItem,
+                                                            string itemPath,
+                                                            string itemToolTip)
         {
-            // Need to include source system in path to avoid conflicts between servers
-            var studyKey = ODM.SourceSystem + ":" + study.OID;
-            var studyPath = "\\STUDY\\" + studyKey + "\\";
-            var studyToolTip = "STUDY\\" + studyKey;
+            var value = Utilities.GetTranslatedValue(codeListItem, "en");
+            var codedValue = codeListItem.CodedValue;
+            var codeListItemPath = itemPath + codedValue + "\\";
+            var codeListItemToolTip = itemToolTip + "\\" + value;
 
-            // set c_hlevel 1 data (Study)
-            var studyInfo = new I2B2StudyInfo(Constants.C_HLEVEL_1,
-                                              studyPath,
-                                              study.GlobalVariables.StudyName.Value,
-                                              studyPath,
-                                              studyToolTip,
-                                              Constants.C_VISUALATTRIBUTES_FOLDER)
+            // set c_hlevel 5 data (TranslatedText)
+            var studyInfo = new I2B2StudyInfo(Constants.C_HLEVEL_5,
+                                              codeListItemPath,
+                                              Utilities.GetTranslatedDescription(itemDef.Description, "en", itemDef.Name) + ": " + value,
+                                              codeListItemPath,
+                                              codeListItemToolTip,
+                                              Constants.C_VISUALATTRIBUTES_LEAF)
                                               { SourceSystemCd = ODM.SourceSystem };
+
+            studyInfo.Cbasecode = Utilities.GenerateConceptCode(ODM.SourceSystem, study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, codedValue);
+            studyInfo.Cmetadataxml = null;
 
             Debug.WriteLine("Inserting study metadata record: " + studyInfo);
 
-            // insert level 1 data
             yield return studyInfo;
-            //yield return studyInfo);
-
-            // save child events
-            var version = study.MetaDataVersion.First();//FirstOrDefault()?
-            if (version.Protocol.StudyEventRef != null)
-            {
-                foreach (var studyEventRef in version.Protocol.StudyEventRef)
-                {
-                    var studyEventDef = Utilities.GetStudyEvent(study, studyEventRef.StudyEventOID);
-                    var events = GetEvents(study, studyEventDef, studyPath, studyToolTip);
-
-                    foreach (var @event in events)
-                    {
-                        yield return @event;
-                    }
-                }
-            }
         }
+
+
+
+
 
         #endregion Private Methods
     }

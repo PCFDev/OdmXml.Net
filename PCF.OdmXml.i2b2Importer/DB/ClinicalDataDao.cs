@@ -6,6 +6,7 @@ using EntityFramework.Extensions;
 using PCF.OdmXml.i2b2Importer.Data;
 using PCF.OdmXml.i2b2Importer.DTO;
 using PCF.OdmXml.i2b2Importer.Interfaces;
+using System.Diagnostics;
 
 namespace PCF.OdmXml.i2b2Importer.DB
 {
@@ -22,11 +23,19 @@ namespace PCF.OdmXml.i2b2Importer.DB
 
                 foreach (var study in odmStudies)
                 {
-                    var projectId = study.OID;
-                    var conceptPattern = "STUDY|" + projectId + "|";//%
 
-                    observations.Where(_ => _.CONCEPT_CD.StartsWith(conceptPattern) && _.SOURCESYSTEM_CD == sourceSystem).Delete();
-                    concepts.Where(_ => _.CONCEPT_CD.StartsWith(conceptPattern) && _.SOURCESYSTEM_CD == sourceSystem).Delete();
+                    //var projectId = study.OID;
+                    //var conceptPattern = "STUDY|" + projectId + "|";//%
+
+                    //observations.Where(_ => _.CONCEPT_CD.StartsWith(conceptPattern) && _.SOURCESYSTEM_CD == sourceSystem).Delete();
+                    //concepts.Where(_ => _.CONCEPT_CD.StartsWith(conceptPattern) && _.SOURCESYSTEM_CD == sourceSystem).Delete();
+
+
+                    var sourceSystemCode = sourceSystem + "|" + study.OID;
+
+                    // Need to include source system in path to avoid conflicts between servers                 
+                    observations.Where(_ => _.SOURCESYSTEM_CD == sourceSystemCode).Delete();
+                    concepts.Where(_ => _.SOURCESYSTEM_CD == sourceSystemCode).Delete();
 
                     //INSERT INTO
                     //    Concept_Dimension (concept_path, concept_cd, name_char, update_date, download_date, import_date, sourcesystem_cd)
@@ -37,7 +46,9 @@ namespace PCF.OdmXml.i2b2Importer.DB
                     //WHERE
                     //    C_BASECODE LIKE <conceptPattern>
 
-                    var newConcepts = studies.Where(_ => _.C_BASECODE.StartsWith(conceptPattern));
+                    //var newConcepts = studies.Where(_ => _.C_BASECODE.StartsWith(conceptPattern));
+                    var newConcepts = studies.Where(_ => _.SOURCESYSTEM_CD == sourceSystemCode);
+
                     //TODO: Bulk insert?
                     //Gross
                     foreach (var newConcept in newConcepts)
@@ -75,6 +86,8 @@ namespace PCF.OdmXml.i2b2Importer.DB
                 {
                     var observation = observations.Create();
 
+                    observation.PROVIDER_ID = clinicalData.ProviderId; //HACK where is the provider?
+
                     observation.CONCEPT_CD = clinicalData.ConceptCd;
                     observation.CONFIDENCE_NUM = clinicalData.ConfidenceNum;
                     observation.DOWNLOAD_DATE = clinicalData.DownloadDate;
@@ -99,9 +112,17 @@ namespace PCF.OdmXml.i2b2Importer.DB
 
                     observations.Add(observation);
                 }
+                try
+                {
 
-                context.SaveChanges();
-                scope.Complete();
+                    var numOfChanges = context.SaveChanges();
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error Saving Observations: " + ex.Message);
+                    Debugger.Break();
+                }
             }
         }
     }

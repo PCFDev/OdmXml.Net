@@ -127,7 +127,7 @@ namespace PCF.OdmXml.i2b2Importer
                                     var item = Utilities.GetItem(study, itemData.ItemOID);
                                     var conceptCd = default(string);
 
-                                    var clinicalDataInfo = new I2B2ClinicalDataInfo { SourcesystemCd = ODM.SourceSystem };
+                                    var clinicalDataInfo = new I2B2ClinicalDataInfo { SourcesystemCd = ODM.SourceSystem + "|" + study.OID };
 
                                     if (item.CodeListRef != null)
                                     {
@@ -140,7 +140,7 @@ namespace PCF.OdmXml.i2b2Importer
                                         if (codeListItem == null)
                                         {
                                             Debug.WriteLine("Code list item for coded value: " + itemValue + " not found in code list: " + codeList.OID);
-                                            return;
+                                            //return; //HACK what should we do about this?
                                         }
                                         else
                                         {
@@ -178,9 +178,17 @@ namespace PCF.OdmXml.i2b2Importer
                                     clinicalDataInfo.StartDate = CurrentDate;
                                     clinicalDataInfo.EndDate = CurrentDate;
 
-                                    Debug.WriteLine("Inserting clinical data: " + clinicalDataInfo);
+                                    if (!String.IsNullOrEmpty(clinicalDataInfo.ConceptCd))
+                                    {
+                                        Debug.WriteLine("Inserting clinical data: " + clinicalDataInfo);
 
-                                    clinicalDatas.Add(clinicalDataInfo);
+                                        clinicalDatas.Add(clinicalDataInfo);
+                                    }
+                                    else
+                                    {
+                                        //HACK what should we do about this?
+                                        Debug.WriteLine("Not inserting: Could not locate a concept code for this item:" + clinicalDataInfo.ToString());
+                                    }
                                 }
                             }
                         }
@@ -263,7 +271,7 @@ namespace PCF.OdmXml.i2b2Importer
                                               codeListItemPath,
                                               codeListItemToolTip,
                                               Constants.C_VISUALATTRIBUTES_LEAF)
-                                              { SourceSystemCd = ODM.SourceSystem };
+                                              { SourceSystemCd = ODM.SourceSystem + "|" + study.OID };
 
             studyInfo.Cbasecode = Utilities.GenerateConceptCode(ODM.SourceSystem, study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, codedValue);
             studyInfo.Cmetadataxml = null;
@@ -295,7 +303,7 @@ namespace PCF.OdmXml.i2b2Importer
                                               eventPath,
                                               eventToolTip,
                                               Constants.C_VISUALATTRIBUTES_FOLDER)
-                                              { SourceSystemCd = ODM.SourceSystem };
+                                              { SourceSystemCd = ODM.SourceSystem + "|" + study.OID };
 
             Debug.WriteLine("Inserting study metadata record: " + studyInfo);
 
@@ -338,7 +346,7 @@ namespace PCF.OdmXml.i2b2Importer
                                               formPath,
                                               formToolTip,
                                               Constants.C_VISUALATTRIBUTES_FOLDER)
-                                              { SourceSystemCd = ODM.SourceSystem };
+                                              { SourceSystemCd = ODM.SourceSystem + "|" + study.OID };
 
             Debug.WriteLine("Inserting study metadata record: " + studyInfo);
 
@@ -394,7 +402,7 @@ namespace PCF.OdmXml.i2b2Importer
                                               itemPath,
                                               itemToolTip,
                                               visualAttributes)
-                                              { SourceSystemCd = ODM.SourceSystem };
+                                              { SourceSystemCd = ODM.SourceSystem + "|" + study.OID };
 
             studyInfo.Cbasecode = Utilities.GenerateConceptCode(ODM.SourceSystem, study.OID, studyEventDef.OID, formDef.OID, itemDef.OID, null);
             studyInfo.Cmetadataxml = MetaDataXML.CreateMetadataXml(study, itemDef);
@@ -440,7 +448,7 @@ namespace PCF.OdmXml.i2b2Importer
                                               studyPath,
                                               studyToolTip,
                                               Constants.C_VISUALATTRIBUTES_FOLDER)
-                                              { SourceSystemCd = ODM.SourceSystem };
+                                              { SourceSystemCd = ODM.SourceSystem + "|" + study.OID };
 
             Debug.WriteLine("Inserting study metadata record: " + studyInfo);
 

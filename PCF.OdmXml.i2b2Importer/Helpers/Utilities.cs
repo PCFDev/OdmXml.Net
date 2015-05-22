@@ -23,9 +23,12 @@ namespace PCF.OdmXml.i2b2Importer.Helpers
         {
             //TODO: Move to utilities? what about logging?
             //What is this actually used for?
-            var concept = new StringBuilder("STUDY|")
-                .Append(studyOID)
-                .Append("|");
+            //var concept = new StringBuilder("STUDY|")
+            //    .Append(studyOID)
+            //    .Append("|");
+
+            //ITL checked to see if we really need this prefix...
+            var concept = new StringBuilder();
 
             //I don't think we want quite use StringBuilder here because the pipes are byte cast chars, not Unicode literals. md5("\x00\x7C") vs md5("\x7C")
             var message = new ByteArrayBulder()

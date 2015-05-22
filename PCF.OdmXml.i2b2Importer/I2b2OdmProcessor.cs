@@ -464,9 +464,6 @@ namespace PCF.OdmXml.i2b2Importer
         }
 
 
-
-
-
         #endregion Private Methods
     }
 }

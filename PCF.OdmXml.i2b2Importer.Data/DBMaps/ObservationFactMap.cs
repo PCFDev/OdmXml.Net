@@ -13,6 +13,8 @@ namespace PCF.OdmXml.i2b2Importer.Data
         {
             this.ToTable("OBSERVATION_FACT");
 
+            this.HasKey(o => new { o.ENCOUNTER_NUM, o.PATIENT_NUM, o.CONCEPT_CD, o.PROVIDER_ID, o.START_DATE, o.MODIFIER_CD, o.INSTANCE_NUM });
+
             this.Property(e => e.CONCEPT_CD)
                 .HasColumnName("CONCEPT_CD")
                 .IsUnicode(false);

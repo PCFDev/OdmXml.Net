@@ -8,38 +8,22 @@ namespace PCF.OdmXml.i2b2Importer.Data
 
     public partial class ObservationFact
     {
-        [Key]
-        [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+
         public int ENCOUNTER_NUM { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PATIENT_NUM { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
         [StringLength(50)]
         public string CONCEPT_CD { get; set; }
 
-        [Key]
-        [Column(Order = 3)]
         [StringLength(50)]
         public string PROVIDER_ID { get; set; }
 
-        [Key]
-        [Column(Order = 4)]
         public DateTime START_DATE { get; set; }
 
-        [Key]
-        [Column(Order = 5)]
         [StringLength(100)]
         public string MODIFIER_CD { get; set; }
 
-        [Key]
-        [Column(Order = 6)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int INSTANCE_NUM { get; set; }
 
         [StringLength(50)]
@@ -78,8 +62,6 @@ namespace PCF.OdmXml.i2b2Importer.Data
         public string SOURCESYSTEM_CD { get; set; }
 
         public int? UPLOAD_ID { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int TEXT_SEARCH_INDEX { get; set; }
+        
     }
 }

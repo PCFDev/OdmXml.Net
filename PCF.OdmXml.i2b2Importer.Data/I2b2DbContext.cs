@@ -6,8 +6,25 @@ namespace PCF.OdmXml.i2b2Importer.Data
     public partial class I2b2DbContext : DbContext
     {
         public I2b2DbContext()
+            : this(true)
+        {
+        }
+
+        public I2b2DbContext(bool isReadWrite)
             : base("name=I2b2Data")
         {
+            if (isReadWrite)
+            {
+                this.Configuration.ProxyCreationEnabled = true;
+                this.Configuration.ValidateOnSaveEnabled = true;
+            }
+            else
+            {
+                this.Configuration.ProxyCreationEnabled = true; // ugh
+                this.Configuration.AutoDetectChangesEnabled = false;
+                this.Configuration.LazyLoadingEnabled = true; // ugh
+                this.Configuration.ValidateOnSaveEnabled = false;   // no saving here!
+            }
         }
 
         public virtual DbSet<ConceptDimension> ConceptDimensions { get; set; }

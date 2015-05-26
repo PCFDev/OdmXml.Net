@@ -12,7 +12,7 @@ namespace PCF.OdmXml.i2b2Importer.Tests
         {
             ODM odm;
             Exception exception;
-            Assert.IsTrue(ODM.Load(@"Samples\CHB_REDCap_2.xml", out odm, out exception));
+            Assert.IsTrue(ODM.Load(@"Samples\ODM_REDCap_Example.xml", out odm, out exception));
             Assert.IsNotNull(odm);
             Assert.IsNull(exception);
 

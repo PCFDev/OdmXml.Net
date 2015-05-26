@@ -46,6 +46,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -64,6 +65,7 @@
     <Compile Include="I2b2OdmProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ODMTests.cs" />
+    <Compile Include="EFTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -103,6 +105,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PCF.OdmXml.i2b2Importer.Data\PCF.OdmXml.i2b2Importer.Data.csproj">
+      <Project>{f402a878-8ece-4695-a4e5-b6e2d8468bb8}</Project>
+      <Name>PCF.OdmXml.i2b2Importer.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PCF.OdmXml.i2b2Importer\PCF.OdmXml.i2b2Importer.csproj">
       <Project>{211eb8f1-79d9-43e8-b373-3e15fe56b77e}</Project>
       <Name>PCF.OdmXml.i2b2Importer</Name>

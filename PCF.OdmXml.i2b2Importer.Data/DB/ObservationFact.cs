@@ -8,7 +8,6 @@ namespace PCF.OdmXml.i2b2Importer.Data
 
     public partial class ObservationFact
     {
-
         public int ENCOUNTER_NUM { get; set; }
 
         public int PATIENT_NUM { get; set; }

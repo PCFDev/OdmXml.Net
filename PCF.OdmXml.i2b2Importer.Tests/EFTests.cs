@@ -25,7 +25,7 @@ namespace PCF.OdmXml.i2b2Importer.Tests
 
                 observation.ENCOUNTER_NUM = 1;
                 observation.PATIENT_NUM = 1;
-                observation.CONCEPT_CD = UnicodeEncoding.Default.GetString(MD5.Create().ComputeHash(UnicodeEncoding.Default.GetBytes("test this hash")));
+                observation.CONCEPT_CD = BitConverter.ToString(MD5.Create().ComputeHash(UnicodeEncoding.Default.GetBytes("test this hash"))).Replace("-", "").ToLowerInvariant();
                 observation.PROVIDER_ID = "@"; //HACK where is the provider?
                 observation.START_DATE = currentDate - TimeSpan.FromDays(3);//???
                 observation.MODIFIER_CD = "@";
